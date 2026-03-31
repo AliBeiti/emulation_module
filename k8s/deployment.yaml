@@ -1,0 +1,76 @@
+# ── Deployment ────────────────────────────────────────────────────────────────
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ksense-usage-api
+  namespace: ksense
+  labels:
+    app: ksense-usage-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ksense-usage-api
+  template:
+    metadata:
+      labels:
+        app: ksense-usage-api
+    spec:
+      serviceAccountName: emulation-module
+
+      containers:
+        - name: emulation-module
+          image: alibeiti/emulation-module:latest
+          imagePullPolicy: Always
+
+          ports:
+            - containerPort: 8090
+              name: api
+
+          resources:
+            requests:
+              cpu: "200m"
+              memory: "512Mi"
+            limits:
+              cpu: "1000m"
+              memory: "2Gi"
+
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8090
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 8090
+            initialDelaySeconds: 10
+            periodSeconds: 5
+
+          env:
+            - name: PYTHONUNBUFFERED
+              value: "1"
+
+---
+# ── Service ───────────────────────────────────────────────────────────────────
+# Admission Control connects via:
+#   http://ksense-usage-api.ksense.svc:8090/usage/latest
+apiVersion: v1
+kind: Service
+metadata:
+  name: ksense-usage-api
+  namespace: ksense
+  labels:
+    app: ksense-usage-api
+spec:
+  selector:
+    app: ksense-usage-api
+  ports:
+    - name: api
+      port: 8090
+      targetPort: 8090
+      protocol: TCP
+  type: ClusterIP

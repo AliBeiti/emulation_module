@@ -1,0 +1,49 @@
+# ── ServiceAccount ────────────────────────────────────────────────────────────
+# The emulation module pod runs under this service account
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: emulation-module
+  namespace: ksense
+
+---
+# ── ClusterRole ───────────────────────────────────────────────────────────────
+# Permissions needed by the emulation module:
+#   - nodes: create/get/delete KWOK fake nodes
+#   - namespaces: create/delete app namespaces (hotel/, sn1/, sa1/ ...)
+#   - pods: create/delete/patch KWOK pods and their annotations
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: emulation-module-role
+rules:
+  # Node management (KWOK fake nodes)
+  - apiGroups: [""]
+    resources: ["nodes"]
+    verbs: ["get", "list", "create", "delete", "patch", "update"]
+
+  # Namespace management (app namespaces)
+  - apiGroups: [""]
+    resources: ["namespaces"]
+    verbs: ["get", "list", "create", "delete"]
+
+  # Pod management (KWOK fake pods + annotation patching)
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get", "list", "create", "delete", "patch", "update"]
+
+---
+# ── ClusterRoleBinding ────────────────────────────────────────────────────────
+# Bind the ClusterRole to the emulation-module ServiceAccount
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: emulation-module-binding
+subjects:
+  - kind: ServiceAccount
+    name: emulation-module
+    namespace: ksense
+roleRef:
+  kind: ClusterRole
+  name: emulation-module-role
+  apiGroup: rbac.authorization.k8s.io
