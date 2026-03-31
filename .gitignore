@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+.eggs/
+dist/
+build/
+.env
+.venv/
+venv/
+
+# Datasets (too large for GitHub — generate locally with prepare_datasets.py)
+# datasets/*.csv
+
+# Keep the index file
+!datasets/dataset_index.json
+
+# Logs
+*.log
+
+# Test artifacts
+prediction/
+plots/
+quality_report.csv
+correction_factors.csv
+power_model.json
+
+# Docker
+*.tar
+
+# OS
+.DS_Store
+Thumbs.db
