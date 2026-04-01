@@ -65,11 +65,17 @@ class KWOKManager:
     def _init_k8s_client(self):
         """Initialize Kubernetes client with connection pooling."""
         try:
-            import os
-            k3s_cfg = "/etc/rancher/k3s/k3s.yaml"
-            if os.path.exists(k3s_cfg) and "KUBECONFIG" not in os.environ:
-                os.environ["KUBECONFIG"] = k3s_cfg
-            k8s_config.load_kube_config()
+            try:
+                k8s_config.load_incluster_config()
+                logger.info("Using in-cluster Kubernetes config")
+            except k8s_config.ConfigException:
+                import os
+                k3s_cfg = "/etc/rancher/k3s/k3s.yaml"
+                if os.path.exists(k3s_cfg) and "KUBECONFIG" not in os.environ:
+                    os.environ["KUBECONFIG"] = k3s_cfg
+                k8s_config.load_kube_config()
+                logger.info("Using kubeconfig file")
+
             cfg = client.Configuration.get_default_copy()
             cfg.connection_pool_maxsize = 20
             api_client = client.ApiClient(configuration=cfg)

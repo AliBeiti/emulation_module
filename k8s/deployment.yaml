@@ -21,7 +21,7 @@ spec:
       containers:
         - name: emulation-module
           image: alibeiti/emulation-module:latest
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent 
 
           ports:
             - containerPort: 8090

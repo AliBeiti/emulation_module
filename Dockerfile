@@ -3,24 +3,24 @@
 # Datasets are NOT baked into the image — they are mounted at runtime
 # from the host node via a HostPath volume at /app/datasets/.
 
-FROM python:3.11-slim
+
 
 # Install kubectl for KWOK manifest apply
+FROM python:3.11-slim
+
 RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     ca-certificates \
     && curl -LO "https://dl.k8s.io/release/$(curl -Ls https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" \
     && chmod +x kubectl \
-    && mv kubectl /usr/local/bin/kubectl \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+    && mv kubectl /usr/local/bin/kubectl
 
 # Set working directory
 WORKDIR /app
 
 # Copy and install Python dependencies first (layer caching)
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir     "numpy==1.24.4"     "pandas==2.0.3"     "fastapi>=0.110.0"     "uvicorn>=0.29.0"     "kubernetes>=29.0.0"     "pydantic>=2.0.0"
 
 # Copy module source files
 COPY config.py .
