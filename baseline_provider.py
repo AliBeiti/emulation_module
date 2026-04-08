@@ -25,7 +25,7 @@ from config import (
 logger = logging.getLogger(__name__)
 
 # Expected baseline CSV path (alongside the emulation module)
-BASELINE_CSV = os.path.join(BASE_DIR, "baseline", "synced_node.csv")
+BASELINE_CSV = os.path.join(BASE_DIR, "baseline", "baseline_node.csv")
 
 # PSI sanity cap — anything above this is a bad row
 PSI_SANITY_CAP = NODE_PSI_MAX_US  # 5,000,000 us

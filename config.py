@@ -97,3 +97,18 @@ POD_CSV_COLS = [
     "softirq_total_ms",
     "pod_cpu_watts",
 ]
+
+# This node's IP — injected by Kubernetes Downward API at runtime
+# Used to filter transactions belonging to this seller node
+SELLER_NODE_IP = os.environ.get("SELLER_NODE_IP", "")
+
+# ─── Transaction Poller Settings ──────────────────────────────────────────────
+# URL of the transaction module ABCI query endpoint
+TRANSACTION_API_URL = os.environ.get(
+    "TRANSACTION_API_URL",
+    f"http://{os.environ.get('SELLER_NODE_IP', 'localhost')}:26657/abci_query?data=%22tx%22"
+)
+
+
+# How often to poll for new transactions (seconds)
+POLL_INTERVAL_S = 5

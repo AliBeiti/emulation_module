@@ -1,39 +1,57 @@
 {
+  "h0s0a0": {
+    "file": "datasets/h0s0a0_pod.csv",
+    "source": "baseline",
+    "hotel": 0,
+    "sn": 0,
+    "sa": 0,
+    "windows": 254,
+    "pods": 1,
+    "tier": "A"
+  },
   "h0s0a1": {
     "file": "datasets/h0s0a1_pod.csv",
-    "source": "real",
+    "source": "generated",
+    "base": "sa5",
     "hotel": 0,
     "sn": 0,
     "sa": 1,
-    "windows": 143,
-    "pods": 1
+    "windows": 144,
+    "pods": 1,
+    "tier": "A"
   },
   "h0s0a2": {
     "file": "datasets/h0s0a2_pod.csv",
-    "source": "real",
+    "source": "generated",
+    "base": "sa5",
     "hotel": 0,
     "sn": 0,
     "sa": 2,
-    "windows": 130,
-    "pods": 2
+    "windows": 144,
+    "pods": 2,
+    "tier": "A"
   },
   "h0s0a3": {
     "file": "datasets/h0s0a3_pod.csv",
-    "source": "real",
+    "source": "generated",
+    "base": "sa5",
     "hotel": 0,
     "sn": 0,
     "sa": 3,
-    "windows": 143,
-    "pods": 3
+    "windows": 144,
+    "pods": 3,
+    "tier": "A"
   },
   "h0s0a4": {
     "file": "datasets/h0s0a4_pod.csv",
-    "source": "real",
+    "source": "generated",
+    "base": "sa5",
     "hotel": 0,
     "sn": 0,
     "sa": 4,
-    "windows": 155,
-    "pods": 4
+    "windows": 144,
+    "pods": 4,
+    "tier": "A"
   },
   "h0s0a5": {
     "file": "datasets/h0s0a5_pod.csv",
@@ -41,8 +59,9 @@
     "hotel": 0,
     "sn": 0,
     "sa": 5,
-    "windows": 145,
-    "pods": 5
+    "windows": 144,
+    "pods": 5,
+    "tier": "A"
   },
   "h0s0a6": {
     "file": "datasets/h0s0a6_pod.csv",
@@ -50,8 +69,9 @@
     "hotel": 0,
     "sn": 0,
     "sa": 6,
-    "windows": 145,
-    "pods": 6
+    "windows": 144,
+    "pods": 6,
+    "tier": "A"
   },
   "h0s1a0": {
     "file": "datasets/h0s1a0_pod.csv",
@@ -60,25 +80,30 @@
     "sn": 1,
     "sa": 0,
     "windows": 145,
-    "pods": 27
+    "pods": 27,
+    "tier": "A"
   },
   "h0s1a1": {
     "file": "datasets/h0s1a1_pod.csv",
-    "source": "real",
+    "source": "generated",
+    "base": "sn1",
     "hotel": 0,
     "sn": 1,
     "sa": 1,
-    "windows": 137,
-    "pods": 27
+    "windows": 145,
+    "pods": 28,
+    "tier": "A"
   },
   "h0s1a2": {
     "file": "datasets/h0s1a2_pod.csv",
-    "source": "real",
+    "source": "generated",
+    "base": "sn1",
     "hotel": 0,
     "sn": 1,
     "sa": 2,
-    "windows": 136,
-    "pods": 28
+    "windows": 145,
+    "pods": 29,
+    "tier": "A"
   },
   "h0s1a3": {
     "file": "datasets/h0s1a3_pod.csv",
@@ -87,7 +112,8 @@
     "sn": 1,
     "sa": 3,
     "windows": 135,
-    "pods": 29
+    "pods": 30,
+    "tier": "A"
   },
   "h0s1a4": {
     "file": "datasets/h0s1a4_pod.csv",
@@ -96,7 +122,8 @@
     "sn": 1,
     "sa": 4,
     "windows": 142,
-    "pods": 30
+    "pods": 31,
+    "tier": "A"
   },
   "h0s1a5": {
     "file": "datasets/h0s1a5_pod.csv",
@@ -105,394 +132,478 @@
     "sn": 1,
     "sa": 5,
     "windows": 134,
-    "pods": 31
+    "pods": 32,
+    "tier": "A"
   },
   "h0s1a6": {
     "file": "datasets/h0s1a6_pod.csv",
     "source": "generated",
+    "base": "sn1_sa5",
     "hotel": 0,
     "sn": 1,
     "sa": 6,
     "windows": 134,
-    "pods": 32
+    "pods": 33,
+    "tier": "A"
   },
   "h0s2a0": {
     "file": "datasets/h0s2a0_pod.csv",
-    "source": "real",
+    "source": "generated",
+    "base": "sn1",
     "hotel": 0,
     "sn": 2,
     "sa": 0,
-    "windows": 147,
-    "pods": 54
+    "windows": 145,
+    "pods": 54,
+    "tier": "A"
   },
   "h0s2a1": {
     "file": "datasets/h0s2a1_pod.csv",
     "source": "generated",
+    "base": "sn1",
     "hotel": 0,
     "sn": 2,
     "sa": 1,
-    "windows": 137,
-    "pods": 54
+    "windows": 145,
+    "pods": 55,
+    "tier": "A"
   },
   "h0s2a2": {
     "file": "datasets/h0s2a2_pod.csv",
     "source": "generated",
+    "base": "sn1",
     "hotel": 0,
     "sn": 2,
     "sa": 2,
-    "windows": 136,
-    "pods": 55
+    "windows": 145,
+    "pods": 56,
+    "tier": "A"
   },
   "h0s2a3": {
     "file": "datasets/h0s2a3_pod.csv",
-    "source": "generated",
+    "source": "real",
     "hotel": 0,
     "sn": 2,
     "sa": 3,
-    "windows": 135,
-    "pods": 56
+    "windows": 143,
+    "pods": 58,
+    "tier": "A"
   },
   "h0s2a4": {
     "file": "datasets/h0s2a4_pod.csv",
-    "source": "generated",
+    "source": "real",
     "hotel": 0,
     "sn": 2,
     "sa": 4,
-    "windows": 142,
-    "pods": 57
+    "windows": 139,
+    "pods": 58,
+    "tier": "A"
   },
   "h0s2a5": {
     "file": "datasets/h0s2a5_pod.csv",
-    "source": "generated",
+    "source": "real",
     "hotel": 0,
     "sn": 2,
     "sa": 5,
-    "windows": 134,
-    "pods": 58
+    "windows": 146,
+    "pods": 59,
+    "tier": "A"
   },
   "h0s2a6": {
     "file": "datasets/h0s2a6_pod.csv",
     "source": "generated",
+    "base": "sn2_sa5",
     "hotel": 0,
     "sn": 2,
     "sa": 6,
-    "windows": 134,
-    "pods": 58
+    "windows": 146,
+    "pods": 60,
+    "tier": "A"
   },
   "h0s3a0": {
     "file": "datasets/h0s3a0_pod.csv",
-    "source": "real",
+    "source": "generated",
+    "base": "sn1",
     "hotel": 0,
     "sn": 3,
     "sa": 0,
-    "windows": 151,
-    "pods": 81
+    "windows": 145,
+    "pods": 81,
+    "tier": "A"
   },
   "h0s3a1": {
     "file": "datasets/h0s3a1_pod.csv",
     "source": "generated",
+    "base": "sn1",
     "hotel": 0,
     "sn": 3,
     "sa": 1,
-    "windows": 137,
-    "pods": 81
+    "windows": 145,
+    "pods": 82,
+    "tier": "A"
   },
   "h0s3a2": {
     "file": "datasets/h0s3a2_pod.csv",
     "source": "generated",
+    "base": "sn1",
     "hotel": 0,
     "sn": 3,
     "sa": 2,
-    "windows": 136,
-    "pods": 80
+    "windows": 145,
+    "pods": 83,
+    "tier": "A"
   },
   "h0s3a3": {
     "file": "datasets/h0s3a3_pod.csv",
     "source": "generated",
+    "base": "sn2_sa3",
     "hotel": 0,
     "sn": 3,
     "sa": 3,
-    "windows": 135,
-    "pods": 69
+    "windows": 143,
+    "pods": 85,
+    "tier": "A"
   },
   "h0s3a4": {
     "file": "datasets/h0s3a4_pod.csv",
     "source": "generated",
+    "base": "sn2_sa4",
     "hotel": 0,
     "sn": 3,
     "sa": 4,
-    "windows": 142,
-    "pods": 69
+    "windows": 139,
+    "pods": 85,
+    "tier": "A"
   },
   "h0s3a5": {
     "file": "datasets/h0s3a5_pod.csv",
     "source": "generated",
+    "base": "sn2_sa5",
     "hotel": 0,
     "sn": 3,
     "sa": 5,
-    "windows": 134,
-    "pods": 69
+    "windows": 146,
+    "pods": 86,
+    "tier": "A"
   },
   "h0s3a6": {
     "file": "datasets/h0s3a6_pod.csv",
     "source": "generated",
+    "base": "sn2_sa5",
     "hotel": 0,
     "sn": 3,
     "sa": 6,
-    "windows": 134,
-    "pods": 70
+    "windows": 146,
+    "pods": 87,
+    "tier": "A"
   },
   "h0s4a0": {
     "file": "datasets/h0s4a0_pod.csv",
-    "source": "real",
+    "source": "generated",
+    "base": "sn1",
     "hotel": 0,
     "sn": 4,
     "sa": 0,
-    "windows": 140,
-    "pods": 108
+    "windows": 145,
+    "pods": 108,
+    "tier": "A"
   },
   "h0s4a1": {
     "file": "datasets/h0s4a1_pod.csv",
     "source": "generated",
+    "base": "sn1",
     "hotel": 0,
     "sn": 4,
     "sa": 1,
-    "windows": 137,
-    "pods": 108
+    "windows": 145,
+    "pods": 109,
+    "tier": "A"
   },
   "h0s4a2": {
     "file": "datasets/h0s4a2_pod.csv",
     "source": "generated",
+    "base": "sn1",
     "hotel": 0,
     "sn": 4,
     "sa": 2,
-    "windows": 136,
-    "pods": 100
+    "windows": 145,
+    "pods": 110,
+    "tier": "A"
   },
   "h0s4a3": {
     "file": "datasets/h0s4a3_pod.csv",
     "source": "generated",
+    "base": "sn2_sa3",
     "hotel": 0,
     "sn": 4,
     "sa": 3,
-    "windows": 135,
-    "pods": 77
+    "windows": 143,
+    "pods": 112,
+    "tier": "A"
   },
   "h0s4a4": {
     "file": "datasets/h0s4a4_pod.csv",
     "source": "generated",
+    "base": "sn2_sa4",
     "hotel": 0,
     "sn": 4,
     "sa": 4,
-    "windows": 142,
-    "pods": 75
+    "windows": 139,
+    "pods": 112,
+    "tier": "A"
   },
   "h0s4a5": {
     "file": "datasets/h0s4a5_pod.csv",
     "source": "generated",
+    "base": "sn2_sa5",
     "hotel": 0,
     "sn": 4,
     "sa": 5,
-    "windows": 134,
-    "pods": 75
+    "windows": 146,
+    "pods": 113,
+    "tier": "A"
   },
   "h0s4a6": {
     "file": "datasets/h0s4a6_pod.csv",
     "source": "generated",
+    "base": "sn2_sa5",
     "hotel": 0,
     "sn": 4,
     "sa": 6,
-    "windows": 134,
-    "pods": 75
+    "windows": 146,
+    "pods": 114,
+    "tier": "A"
   },
   "h0s5a0": {
     "file": "datasets/h0s5a0_pod.csv",
-    "source": "real",
+    "source": "generated",
+    "base": "sn1",
     "hotel": 0,
     "sn": 5,
     "sa": 0,
-    "windows": 142,
-    "pods": 135
+    "windows": 145,
+    "pods": 135,
+    "tier": "A"
   },
   "h0s5a1": {
     "file": "datasets/h0s5a1_pod.csv",
     "source": "generated",
+    "base": "sn1",
     "hotel": 0,
     "sn": 5,
     "sa": 1,
-    "windows": 137,
-    "pods": 135
+    "windows": 145,
+    "pods": 136,
+    "tier": "A"
   },
   "h0s5a2": {
     "file": "datasets/h0s5a2_pod.csv",
     "source": "generated",
+    "base": "sn1",
     "hotel": 0,
     "sn": 5,
     "sa": 2,
-    "windows": 136,
-    "pods": 109
+    "windows": 145,
+    "pods": 137,
+    "tier": "A"
   },
   "h0s5a3": {
     "file": "datasets/h0s5a3_pod.csv",
     "source": "generated",
+    "base": "sn2_sa3",
     "hotel": 0,
     "sn": 5,
     "sa": 3,
-    "windows": 135,
-    "pods": 82
+    "windows": 143,
+    "pods": 139,
+    "tier": "A"
   },
   "h0s5a4": {
     "file": "datasets/h0s5a4_pod.csv",
     "source": "generated",
+    "base": "sn2_sa4",
     "hotel": 0,
     "sn": 5,
     "sa": 4,
-    "windows": 142,
-    "pods": 80
+    "windows": 139,
+    "pods": 139,
+    "tier": "A"
   },
   "h0s5a5": {
     "file": "datasets/h0s5a5_pod.csv",
     "source": "generated",
+    "base": "sn2_sa5",
     "hotel": 0,
     "sn": 5,
     "sa": 5,
-    "windows": 134,
-    "pods": 80
+    "windows": 146,
+    "pods": 140,
+    "tier": "A"
   },
   "h0s5a6": {
     "file": "datasets/h0s5a6_pod.csv",
     "source": "generated",
+    "base": "sn2_sa5",
     "hotel": 0,
     "sn": 5,
     "sa": 6,
-    "windows": 134,
-    "pods": 80
+    "windows": 146,
+    "pods": 141,
+    "tier": "A"
   },
   "h0s6a0": {
     "file": "datasets/h0s6a0_pod.csv",
-    "source": "real",
+    "source": "generated",
+    "base": "sn1",
     "hotel": 0,
     "sn": 6,
     "sa": 0,
     "windows": 145,
-    "pods": 162
+    "pods": 162,
+    "tier": "A"
   },
   "h0s6a1": {
     "file": "datasets/h0s6a1_pod.csv",
     "source": "generated",
+    "base": "sn1",
     "hotel": 0,
     "sn": 6,
     "sa": 1,
-    "windows": 137,
-    "pods": 146
+    "windows": 145,
+    "pods": 163,
+    "tier": "A"
   },
   "h0s6a2": {
     "file": "datasets/h0s6a2_pod.csv",
     "source": "generated",
+    "base": "sn1",
     "hotel": 0,
     "sn": 6,
     "sa": 2,
-    "windows": 136,
-    "pods": 115
+    "windows": 145,
+    "pods": 164,
+    "tier": "A"
   },
   "h0s6a3": {
     "file": "datasets/h0s6a3_pod.csv",
     "source": "generated",
+    "base": "sn2_sa3",
     "hotel": 0,
     "sn": 6,
     "sa": 3,
-    "windows": 135,
-    "pods": 87
+    "windows": 143,
+    "pods": 166,
+    "tier": "A"
   },
   "h0s6a4": {
     "file": "datasets/h0s6a4_pod.csv",
     "source": "generated",
+    "base": "sn2_sa4",
     "hotel": 0,
     "sn": 6,
     "sa": 4,
-    "windows": 142,
-    "pods": 84
+    "windows": 139,
+    "pods": 166,
+    "tier": "A"
   },
   "h0s6a5": {
     "file": "datasets/h0s6a5_pod.csv",
     "source": "generated",
+    "base": "sn2_sa5",
     "hotel": 0,
     "sn": 6,
     "sa": 5,
-    "windows": 134,
-    "pods": 84
+    "windows": 146,
+    "pods": 167,
+    "tier": "A"
   },
   "h0s6a6": {
     "file": "datasets/h0s6a6_pod.csv",
     "source": "generated",
+    "base": "sn2_sa5",
     "hotel": 0,
     "sn": 6,
     "sa": 6,
-    "windows": 134,
-    "pods": 85
+    "windows": 146,
+    "pods": 168,
+    "tier": "A"
   },
   "h0s7a0": {
     "file": "datasets/h0s7a0_pod.csv",
-    "source": "real",
+    "source": "generated",
+    "base": "sn1",
     "hotel": 0,
     "sn": 7,
     "sa": 0,
-    "windows": 144,
-    "pods": 189
+    "windows": 145,
+    "pods": 189,
+    "tier": "A"
   },
   "h0s7a1": {
     "file": "datasets/h0s7a1_pod.csv",
     "source": "generated",
+    "base": "sn1",
     "hotel": 0,
     "sn": 7,
     "sa": 1,
-    "windows": 137,
-    "pods": 151
+    "windows": 145,
+    "pods": 190,
+    "tier": "A"
   },
   "h0s7a2": {
     "file": "datasets/h0s7a2_pod.csv",
     "source": "generated",
+    "base": "sn1",
     "hotel": 0,
     "sn": 7,
     "sa": 2,
-    "windows": 136,
-    "pods": 120
+    "windows": 145,
+    "pods": 191,
+    "tier": "A"
   },
   "h0s7a3": {
     "file": "datasets/h0s7a3_pod.csv",
     "source": "generated",
+    "base": "sn2_sa3",
     "hotel": 0,
     "sn": 7,
     "sa": 3,
-    "windows": 135,
-    "pods": 92
+    "windows": 143,
+    "pods": 193,
+    "tier": "A"
   },
   "h0s7a4": {
     "file": "datasets/h0s7a4_pod.csv",
     "source": "generated",
+    "base": "sn2_sa4",
     "hotel": 0,
     "sn": 7,
     "sa": 4,
-    "windows": 142,
-    "pods": 89
+    "windows": 139,
+    "pods": 193,
+    "tier": "A"
   },
   "h0s7a5": {
     "file": "datasets/h0s7a5_pod.csv",
     "source": "generated",
+    "base": "sn2_sa5",
     "hotel": 0,
     "sn": 7,
     "sa": 5,
-    "windows": 134,
-    "pods": 89
+    "windows": 146,
+    "pods": 194,
+    "tier": "A"
   },
   "h0s7a6": {
     "file": "datasets/h0s7a6_pod.csv",
     "source": "generated",
+    "base": "sn2_sa5",
     "hotel": 0,
     "sn": 7,
     "sa": 6,
-    "windows": 134,
-    "pods": 89
+    "windows": 146,
+    "pods": 195,
+    "tier": "A"
   },
   "h1s0a0": {
     "file": "datasets/h1s0a0_pod.csv",
@@ -501,7 +612,8 @@
     "sn": 0,
     "sa": 0,
     "windows": 138,
-    "pods": 19
+    "pods": 19,
+    "tier": "A"
   },
   "h1s0a1": {
     "file": "datasets/h1s0a1_pod.csv",
@@ -510,7 +622,8 @@
     "sn": 0,
     "sa": 1,
     "windows": 140,
-    "pods": 20
+    "pods": 20,
+    "tier": "A"
   },
   "h1s0a2": {
     "file": "datasets/h1s0a2_pod.csv",
@@ -519,7 +632,8 @@
     "sn": 0,
     "sa": 2,
     "windows": 142,
-    "pods": 21
+    "pods": 21,
+    "tier": "A"
   },
   "h1s0a3": {
     "file": "datasets/h1s0a3_pod.csv",
@@ -528,7 +642,8 @@
     "sn": 0,
     "sa": 3,
     "windows": 127,
-    "pods": 22
+    "pods": 22,
+    "tier": "A"
   },
   "h1s0a4": {
     "file": "datasets/h1s0a4_pod.csv",
@@ -536,8 +651,9 @@
     "hotel": 1,
     "sn": 0,
     "sa": 4,
-    "windows": 134,
-    "pods": 23
+    "windows": 133,
+    "pods": 23,
+    "tier": "A"
   },
   "h1s0a5": {
     "file": "datasets/h1s0a5_pod.csv",
@@ -546,7 +662,8 @@
     "sn": 0,
     "sa": 5,
     "windows": 133,
-    "pods": 24
+    "pods": 24,
+    "tier": "A"
   },
   "h1s0a6": {
     "file": "datasets/h1s0a6_pod.csv",
@@ -554,8 +671,9 @@
     "hotel": 1,
     "sn": 0,
     "sa": 6,
-    "windows": 143,
-    "pods": 25
+    "windows": 142,
+    "pods": 25,
+    "tier": "A"
   },
   "h1s1a0": {
     "file": "datasets/h1s1a0_pod.csv",
@@ -564,7 +682,8 @@
     "sn": 1,
     "sa": 0,
     "windows": 145,
-    "pods": 46
+    "pods": 46,
+    "tier": "A"
   },
   "h1s1a1": {
     "file": "datasets/h1s1a1_pod.csv",
@@ -573,7 +692,8 @@
     "sn": 1,
     "sa": 1,
     "windows": 142,
-    "pods": 47
+    "pods": 47,
+    "tier": "A"
   },
   "h1s1a2": {
     "file": "datasets/h1s1a2_pod.csv",
@@ -582,7 +702,8 @@
     "sn": 1,
     "sa": 2,
     "windows": 129,
-    "pods": 48
+    "pods": 48,
+    "tier": "A"
   },
   "h1s1a3": {
     "file": "datasets/h1s1a3_pod.csv",
@@ -591,7 +712,8 @@
     "sn": 1,
     "sa": 3,
     "windows": 132,
-    "pods": 49
+    "pods": 49,
+    "tier": "A"
   },
   "h1s1a4": {
     "file": "datasets/h1s1a4_pod.csv",
@@ -600,7 +722,8 @@
     "sn": 1,
     "sa": 4,
     "windows": 139,
-    "pods": 50
+    "pods": 50,
+    "tier": "A"
   },
   "h1s1a5": {
     "file": "datasets/h1s1a5_pod.csv",
@@ -609,394 +732,481 @@
     "sn": 1,
     "sa": 5,
     "windows": 133,
-    "pods": 51
+    "pods": 51,
+    "tier": "A"
   },
   "h1s1a6": {
     "file": "datasets/h1s1a6_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa5",
     "hotel": 1,
     "sn": 1,
     "sa": 6,
     "windows": 133,
-    "pods": 52
+    "pods": 52,
+    "tier": "A"
   },
   "h1s2a0": {
     "file": "datasets/h1s2a0_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa0",
     "hotel": 1,
     "sn": 2,
     "sa": 0,
     "windows": 145,
-    "pods": 73
+    "pods": 73,
+    "tier": "A"
   },
   "h1s2a1": {
     "file": "datasets/h1s2a1_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa1",
     "hotel": 1,
     "sn": 2,
     "sa": 1,
     "windows": 142,
-    "pods": 74
+    "pods": 74,
+    "tier": "A"
   },
   "h1s2a2": {
     "file": "datasets/h1s2a2_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa2",
     "hotel": 1,
     "sn": 2,
     "sa": 2,
     "windows": 129,
-    "pods": 75
+    "pods": 75,
+    "tier": "A"
   },
   "h1s2a3": {
     "file": "datasets/h1s2a3_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa3",
     "hotel": 1,
     "sn": 2,
     "sa": 3,
     "windows": 132,
-    "pods": 76
+    "pods": 76,
+    "tier": "A"
   },
   "h1s2a4": {
     "file": "datasets/h1s2a4_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa4",
     "hotel": 1,
     "sn": 2,
     "sa": 4,
     "windows": 139,
-    "pods": 77
+    "pods": 77,
+    "tier": "A"
   },
   "h1s2a5": {
     "file": "datasets/h1s2a5_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa5",
     "hotel": 1,
     "sn": 2,
     "sa": 5,
     "windows": 133,
-    "pods": 78
+    "pods": 78,
+    "tier": "A"
   },
   "h1s2a6": {
     "file": "datasets/h1s2a6_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa5",
     "hotel": 1,
     "sn": 2,
     "sa": 6,
     "windows": 133,
-    "pods": 78
+    "pods": 79,
+    "tier": "A"
   },
   "h1s3a0": {
     "file": "datasets/h1s3a0_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa0",
     "hotel": 1,
     "sn": 3,
     "sa": 0,
     "windows": 145,
-    "pods": 100
+    "pods": 100,
+    "tier": "A"
   },
   "h1s3a1": {
     "file": "datasets/h1s3a1_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa1",
     "hotel": 1,
     "sn": 3,
     "sa": 1,
     "windows": 142,
-    "pods": 101
+    "pods": 101,
+    "tier": "A"
   },
   "h1s3a2": {
     "file": "datasets/h1s3a2_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa2",
     "hotel": 1,
     "sn": 3,
     "sa": 2,
     "windows": 129,
-    "pods": 92
+    "pods": 102,
+    "tier": "A"
   },
   "h1s3a3": {
     "file": "datasets/h1s3a3_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa3",
     "hotel": 1,
     "sn": 3,
     "sa": 3,
     "windows": 132,
-    "pods": 87
+    "pods": 103,
+    "tier": "A"
   },
   "h1s3a4": {
     "file": "datasets/h1s3a4_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa4",
     "hotel": 1,
     "sn": 3,
     "sa": 4,
     "windows": 139,
-    "pods": 88
+    "pods": 104,
+    "tier": "A"
   },
   "h1s3a5": {
     "file": "datasets/h1s3a5_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa5",
     "hotel": 1,
     "sn": 3,
     "sa": 5,
     "windows": 133,
-    "pods": 89
+    "pods": 105,
+    "tier": "A"
   },
   "h1s3a6": {
     "file": "datasets/h1s3a6_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa5",
     "hotel": 1,
     "sn": 3,
     "sa": 6,
     "windows": 133,
-    "pods": 89
+    "pods": 106,
+    "tier": "A"
   },
   "h1s4a0": {
     "file": "datasets/h1s4a0_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa0",
     "hotel": 1,
     "sn": 4,
     "sa": 0,
     "windows": 145,
-    "pods": 127
+    "pods": 127,
+    "tier": "A"
   },
   "h1s4a1": {
     "file": "datasets/h1s4a1_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa1",
     "hotel": 1,
     "sn": 4,
     "sa": 1,
     "windows": 142,
-    "pods": 117
+    "pods": 128,
+    "tier": "A"
   },
   "h1s4a2": {
     "file": "datasets/h1s4a2_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa2",
     "hotel": 1,
     "sn": 4,
     "sa": 2,
     "windows": 129,
-    "pods": 100
+    "pods": 129,
+    "tier": "A"
   },
   "h1s4a3": {
     "file": "datasets/h1s4a3_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa3",
     "hotel": 1,
     "sn": 4,
     "sa": 3,
     "windows": 132,
-    "pods": 91
+    "pods": 130,
+    "tier": "A"
   },
   "h1s4a4": {
     "file": "datasets/h1s4a4_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa4",
     "hotel": 1,
     "sn": 4,
     "sa": 4,
     "windows": 139,
-    "pods": 93
+    "pods": 131,
+    "tier": "A"
   },
   "h1s4a5": {
     "file": "datasets/h1s4a5_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa5",
     "hotel": 1,
     "sn": 4,
     "sa": 5,
     "windows": 133,
-    "pods": 93
+    "pods": 132,
+    "tier": "A"
   },
   "h1s4a6": {
     "file": "datasets/h1s4a6_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa5",
     "hotel": 1,
     "sn": 4,
     "sa": 6,
     "windows": 133,
-    "pods": 94
+    "pods": 133,
+    "tier": "A"
   },
   "h1s5a0": {
     "file": "datasets/h1s5a0_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa0",
     "hotel": 1,
     "sn": 5,
     "sa": 0,
     "windows": 145,
-    "pods": 140
+    "pods": 154,
+    "tier": "A"
   },
   "h1s5a1": {
     "file": "datasets/h1s5a1_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa1",
     "hotel": 1,
     "sn": 5,
     "sa": 1,
     "windows": 142,
-    "pods": 124
+    "pods": 155,
+    "tier": "A"
   },
   "h1s5a2": {
     "file": "datasets/h1s5a2_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa2",
     "hotel": 1,
     "sn": 5,
     "sa": 2,
     "windows": 129,
-    "pods": 104
+    "pods": 156,
+    "tier": "A"
   },
   "h1s5a3": {
     "file": "datasets/h1s5a3_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa3",
     "hotel": 1,
     "sn": 5,
     "sa": 3,
     "windows": 132,
-    "pods": 95
+    "pods": 157,
+    "tier": "A"
   },
   "h1s5a4": {
     "file": "datasets/h1s5a4_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa4",
     "hotel": 1,
     "sn": 5,
     "sa": 4,
     "windows": 139,
-    "pods": 98
+    "pods": 158,
+    "tier": "A"
   },
   "h1s5a5": {
     "file": "datasets/h1s5a5_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa5",
     "hotel": 1,
     "sn": 5,
     "sa": 5,
     "windows": 133,
-    "pods": 98
+    "pods": 159,
+    "tier": "A"
   },
   "h1s5a6": {
     "file": "datasets/h1s5a6_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa5",
     "hotel": 1,
     "sn": 5,
     "sa": 6,
     "windows": 133,
-    "pods": 98
+    "pods": 160,
+    "tier": "A"
   },
   "h1s6a0": {
     "file": "datasets/h1s6a0_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa0",
     "hotel": 1,
     "sn": 6,
     "sa": 0,
     "windows": 145,
-    "pods": 146
+    "pods": 181,
+    "tier": "A"
   },
   "h1s6a1": {
     "file": "datasets/h1s6a1_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa1",
     "hotel": 1,
     "sn": 6,
     "sa": 1,
     "windows": 142,
-    "pods": 129
+    "pods": 182,
+    "tier": "A"
   },
   "h1s6a2": {
     "file": "datasets/h1s6a2_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa2",
     "hotel": 1,
     "sn": 6,
     "sa": 2,
     "windows": 129,
-    "pods": 108
+    "pods": 183,
+    "tier": "A"
   },
   "h1s6a3": {
     "file": "datasets/h1s6a3_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa3",
     "hotel": 1,
     "sn": 6,
     "sa": 3,
     "windows": 132,
-    "pods": 99
+    "pods": 184,
+    "tier": "A"
   },
   "h1s6a4": {
     "file": "datasets/h1s6a4_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa4",
     "hotel": 1,
     "sn": 6,
     "sa": 4,
     "windows": 139,
-    "pods": 102
+    "pods": 185,
+    "tier": "A"
   },
   "h1s6a5": {
     "file": "datasets/h1s6a5_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa5",
     "hotel": 1,
     "sn": 6,
     "sa": 5,
     "windows": 133,
-    "pods": 102
+    "pods": 186,
+    "tier": "A"
   },
   "h1s6a6": {
     "file": "datasets/h1s6a6_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa5",
     "hotel": 1,
     "sn": 6,
     "sa": 6,
     "windows": 133,
-    "pods": 103
+    "pods": 187,
+    "tier": "A"
   },
   "h1s7a0": {
     "file": "datasets/h1s7a0_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa0",
     "hotel": 1,
     "sn": 7,
     "sa": 0,
     "windows": 145,
-    "pods": 150
+    "pods": 208,
+    "tier": "A"
   },
   "h1s7a1": {
     "file": "datasets/h1s7a1_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa1",
     "hotel": 1,
     "sn": 7,
     "sa": 1,
     "windows": 142,
-    "pods": 133
+    "pods": 209,
+    "tier": "A"
   },
   "h1s7a2": {
     "file": "datasets/h1s7a2_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa2",
     "hotel": 1,
     "sn": 7,
     "sa": 2,
     "windows": 129,
-    "pods": 111
+    "pods": 210,
+    "tier": "A"
   },
   "h1s7a3": {
     "file": "datasets/h1s7a3_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa3",
     "hotel": 1,
     "sn": 7,
     "sa": 3,
     "windows": 132,
-    "pods": 103
+    "pods": 211,
+    "tier": "A"
   },
   "h1s7a4": {
     "file": "datasets/h1s7a4_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa4",
     "hotel": 1,
     "sn": 7,
     "sa": 4,
     "windows": 139,
-    "pods": 107
+    "pods": 212,
+    "tier": "A"
   },
   "h1s7a5": {
     "file": "datasets/h1s7a5_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa5",
     "hotel": 1,
     "sn": 7,
     "sa": 5,
     "windows": 133,
-    "pods": 107
+    "pods": 213,
+    "tier": "A"
   },
   "h1s7a6": {
     "file": "datasets/h1s7a6_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa5",
     "hotel": 1,
     "sn": 7,
     "sa": 6,
     "windows": 133,
-    "pods": 107
+    "pods": 214,
+    "tier": "A"
   },
   "h2s0a0": {
     "file": "datasets/h2s0a0_pod.csv",
@@ -1005,502 +1215,602 @@
     "sn": 0,
     "sa": 0,
     "windows": 142,
-    "pods": 38
+    "pods": 38,
+    "tier": "A"
   },
   "h2s0a1": {
     "file": "datasets/h2s0a1_pod.csv",
-    "source": "generated",
+    "source": "real",
     "hotel": 2,
     "sn": 0,
     "sa": 1,
-    "windows": 138,
-    "pods": 39
+    "windows": 143,
+    "pods": 39,
+    "tier": "A"
   },
   "h2s0a2": {
     "file": "datasets/h2s0a2_pod.csv",
-    "source": "generated",
+    "source": "real",
     "hotel": 2,
     "sn": 0,
     "sa": 2,
-    "windows": 138,
-    "pods": 40
+    "windows": 141,
+    "pods": 40,
+    "tier": "A"
   },
   "h2s0a3": {
     "file": "datasets/h2s0a3_pod.csv",
-    "source": "generated",
+    "source": "real",
     "hotel": 2,
     "sn": 0,
     "sa": 3,
-    "windows": 127,
-    "pods": 41
+    "windows": 141,
+    "pods": 41,
+    "tier": "A"
   },
   "h2s0a4": {
     "file": "datasets/h2s0a4_pod.csv",
-    "source": "generated",
+    "source": "real",
     "hotel": 2,
     "sn": 0,
     "sa": 4,
-    "windows": 134,
-    "pods": 42
+    "windows": 142,
+    "pods": 42,
+    "tier": "A"
   },
   "h2s0a5": {
     "file": "datasets/h2s0a5_pod.csv",
-    "source": "generated",
+    "source": "real",
     "hotel": 2,
     "sn": 0,
     "sa": 5,
-    "windows": 133,
-    "pods": 43
+    "windows": 147,
+    "pods": 43,
+    "tier": "A"
   },
   "h2s0a6": {
     "file": "datasets/h2s0a6_pod.csv",
-    "source": "generated",
+    "source": "real",
     "hotel": 2,
     "sn": 0,
     "sa": 6,
-    "windows": 138,
-    "pods": 44
+    "windows": 142,
+    "pods": 44,
+    "tier": "A"
   },
   "h2s1a0": {
     "file": "datasets/h2s1a0_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa0",
     "hotel": 2,
     "sn": 1,
     "sa": 0,
-    "windows": 138,
-    "pods": 65
+    "windows": 145,
+    "pods": 65,
+    "tier": "A"
   },
   "h2s1a1": {
     "file": "datasets/h2s1a1_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa1",
     "hotel": 2,
     "sn": 1,
     "sa": 1,
-    "windows": 138,
-    "pods": 66
+    "windows": 142,
+    "pods": 66,
+    "tier": "A"
   },
   "h2s1a2": {
     "file": "datasets/h2s1a2_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa2",
     "hotel": 2,
     "sn": 1,
     "sa": 2,
     "windows": 129,
-    "pods": 67
+    "pods": 67,
+    "tier": "A"
   },
   "h2s1a3": {
     "file": "datasets/h2s1a3_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa3",
     "hotel": 2,
     "sn": 1,
     "sa": 3,
     "windows": 132,
-    "pods": 68
+    "pods": 68,
+    "tier": "A"
   },
   "h2s1a4": {
     "file": "datasets/h2s1a4_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa4",
     "hotel": 2,
     "sn": 1,
     "sa": 4,
-    "windows": 138,
-    "pods": 69
+    "windows": 139,
+    "pods": 69,
+    "tier": "A"
   },
   "h2s1a5": {
     "file": "datasets/h2s1a5_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa5",
     "hotel": 2,
     "sn": 1,
     "sa": 5,
     "windows": 133,
-    "pods": 70
+    "pods": 70,
+    "tier": "A"
   },
   "h2s1a6": {
     "file": "datasets/h2s1a6_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa5",
     "hotel": 2,
     "sn": 1,
     "sa": 6,
     "windows": 133,
-    "pods": 70
+    "pods": 71,
+    "tier": "A"
   },
   "h2s2a0": {
     "file": "datasets/h2s2a0_pod.csv",
-    "source": "generated",
+    "source": "real",
     "hotel": 2,
     "sn": 2,
     "sa": 0,
-    "windows": 138,
-    "pods": 92
+    "windows": 145,
+    "pods": 93,
+    "tier": "A"
   },
   "h2s2a1": {
     "file": "datasets/h2s2a1_pod.csv",
-    "source": "generated",
+    "source": "real",
     "hotel": 2,
     "sn": 2,
     "sa": 1,
-    "windows": 138,
-    "pods": 93
+    "windows": 142,
+    "pods": 93,
+    "tier": "A"
   },
   "h2s2a2": {
     "file": "datasets/h2s2a2_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 2,
     "sn": 2,
     "sa": 2,
-    "windows": 129,
-    "pods": 94
+    "windows": 142,
+    "pods": 94,
+    "tier": "A"
   },
   "h2s2a3": {
     "file": "datasets/h2s2a3_pod.csv",
-    "source": "generated",
+    "source": "real",
     "hotel": 2,
     "sn": 2,
     "sa": 3,
-    "windows": 132,
-    "pods": 84
+    "windows": 138,
+    "pods": 95,
+    "tier": "A"
   },
   "h2s2a4": {
     "file": "datasets/h2s2a4_pod.csv",
-    "source": "generated",
+    "source": "real",
     "hotel": 2,
     "sn": 2,
     "sa": 4,
-    "windows": 138,
-    "pods": 84
+    "windows": 140,
+    "pods": 96,
+    "tier": "A"
   },
   "h2s2a5": {
     "file": "datasets/h2s2a5_pod.csv",
-    "source": "generated",
+    "source": "real",
     "hotel": 2,
     "sn": 2,
     "sa": 5,
-    "windows": 133,
-    "pods": 81
+    "windows": 139,
+    "pods": 97,
+    "tier": "A"
   },
   "h2s2a6": {
     "file": "datasets/h2s2a6_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 2,
     "sn": 2,
     "sa": 6,
-    "windows": 133,
-    "pods": 81
+    "windows": 139,
+    "pods": 98,
+    "tier": "A"
   },
   "h2s3a0": {
     "file": "datasets/h2s3a0_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa0",
     "hotel": 2,
     "sn": 3,
     "sa": 0,
-    "windows": 138,
-    "pods": 119
+    "windows": 145,
+    "pods": 120,
+    "tier": "A"
   },
   "h2s3a1": {
     "file": "datasets/h2s3a1_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 2,
     "sn": 3,
     "sa": 1,
-    "windows": 138,
-    "pods": 119
+    "windows": 142,
+    "pods": 120,
+    "tier": "A"
   },
   "h2s3a2": {
     "file": "datasets/h2s3a2_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 2,
     "sn": 3,
     "sa": 2,
-    "windows": 129,
-    "pods": 106
+    "windows": 142,
+    "pods": 121,
+    "tier": "A"
   },
   "h2s3a3": {
     "file": "datasets/h2s3a3_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa3",
     "hotel": 2,
     "sn": 3,
     "sa": 3,
-    "windows": 132,
-    "pods": 91
+    "windows": 138,
+    "pods": 122,
+    "tier": "A"
   },
   "h2s3a4": {
     "file": "datasets/h2s3a4_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa4",
     "hotel": 2,
     "sn": 3,
     "sa": 4,
-    "windows": 138,
-    "pods": 89
+    "windows": 140,
+    "pods": 123,
+    "tier": "A"
   },
   "h2s3a5": {
     "file": "datasets/h2s3a5_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 2,
     "sn": 3,
     "sa": 5,
-    "windows": 133,
-    "pods": 85
+    "windows": 139,
+    "pods": 124,
+    "tier": "A"
   },
   "h2s3a6": {
     "file": "datasets/h2s3a6_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 2,
     "sn": 3,
     "sa": 6,
-    "windows": 133,
-    "pods": 85
+    "windows": 139,
+    "pods": 125,
+    "tier": "A"
   },
   "h2s4a0": {
     "file": "datasets/h2s4a0_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa0",
     "hotel": 2,
     "sn": 4,
     "sa": 0,
-    "windows": 138,
-    "pods": 133
+    "windows": 145,
+    "pods": 147,
+    "tier": "A"
   },
   "h2s4a1": {
     "file": "datasets/h2s4a1_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 2,
     "sn": 4,
     "sa": 1,
-    "windows": 138,
-    "pods": 128
+    "windows": 142,
+    "pods": 147,
+    "tier": "A"
   },
   "h2s4a2": {
     "file": "datasets/h2s4a2_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 2,
     "sn": 4,
     "sa": 2,
-    "windows": 129,
-    "pods": 112
+    "windows": 142,
+    "pods": 148,
+    "tier": "A"
   },
   "h2s4a3": {
     "file": "datasets/h2s4a3_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa3",
     "hotel": 2,
     "sn": 4,
     "sa": 3,
-    "windows": 132,
-    "pods": 94
+    "windows": 138,
+    "pods": 149,
+    "tier": "A"
   },
   "h2s4a4": {
     "file": "datasets/h2s4a4_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa4",
     "hotel": 2,
     "sn": 4,
     "sa": 4,
-    "windows": 138,
-    "pods": 93
+    "windows": 140,
+    "pods": 150,
+    "tier": "A"
   },
   "h2s4a5": {
     "file": "datasets/h2s4a5_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 2,
     "sn": 4,
     "sa": 5,
-    "windows": 133,
-    "pods": 88
+    "windows": 139,
+    "pods": 151,
+    "tier": "A"
   },
   "h2s4a6": {
     "file": "datasets/h2s4a6_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 2,
     "sn": 4,
     "sa": 6,
-    "windows": 133,
-    "pods": 88
+    "windows": 139,
+    "pods": 152,
+    "tier": "A"
   },
   "h2s5a0": {
     "file": "datasets/h2s5a0_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa0",
     "hotel": 2,
     "sn": 5,
     "sa": 0,
-    "windows": 138,
-    "pods": 138
+    "windows": 145,
+    "pods": 174,
+    "tier": "A"
   },
   "h2s5a1": {
     "file": "datasets/h2s5a1_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 2,
     "sn": 5,
     "sa": 1,
-    "windows": 138,
-    "pods": 133
+    "windows": 142,
+    "pods": 174,
+    "tier": "A"
   },
   "h2s5a2": {
     "file": "datasets/h2s5a2_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 2,
     "sn": 5,
     "sa": 2,
-    "windows": 129,
-    "pods": 115
+    "windows": 142,
+    "pods": 175,
+    "tier": "A"
   },
   "h2s5a3": {
     "file": "datasets/h2s5a3_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa3",
     "hotel": 2,
     "sn": 5,
     "sa": 3,
-    "windows": 132,
-    "pods": 97
+    "windows": 138,
+    "pods": 176,
+    "tier": "A"
   },
   "h2s5a4": {
     "file": "datasets/h2s5a4_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa4",
     "hotel": 2,
     "sn": 5,
     "sa": 4,
-    "windows": 138,
-    "pods": 97
+    "windows": 140,
+    "pods": 177,
+    "tier": "A"
   },
   "h2s5a5": {
     "file": "datasets/h2s5a5_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 2,
     "sn": 5,
     "sa": 5,
-    "windows": 133,
-    "pods": 91
+    "windows": 139,
+    "pods": 178,
+    "tier": "A"
   },
   "h2s5a6": {
     "file": "datasets/h2s5a6_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 2,
     "sn": 5,
     "sa": 6,
-    "windows": 133,
-    "pods": 91
+    "windows": 139,
+    "pods": 179,
+    "tier": "A"
   },
   "h2s6a0": {
     "file": "datasets/h2s6a0_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa0",
     "hotel": 2,
     "sn": 6,
     "sa": 0,
-    "windows": 138,
-    "pods": 142
+    "windows": 145,
+    "pods": 201,
+    "tier": "A"
   },
   "h2s6a1": {
     "file": "datasets/h2s6a1_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 2,
     "sn": 6,
     "sa": 1,
-    "windows": 138,
-    "pods": 136
+    "windows": 142,
+    "pods": 201,
+    "tier": "A"
   },
   "h2s6a2": {
     "file": "datasets/h2s6a2_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 2,
     "sn": 6,
     "sa": 2,
-    "windows": 129,
-    "pods": 118
+    "windows": 142,
+    "pods": 202,
+    "tier": "A"
   },
   "h2s6a3": {
     "file": "datasets/h2s6a3_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa3",
     "hotel": 2,
     "sn": 6,
     "sa": 3,
-    "windows": 132,
-    "pods": 100
+    "windows": 138,
+    "pods": 203,
+    "tier": "A"
   },
   "h2s6a4": {
     "file": "datasets/h2s6a4_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa4",
     "hotel": 2,
     "sn": 6,
     "sa": 4,
-    "windows": 138,
-    "pods": 101
+    "windows": 140,
+    "pods": 204,
+    "tier": "A"
   },
   "h2s6a5": {
     "file": "datasets/h2s6a5_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 2,
     "sn": 6,
     "sa": 5,
-    "windows": 133,
-    "pods": 94
+    "windows": 139,
+    "pods": 205,
+    "tier": "A"
   },
   "h2s6a6": {
     "file": "datasets/h2s6a6_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 2,
     "sn": 6,
     "sa": 6,
-    "windows": 133,
-    "pods": 94
+    "windows": 139,
+    "pods": 206,
+    "tier": "A"
   },
   "h2s7a0": {
     "file": "datasets/h2s7a0_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa0",
     "hotel": 2,
     "sn": 7,
     "sa": 0,
-    "windows": 138,
-    "pods": 145
+    "windows": 145,
+    "pods": 228,
+    "tier": "A"
   },
   "h2s7a1": {
     "file": "datasets/h2s7a1_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 2,
     "sn": 7,
     "sa": 1,
-    "windows": 138,
-    "pods": 140
+    "windows": 142,
+    "pods": 228,
+    "tier": "A"
   },
   "h2s7a2": {
     "file": "datasets/h2s7a2_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 2,
     "sn": 7,
     "sa": 2,
-    "windows": 129,
-    "pods": 122
+    "windows": 142,
+    "pods": 229,
+    "tier": "A"
   },
   "h2s7a3": {
     "file": "datasets/h2s7a3_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa3",
     "hotel": 2,
     "sn": 7,
     "sa": 3,
-    "windows": 132,
-    "pods": 103
+    "windows": 138,
+    "pods": 230,
+    "tier": "A"
   },
   "h2s7a4": {
     "file": "datasets/h2s7a4_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa4",
     "hotel": 2,
     "sn": 7,
     "sa": 4,
-    "windows": 138,
-    "pods": 104
+    "windows": 140,
+    "pods": 231,
+    "tier": "A"
   },
   "h2s7a5": {
     "file": "datasets/h2s7a5_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 2,
     "sn": 7,
     "sa": 5,
-    "windows": 133,
-    "pods": 97
+    "windows": 139,
+    "pods": 232,
+    "tier": "A"
   },
   "h2s7a6": {
     "file": "datasets/h2s7a6_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 2,
     "sn": 7,
     "sa": 6,
-    "windows": 133,
-    "pods": 97
+    "windows": 139,
+    "pods": 233,
+    "tier": "A"
   },
   "h3s0a0": {
     "file": "datasets/h3s0a0_pod.csv",
@@ -1509,502 +1819,613 @@
     "sn": 0,
     "sa": 0,
     "windows": 142,
-    "pods": 57
+    "pods": 57,
+    "tier": "A"
   },
   "h3s0a1": {
     "file": "datasets/h3s0a1_pod.csv",
     "source": "generated",
+    "base": "hotel2_sa1",
     "hotel": 3,
     "sn": 0,
     "sa": 1,
-    "windows": 138,
-    "pods": 58
+    "windows": 143,
+    "pods": 58,
+    "tier": "A"
   },
   "h3s0a2": {
     "file": "datasets/h3s0a2_pod.csv",
     "source": "generated",
+    "base": "hotel2_sa2",
     "hotel": 3,
     "sn": 0,
     "sa": 2,
-    "windows": 138,
-    "pods": 59
+    "windows": 141,
+    "pods": 59,
+    "tier": "A"
   },
   "h3s0a3": {
     "file": "datasets/h3s0a3_pod.csv",
     "source": "generated",
+    "base": "hotel2_sa3",
     "hotel": 3,
     "sn": 0,
     "sa": 3,
-    "windows": 127,
-    "pods": 60
+    "windows": 141,
+    "pods": 60,
+    "tier": "A"
   },
   "h3s0a4": {
     "file": "datasets/h3s0a4_pod.csv",
     "source": "generated",
+    "base": "hotel2_sa4",
     "hotel": 3,
     "sn": 0,
     "sa": 4,
-    "windows": 134,
-    "pods": 53
+    "windows": 142,
+    "pods": 61,
+    "tier": "A"
   },
   "h3s0a5": {
     "file": "datasets/h3s0a5_pod.csv",
     "source": "generated",
+    "base": "hotel2_sa5",
     "hotel": 3,
     "sn": 0,
     "sa": 5,
-    "windows": 133,
-    "pods": 50
+    "windows": 147,
+    "pods": 62,
+    "tier": "A"
   },
   "h3s0a6": {
     "file": "datasets/h3s0a6_pod.csv",
     "source": "generated",
+    "base": "hotel2_sa6",
     "hotel": 3,
     "sn": 0,
     "sa": 6,
-    "windows": 138,
-    "pods": 52
+    "windows": 142,
+    "pods": 63,
+    "tier": "A"
   },
   "h3s1a0": {
     "file": "datasets/h3s1a0_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa0",
     "hotel": 3,
     "sn": 1,
     "sa": 0,
-    "windows": 138,
-    "pods": 84
+    "windows": 145,
+    "pods": 84,
+    "tier": "A"
   },
   "h3s1a1": {
     "file": "datasets/h3s1a1_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa1",
     "hotel": 3,
     "sn": 1,
     "sa": 1,
-    "windows": 138,
-    "pods": 85
+    "windows": 142,
+    "pods": 85,
+    "tier": "A"
   },
   "h3s1a2": {
     "file": "datasets/h3s1a2_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa2",
     "hotel": 3,
     "sn": 1,
     "sa": 2,
     "windows": 129,
-    "pods": 86
+    "pods": 86,
+    "tier": "A"
   },
   "h3s1a3": {
     "file": "datasets/h3s1a3_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa3",
     "hotel": 3,
     "sn": 1,
     "sa": 3,
     "windows": 132,
-    "pods": 80
+    "pods": 87,
+    "tier": "A"
   },
   "h3s1a4": {
     "file": "datasets/h3s1a4_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa4",
     "hotel": 3,
     "sn": 1,
     "sa": 4,
-    "windows": 138,
-    "pods": 79
+    "windows": 139,
+    "pods": 88,
+    "tier": "A"
   },
   "h3s1a5": {
     "file": "datasets/h3s1a5_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa5",
     "hotel": 3,
     "sn": 1,
     "sa": 5,
     "windows": 133,
-    "pods": 78
+    "pods": 89,
+    "tier": "A"
   },
   "h3s1a6": {
     "file": "datasets/h3s1a6_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa5",
     "hotel": 3,
     "sn": 1,
     "sa": 6,
     "windows": 133,
-    "pods": 78
+    "pods": 90,
+    "tier": "A"
   },
   "h3s2a0": {
     "file": "datasets/h3s2a0_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa0",
     "hotel": 3,
     "sn": 2,
     "sa": 0,
-    "windows": 138,
-    "pods": 111
+    "windows": 145,
+    "pods": 112,
+    "tier": "A"
   },
   "h3s2a1": {
     "file": "datasets/h3s2a1_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 3,
     "sn": 2,
     "sa": 1,
-    "windows": 138,
-    "pods": 112
+    "windows": 142,
+    "pods": 112,
+    "tier": "A"
   },
   "h3s2a2": {
     "file": "datasets/h3s2a2_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 3,
     "sn": 2,
     "sa": 2,
-    "windows": 129,
-    "pods": 104
+    "windows": 142,
+    "pods": 113,
+    "tier": "A"
   },
   "h3s2a3": {
     "file": "datasets/h3s2a3_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa3",
     "hotel": 3,
     "sn": 2,
     "sa": 3,
-    "windows": 132,
-    "pods": 86
+    "windows": 138,
+    "pods": 114,
+    "tier": "A"
   },
   "h3s2a4": {
     "file": "datasets/h3s2a4_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa4",
     "hotel": 3,
     "sn": 2,
     "sa": 4,
-    "windows": 138,
-    "pods": 85
+    "windows": 140,
+    "pods": 115,
+    "tier": "A"
   },
   "h3s2a5": {
     "file": "datasets/h3s2a5_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 3,
     "sn": 2,
     "sa": 5,
-    "windows": 133,
-    "pods": 82
+    "windows": 139,
+    "pods": 116,
+    "tier": "A"
   },
   "h3s2a6": {
     "file": "datasets/h3s2a6_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 3,
     "sn": 2,
     "sa": 6,
-    "windows": 133,
-    "pods": 82
+    "windows": 139,
+    "pods": 117,
+    "tier": "A"
   },
   "h3s3a0": {
     "file": "datasets/h3s3a0_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa0",
     "hotel": 3,
     "sn": 3,
     "sa": 0,
-    "windows": 138,
-    "pods": 125
+    "windows": 145,
+    "pods": 139,
+    "tier": "A"
   },
   "h3s3a1": {
     "file": "datasets/h3s3a1_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 3,
     "sn": 3,
     "sa": 1,
-    "windows": 138,
-    "pods": 122
+    "windows": 142,
+    "pods": 139,
+    "tier": "A"
   },
   "h3s3a2": {
     "file": "datasets/h3s3a2_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 3,
     "sn": 3,
     "sa": 2,
-    "windows": 129,
-    "pods": 110
+    "windows": 142,
+    "pods": 140,
+    "tier": "A"
   },
   "h3s3a3": {
     "file": "datasets/h3s3a3_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa3",
     "hotel": 3,
     "sn": 3,
     "sa": 3,
-    "windows": 132,
-    "pods": 89
+    "windows": 138,
+    "pods": 141,
+    "tier": "A"
   },
   "h3s3a4": {
     "file": "datasets/h3s3a4_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa4",
     "hotel": 3,
     "sn": 3,
     "sa": 4,
-    "windows": 138,
-    "pods": 89
+    "windows": 140,
+    "pods": 142,
+    "tier": "A"
   },
   "h3s3a5": {
     "file": "datasets/h3s3a5_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 3,
     "sn": 3,
     "sa": 5,
-    "windows": 133,
-    "pods": 85
+    "windows": 139,
+    "pods": 143,
+    "tier": "A"
   },
   "h3s3a6": {
     "file": "datasets/h3s3a6_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 3,
     "sn": 3,
     "sa": 6,
-    "windows": 133,
-    "pods": 85
+    "windows": 139,
+    "pods": 144,
+    "tier": "A"
   },
   "h3s4a0": {
     "file": "datasets/h3s4a0_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa0",
     "hotel": 3,
     "sn": 4,
     "sa": 0,
-    "windows": 138,
-    "pods": 132
+    "windows": 145,
+    "pods": 166,
+    "tier": "A"
   },
   "h3s4a1": {
     "file": "datasets/h3s4a1_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 3,
     "sn": 4,
     "sa": 1,
-    "windows": 138,
-    "pods": 127
+    "windows": 142,
+    "pods": 166,
+    "tier": "A"
   },
   "h3s4a2": {
     "file": "datasets/h3s4a2_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 3,
     "sn": 4,
     "sa": 2,
-    "windows": 129,
-    "pods": 114
+    "windows": 142,
+    "pods": 167,
+    "tier": "A"
   },
   "h3s4a3": {
     "file": "datasets/h3s4a3_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa3",
     "hotel": 3,
     "sn": 4,
     "sa": 3,
-    "windows": 132,
-    "pods": 92
+    "windows": 138,
+    "pods": 168,
+    "tier": "A"
   },
   "h3s4a4": {
     "file": "datasets/h3s4a4_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa4",
     "hotel": 3,
     "sn": 4,
     "sa": 4,
-    "windows": 138,
-    "pods": 92
+    "windows": 140,
+    "pods": 169,
+    "tier": "A"
   },
   "h3s4a5": {
     "file": "datasets/h3s4a5_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 3,
     "sn": 4,
     "sa": 5,
-    "windows": 133,
-    "pods": 88
+    "windows": 139,
+    "pods": 170,
+    "tier": "A"
   },
   "h3s4a6": {
     "file": "datasets/h3s4a6_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 3,
     "sn": 4,
     "sa": 6,
-    "windows": 133,
-    "pods": 88
+    "windows": 139,
+    "pods": 171,
+    "tier": "A"
   },
   "h3s5a0": {
     "file": "datasets/h3s5a0_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa0",
     "hotel": 3,
     "sn": 5,
     "sa": 0,
-    "windows": 138,
-    "pods": 136
+    "windows": 145,
+    "pods": 193,
+    "tier": "A"
   },
   "h3s5a1": {
     "file": "datasets/h3s5a1_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 3,
     "sn": 5,
     "sa": 1,
-    "windows": 138,
-    "pods": 131
+    "windows": 142,
+    "pods": 193,
+    "tier": "A"
   },
   "h3s5a2": {
     "file": "datasets/h3s5a2_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 3,
     "sn": 5,
     "sa": 2,
-    "windows": 129,
-    "pods": 117
+    "windows": 142,
+    "pods": 194,
+    "tier": "A"
   },
   "h3s5a3": {
     "file": "datasets/h3s5a3_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa3",
     "hotel": 3,
     "sn": 5,
     "sa": 3,
-    "windows": 132,
-    "pods": 94
+    "windows": 138,
+    "pods": 195,
+    "tier": "A"
   },
   "h3s5a4": {
     "file": "datasets/h3s5a4_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa4",
     "hotel": 3,
     "sn": 5,
     "sa": 4,
-    "windows": 138,
-    "pods": 96
+    "windows": 140,
+    "pods": 196,
+    "tier": "A"
   },
   "h3s5a5": {
     "file": "datasets/h3s5a5_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 3,
     "sn": 5,
     "sa": 5,
-    "windows": 133,
-    "pods": 91
+    "windows": 139,
+    "pods": 197,
+    "tier": "A"
   },
   "h3s5a6": {
     "file": "datasets/h3s5a6_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 3,
     "sn": 5,
     "sa": 6,
-    "windows": 133,
-    "pods": 91
+    "windows": 139,
+    "pods": 198,
+    "tier": "A"
   },
   "h3s6a0": {
     "file": "datasets/h3s6a0_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa0",
     "hotel": 3,
     "sn": 6,
     "sa": 0,
-    "windows": 138,
-    "pods": 140
+    "windows": 145,
+    "pods": 220,
+    "tier": "A"
   },
   "h3s6a1": {
     "file": "datasets/h3s6a1_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 3,
     "sn": 6,
     "sa": 1,
-    "windows": 138,
-    "pods": 135
+    "windows": 142,
+    "pods": 220,
+    "tier": "A"
   },
   "h3s6a2": {
     "file": "datasets/h3s6a2_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 3,
     "sn": 6,
     "sa": 2,
-    "windows": 129,
-    "pods": 120
+    "windows": 142,
+    "pods": 221,
+    "tier": "A"
   },
   "h3s6a3": {
     "file": "datasets/h3s6a3_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa3",
     "hotel": 3,
     "sn": 6,
     "sa": 3,
-    "windows": 132,
-    "pods": 97
+    "windows": 138,
+    "pods": 222,
+    "tier": "A"
   },
   "h3s6a4": {
     "file": "datasets/h3s6a4_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa4",
     "hotel": 3,
     "sn": 6,
     "sa": 4,
-    "windows": 138,
-    "pods": 100
+    "windows": 140,
+    "pods": 223,
+    "tier": "A"
   },
   "h3s6a5": {
     "file": "datasets/h3s6a5_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 3,
     "sn": 6,
     "sa": 5,
-    "windows": 133,
-    "pods": 93
+    "windows": 139,
+    "pods": 224,
+    "tier": "A"
   },
   "h3s6a6": {
     "file": "datasets/h3s6a6_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 3,
     "sn": 6,
     "sa": 6,
-    "windows": 133,
-    "pods": 93
+    "windows": 139,
+    "pods": 225,
+    "tier": "A"
   },
   "h3s7a0": {
     "file": "datasets/h3s7a0_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa0",
     "hotel": 3,
     "sn": 7,
     "sa": 0,
-    "windows": 138,
-    "pods": 143
+    "windows": 145,
+    "pods": 247,
+    "tier": "A"
   },
   "h3s7a1": {
     "file": "datasets/h3s7a1_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 3,
     "sn": 7,
     "sa": 1,
-    "windows": 138,
-    "pods": 139
+    "windows": 142,
+    "pods": 247,
+    "tier": "A"
   },
   "h3s7a2": {
     "file": "datasets/h3s7a2_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 3,
     "sn": 7,
     "sa": 2,
-    "windows": 129,
-    "pods": 123
+    "windows": 142,
+    "pods": 248,
+    "tier": "A"
   },
   "h3s7a3": {
     "file": "datasets/h3s7a3_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa3",
     "hotel": 3,
     "sn": 7,
     "sa": 3,
-    "windows": 132,
-    "pods": 100
+    "windows": 138,
+    "pods": 249,
+    "tier": "A"
   },
   "h3s7a4": {
     "file": "datasets/h3s7a4_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa4",
     "hotel": 3,
     "sn": 7,
     "sa": 4,
-    "windows": 138,
-    "pods": 103
+    "windows": 140,
+    "pods": 250,
+    "tier": "A"
   },
   "h3s7a5": {
     "file": "datasets/h3s7a5_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 3,
     "sn": 7,
     "sa": 5,
-    "windows": 133,
-    "pods": 96
+    "windows": 139,
+    "pods": 251,
+    "tier": "A"
   },
   "h3s7a6": {
     "file": "datasets/h3s7a6_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 3,
     "sn": 7,
     "sa": 6,
-    "windows": 133,
-    "pods": 96
+    "windows": 139,
+    "pods": 252,
+    "tier": "A"
   },
   "h4s0a0": {
     "file": "datasets/h4s0a0_pod.csv",
@@ -2013,502 +2434,613 @@
     "sn": 0,
     "sa": 0,
     "windows": 142,
-    "pods": 76
+    "pods": 76,
+    "tier": "A"
   },
   "h4s0a1": {
     "file": "datasets/h4s0a1_pod.csv",
     "source": "generated",
+    "base": "hotel2_sa1",
     "hotel": 4,
     "sn": 0,
     "sa": 1,
-    "windows": 138,
-    "pods": 77
+    "windows": 143,
+    "pods": 77,
+    "tier": "A"
   },
   "h4s0a2": {
     "file": "datasets/h4s0a2_pod.csv",
     "source": "generated",
+    "base": "hotel2_sa2",
     "hotel": 4,
     "sn": 0,
     "sa": 2,
-    "windows": 138,
-    "pods": 78
+    "windows": 141,
+    "pods": 78,
+    "tier": "A"
   },
   "h4s0a3": {
     "file": "datasets/h4s0a3_pod.csv",
     "source": "generated",
+    "base": "hotel2_sa3",
     "hotel": 4,
     "sn": 0,
     "sa": 3,
-    "windows": 127,
-    "pods": 78
+    "windows": 141,
+    "pods": 79,
+    "tier": "A"
   },
   "h4s0a4": {
     "file": "datasets/h4s0a4_pod.csv",
     "source": "generated",
+    "base": "hotel2_sa4",
     "hotel": 4,
     "sn": 0,
     "sa": 4,
-    "windows": 134,
-    "pods": 62
+    "windows": 142,
+    "pods": 80,
+    "tier": "A"
   },
   "h4s0a5": {
     "file": "datasets/h4s0a5_pod.csv",
     "source": "generated",
+    "base": "hotel2_sa5",
     "hotel": 4,
     "sn": 0,
     "sa": 5,
-    "windows": 133,
-    "pods": 54
+    "windows": 147,
+    "pods": 81,
+    "tier": "A"
   },
   "h4s0a6": {
     "file": "datasets/h4s0a6_pod.csv",
     "source": "generated",
+    "base": "hotel2_sa6",
     "hotel": 4,
     "sn": 0,
     "sa": 6,
-    "windows": 138,
-    "pods": 56
+    "windows": 142,
+    "pods": 82,
+    "tier": "A"
   },
   "h4s1a0": {
     "file": "datasets/h4s1a0_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa0",
     "hotel": 4,
     "sn": 1,
     "sa": 0,
-    "windows": 138,
-    "pods": 103
+    "windows": 145,
+    "pods": 103,
+    "tier": "A"
   },
   "h4s1a1": {
     "file": "datasets/h4s1a1_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa1",
     "hotel": 4,
     "sn": 1,
     "sa": 1,
-    "windows": 138,
-    "pods": 104
+    "windows": 142,
+    "pods": 104,
+    "tier": "A"
   },
   "h4s1a2": {
     "file": "datasets/h4s1a2_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa2",
     "hotel": 4,
     "sn": 1,
     "sa": 2,
     "windows": 129,
-    "pods": 99
+    "pods": 105,
+    "tier": "A"
   },
   "h4s1a3": {
     "file": "datasets/h4s1a3_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa3",
     "hotel": 4,
     "sn": 1,
     "sa": 3,
     "windows": 132,
-    "pods": 84
+    "pods": 106,
+    "tier": "A"
   },
   "h4s1a4": {
     "file": "datasets/h4s1a4_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa4",
     "hotel": 4,
     "sn": 1,
     "sa": 4,
-    "windows": 138,
-    "pods": 83
+    "windows": 139,
+    "pods": 107,
+    "tier": "A"
   },
   "h4s1a5": {
     "file": "datasets/h4s1a5_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa5",
     "hotel": 4,
     "sn": 1,
     "sa": 5,
     "windows": 133,
-    "pods": 81
+    "pods": 108,
+    "tier": "A"
   },
   "h4s1a6": {
     "file": "datasets/h4s1a6_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa5",
     "hotel": 4,
     "sn": 1,
     "sa": 6,
     "windows": 133,
-    "pods": 81
+    "pods": 109,
+    "tier": "A"
   },
   "h4s2a0": {
     "file": "datasets/h4s2a0_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa0",
     "hotel": 4,
     "sn": 2,
     "sa": 0,
-    "windows": 138,
-    "pods": 119
+    "windows": 145,
+    "pods": 131,
+    "tier": "A"
   },
   "h4s2a1": {
     "file": "datasets/h4s2a1_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 4,
     "sn": 2,
     "sa": 1,
-    "windows": 138,
-    "pods": 115
+    "windows": 142,
+    "pods": 131,
+    "tier": "A"
   },
   "h4s2a2": {
     "file": "datasets/h4s2a2_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 4,
     "sn": 2,
     "sa": 2,
-    "windows": 129,
-    "pods": 104
+    "windows": 142,
+    "pods": 132,
+    "tier": "A"
   },
   "h4s2a3": {
     "file": "datasets/h4s2a3_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa3",
     "hotel": 4,
     "sn": 2,
     "sa": 3,
-    "windows": 132,
-    "pods": 87
+    "windows": 138,
+    "pods": 133,
+    "tier": "A"
   },
   "h4s2a4": {
     "file": "datasets/h4s2a4_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa4",
     "hotel": 4,
     "sn": 2,
     "sa": 4,
-    "windows": 138,
-    "pods": 88
+    "windows": 140,
+    "pods": 134,
+    "tier": "A"
   },
   "h4s2a5": {
     "file": "datasets/h4s2a5_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 4,
     "sn": 2,
     "sa": 5,
-    "windows": 133,
-    "pods": 83
+    "windows": 139,
+    "pods": 135,
+    "tier": "A"
   },
   "h4s2a6": {
     "file": "datasets/h4s2a6_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 4,
     "sn": 2,
     "sa": 6,
-    "windows": 133,
-    "pods": 84
+    "windows": 139,
+    "pods": 136,
+    "tier": "A"
   },
   "h4s3a0": {
     "file": "datasets/h4s3a0_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa0",
     "hotel": 4,
     "sn": 3,
     "sa": 0,
-    "windows": 138,
-    "pods": 126
+    "windows": 145,
+    "pods": 158,
+    "tier": "A"
   },
   "h4s3a1": {
     "file": "datasets/h4s3a1_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 4,
     "sn": 3,
     "sa": 1,
-    "windows": 138,
-    "pods": 119
+    "windows": 142,
+    "pods": 158,
+    "tier": "A"
   },
   "h4s3a2": {
     "file": "datasets/h4s3a2_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 4,
     "sn": 3,
     "sa": 2,
-    "windows": 129,
-    "pods": 107
+    "windows": 142,
+    "pods": 159,
+    "tier": "A"
   },
   "h4s3a3": {
     "file": "datasets/h4s3a3_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa3",
     "hotel": 4,
     "sn": 3,
     "sa": 3,
-    "windows": 132,
-    "pods": 89
+    "windows": 138,
+    "pods": 160,
+    "tier": "A"
   },
   "h4s3a4": {
     "file": "datasets/h4s3a4_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa4",
     "hotel": 4,
     "sn": 3,
     "sa": 4,
-    "windows": 138,
-    "pods": 91
+    "windows": 140,
+    "pods": 161,
+    "tier": "A"
   },
   "h4s3a5": {
     "file": "datasets/h4s3a5_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 4,
     "sn": 3,
     "sa": 5,
-    "windows": 133,
-    "pods": 86
+    "windows": 139,
+    "pods": 162,
+    "tier": "A"
   },
   "h4s3a6": {
     "file": "datasets/h4s3a6_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 4,
     "sn": 3,
     "sa": 6,
-    "windows": 133,
-    "pods": 86
+    "windows": 139,
+    "pods": 163,
+    "tier": "A"
   },
   "h4s4a0": {
     "file": "datasets/h4s4a0_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa0",
     "hotel": 4,
     "sn": 4,
     "sa": 0,
-    "windows": 138,
-    "pods": 131
+    "windows": 145,
+    "pods": 185,
+    "tier": "A"
   },
   "h4s4a1": {
     "file": "datasets/h4s4a1_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 4,
     "sn": 4,
     "sa": 1,
-    "windows": 138,
-    "pods": 123
+    "windows": 142,
+    "pods": 185,
+    "tier": "A"
   },
   "h4s4a2": {
     "file": "datasets/h4s4a2_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 4,
     "sn": 4,
     "sa": 2,
-    "windows": 129,
-    "pods": 109
+    "windows": 142,
+    "pods": 186,
+    "tier": "A"
   },
   "h4s4a3": {
     "file": "datasets/h4s4a3_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa3",
     "hotel": 4,
     "sn": 4,
     "sa": 3,
-    "windows": 132,
-    "pods": 92
+    "windows": 138,
+    "pods": 187,
+    "tier": "A"
   },
   "h4s4a4": {
     "file": "datasets/h4s4a4_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa4",
     "hotel": 4,
     "sn": 4,
     "sa": 4,
-    "windows": 138,
-    "pods": 95
+    "windows": 140,
+    "pods": 188,
+    "tier": "A"
   },
   "h4s4a5": {
     "file": "datasets/h4s4a5_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 4,
     "sn": 4,
     "sa": 5,
-    "windows": 133,
-    "pods": 89
+    "windows": 139,
+    "pods": 189,
+    "tier": "A"
   },
   "h4s4a6": {
     "file": "datasets/h4s4a6_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 4,
     "sn": 4,
     "sa": 6,
-    "windows": 133,
-    "pods": 89
+    "windows": 139,
+    "pods": 190,
+    "tier": "A"
   },
   "h4s5a0": {
     "file": "datasets/h4s5a0_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa0",
     "hotel": 4,
     "sn": 5,
     "sa": 0,
-    "windows": 138,
-    "pods": 136
+    "windows": 145,
+    "pods": 212,
+    "tier": "A"
   },
   "h4s5a1": {
     "file": "datasets/h4s5a1_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 4,
     "sn": 5,
     "sa": 1,
-    "windows": 138,
-    "pods": 127
+    "windows": 142,
+    "pods": 212,
+    "tier": "A"
   },
   "h4s5a2": {
     "file": "datasets/h4s5a2_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 4,
     "sn": 5,
     "sa": 2,
-    "windows": 129,
-    "pods": 111
+    "windows": 142,
+    "pods": 213,
+    "tier": "A"
   },
   "h4s5a3": {
     "file": "datasets/h4s5a3_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa3",
     "hotel": 4,
     "sn": 5,
     "sa": 3,
-    "windows": 132,
-    "pods": 94
+    "windows": 138,
+    "pods": 214,
+    "tier": "A"
   },
   "h4s5a4": {
     "file": "datasets/h4s5a4_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa4",
     "hotel": 4,
     "sn": 5,
     "sa": 4,
-    "windows": 138,
-    "pods": 98
+    "windows": 140,
+    "pods": 215,
+    "tier": "A"
   },
   "h4s5a5": {
     "file": "datasets/h4s5a5_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 4,
     "sn": 5,
     "sa": 5,
-    "windows": 133,
-    "pods": 91
+    "windows": 139,
+    "pods": 216,
+    "tier": "A"
   },
   "h4s5a6": {
     "file": "datasets/h4s5a6_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 4,
     "sn": 5,
     "sa": 6,
-    "windows": 133,
-    "pods": 91
+    "windows": 139,
+    "pods": 217,
+    "tier": "A"
   },
   "h4s6a0": {
     "file": "datasets/h4s6a0_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa0",
     "hotel": 4,
     "sn": 6,
     "sa": 0,
-    "windows": 138,
-    "pods": 139
+    "windows": 145,
+    "pods": 239,
+    "tier": "A"
   },
   "h4s6a1": {
     "file": "datasets/h4s6a1_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 4,
     "sn": 6,
     "sa": 1,
-    "windows": 138,
-    "pods": 130
+    "windows": 142,
+    "pods": 239,
+    "tier": "A"
   },
   "h4s6a2": {
     "file": "datasets/h4s6a2_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 4,
     "sn": 6,
     "sa": 2,
-    "windows": 129,
-    "pods": 113
+    "windows": 142,
+    "pods": 240,
+    "tier": "A"
   },
   "h4s6a3": {
     "file": "datasets/h4s6a3_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa3",
     "hotel": 4,
     "sn": 6,
     "sa": 3,
-    "windows": 132,
-    "pods": 97
+    "windows": 138,
+    "pods": 241,
+    "tier": "A"
   },
   "h4s6a4": {
     "file": "datasets/h4s6a4_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa4",
     "hotel": 4,
     "sn": 6,
     "sa": 4,
-    "windows": 138,
-    "pods": 102
+    "windows": 140,
+    "pods": 242,
+    "tier": "A"
   },
   "h4s6a5": {
     "file": "datasets/h4s6a5_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 4,
     "sn": 6,
     "sa": 5,
-    "windows": 133,
-    "pods": 94
+    "windows": 139,
+    "pods": 243,
+    "tier": "A"
   },
   "h4s6a6": {
     "file": "datasets/h4s6a6_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 4,
     "sn": 6,
     "sa": 6,
-    "windows": 133,
-    "pods": 94
+    "windows": 139,
+    "pods": 244,
+    "tier": "A"
   },
   "h4s7a0": {
     "file": "datasets/h4s7a0_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa0",
     "hotel": 4,
     "sn": 7,
     "sa": 0,
-    "windows": 138,
-    "pods": 143
+    "windows": 145,
+    "pods": 266,
+    "tier": "A"
   },
   "h4s7a1": {
     "file": "datasets/h4s7a1_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 4,
     "sn": 7,
     "sa": 1,
-    "windows": 138,
-    "pods": 134
+    "windows": 142,
+    "pods": 266,
+    "tier": "A"
   },
   "h4s7a2": {
     "file": "datasets/h4s7a2_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 4,
     "sn": 7,
     "sa": 2,
-    "windows": 129,
-    "pods": 115
+    "windows": 142,
+    "pods": 267,
+    "tier": "A"
   },
   "h4s7a3": {
     "file": "datasets/h4s7a3_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa3",
     "hotel": 4,
     "sn": 7,
     "sa": 3,
-    "windows": 132,
-    "pods": 99
+    "windows": 138,
+    "pods": 268,
+    "tier": "A"
   },
   "h4s7a4": {
     "file": "datasets/h4s7a4_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa4",
     "hotel": 4,
     "sn": 7,
     "sa": 4,
-    "windows": 138,
-    "pods": 105
+    "windows": 140,
+    "pods": 269,
+    "tier": "A"
   },
   "h4s7a5": {
     "file": "datasets/h4s7a5_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 4,
     "sn": 7,
     "sa": 5,
-    "windows": 133,
-    "pods": 97
+    "windows": 139,
+    "pods": 270,
+    "tier": "A"
   },
   "h4s7a6": {
     "file": "datasets/h4s7a6_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 4,
     "sn": 7,
     "sa": 6,
-    "windows": 133,
-    "pods": 97
+    "windows": 139,
+    "pods": 271,
+    "tier": "A"
   },
   "h5s0a0": {
     "file": "datasets/h5s0a0_pod.csv",
@@ -2517,502 +3049,613 @@
     "sn": 0,
     "sa": 0,
     "windows": 142,
-    "pods": 95
+    "pods": 95,
+    "tier": "A"
   },
   "h5s0a1": {
     "file": "datasets/h5s0a1_pod.csv",
     "source": "generated",
+    "base": "hotel2_sa1",
     "hotel": 5,
     "sn": 0,
     "sa": 1,
-    "windows": 138,
-    "pods": 96
+    "windows": 143,
+    "pods": 96,
+    "tier": "A"
   },
   "h5s0a2": {
     "file": "datasets/h5s0a2_pod.csv",
     "source": "generated",
+    "base": "hotel2_sa2",
     "hotel": 5,
     "sn": 0,
     "sa": 2,
-    "windows": 138,
-    "pods": 97
+    "windows": 141,
+    "pods": 97,
+    "tier": "A"
   },
   "h5s0a3": {
     "file": "datasets/h5s0a3_pod.csv",
     "source": "generated",
+    "base": "hotel2_sa3",
     "hotel": 5,
     "sn": 0,
     "sa": 3,
-    "windows": 127,
-    "pods": 88
+    "windows": 141,
+    "pods": 98,
+    "tier": "A"
   },
   "h5s0a4": {
     "file": "datasets/h5s0a4_pod.csv",
     "source": "generated",
+    "base": "hotel2_sa4",
     "hotel": 5,
     "sn": 0,
     "sa": 4,
-    "windows": 134,
-    "pods": 66
+    "windows": 142,
+    "pods": 99,
+    "tier": "A"
   },
   "h5s0a5": {
     "file": "datasets/h5s0a5_pod.csv",
     "source": "generated",
+    "base": "hotel2_sa5",
     "hotel": 5,
     "sn": 0,
     "sa": 5,
-    "windows": 133,
-    "pods": 57
+    "windows": 147,
+    "pods": 100,
+    "tier": "A"
   },
   "h5s0a6": {
     "file": "datasets/h5s0a6_pod.csv",
     "source": "generated",
+    "base": "hotel2_sa6",
     "hotel": 5,
     "sn": 0,
     "sa": 6,
-    "windows": 138,
-    "pods": 59
+    "windows": 142,
+    "pods": 101,
+    "tier": "A"
   },
   "h5s1a0": {
     "file": "datasets/h5s1a0_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa0",
     "hotel": 5,
     "sn": 1,
     "sa": 0,
-    "windows": 138,
-    "pods": 114
+    "windows": 145,
+    "pods": 122,
+    "tier": "A"
   },
   "h5s1a1": {
     "file": "datasets/h5s1a1_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa1",
     "hotel": 5,
     "sn": 1,
     "sa": 1,
-    "windows": 138,
-    "pods": 111
+    "windows": 142,
+    "pods": 123,
+    "tier": "A"
   },
   "h5s1a2": {
     "file": "datasets/h5s1a2_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa2",
     "hotel": 5,
     "sn": 1,
     "sa": 2,
     "windows": 129,
-    "pods": 102
+    "pods": 124,
+    "tier": "A"
   },
   "h5s1a3": {
     "file": "datasets/h5s1a3_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa3",
     "hotel": 5,
     "sn": 1,
     "sa": 3,
     "windows": 132,
-    "pods": 86
+    "pods": 125,
+    "tier": "A"
   },
   "h5s1a4": {
     "file": "datasets/h5s1a4_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa4",
     "hotel": 5,
     "sn": 1,
     "sa": 4,
-    "windows": 138,
-    "pods": 86
+    "windows": 139,
+    "pods": 126,
+    "tier": "A"
   },
   "h5s1a5": {
     "file": "datasets/h5s1a5_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa5",
     "hotel": 5,
     "sn": 1,
     "sa": 5,
     "windows": 133,
-    "pods": 83
+    "pods": 127,
+    "tier": "A"
   },
   "h5s1a6": {
     "file": "datasets/h5s1a6_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa5",
     "hotel": 5,
     "sn": 1,
     "sa": 6,
     "windows": 133,
-    "pods": 83
+    "pods": 128,
+    "tier": "A"
   },
   "h5s2a0": {
     "file": "datasets/h5s2a0_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa0",
     "hotel": 5,
     "sn": 2,
     "sa": 0,
-    "windows": 138,
-    "pods": 121
+    "windows": 145,
+    "pods": 150,
+    "tier": "A"
   },
   "h5s2a1": {
     "file": "datasets/h5s2a1_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 5,
     "sn": 2,
     "sa": 1,
-    "windows": 138,
-    "pods": 117
+    "windows": 142,
+    "pods": 150,
+    "tier": "A"
   },
   "h5s2a2": {
     "file": "datasets/h5s2a2_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 5,
     "sn": 2,
     "sa": 2,
-    "windows": 129,
-    "pods": 105
+    "windows": 142,
+    "pods": 151,
+    "tier": "A"
   },
   "h5s2a3": {
     "file": "datasets/h5s2a3_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa3",
     "hotel": 5,
     "sn": 2,
     "sa": 3,
-    "windows": 132,
-    "pods": 89
+    "windows": 138,
+    "pods": 152,
+    "tier": "A"
   },
   "h5s2a4": {
     "file": "datasets/h5s2a4_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa4",
     "hotel": 5,
     "sn": 2,
     "sa": 4,
-    "windows": 138,
-    "pods": 90
+    "windows": 140,
+    "pods": 153,
+    "tier": "A"
   },
   "h5s2a5": {
     "file": "datasets/h5s2a5_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 5,
     "sn": 2,
     "sa": 5,
-    "windows": 133,
-    "pods": 85
+    "windows": 139,
+    "pods": 154,
+    "tier": "A"
   },
   "h5s2a6": {
     "file": "datasets/h5s2a6_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 5,
     "sn": 2,
     "sa": 6,
-    "windows": 133,
-    "pods": 86
+    "windows": 139,
+    "pods": 155,
+    "tier": "A"
   },
   "h5s3a0": {
     "file": "datasets/h5s3a0_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa0",
     "hotel": 5,
     "sn": 3,
     "sa": 0,
-    "windows": 138,
-    "pods": 127
+    "windows": 145,
+    "pods": 177,
+    "tier": "A"
   },
   "h5s3a1": {
     "file": "datasets/h5s3a1_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 5,
     "sn": 3,
     "sa": 1,
-    "windows": 138,
-    "pods": 122
+    "windows": 142,
+    "pods": 177,
+    "tier": "A"
   },
   "h5s3a2": {
     "file": "datasets/h5s3a2_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 5,
     "sn": 3,
     "sa": 2,
-    "windows": 129,
-    "pods": 107
+    "windows": 142,
+    "pods": 178,
+    "tier": "A"
   },
   "h5s3a3": {
     "file": "datasets/h5s3a3_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa3",
     "hotel": 5,
     "sn": 3,
     "sa": 3,
-    "windows": 132,
-    "pods": 91
+    "windows": 138,
+    "pods": 179,
+    "tier": "A"
   },
   "h5s3a4": {
     "file": "datasets/h5s3a4_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa4",
     "hotel": 5,
     "sn": 3,
     "sa": 4,
-    "windows": 138,
-    "pods": 94
+    "windows": 140,
+    "pods": 180,
+    "tier": "A"
   },
   "h5s3a5": {
     "file": "datasets/h5s3a5_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 5,
     "sn": 3,
     "sa": 5,
-    "windows": 133,
-    "pods": 88
+    "windows": 139,
+    "pods": 181,
+    "tier": "A"
   },
   "h5s3a6": {
     "file": "datasets/h5s3a6_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 5,
     "sn": 3,
     "sa": 6,
-    "windows": 133,
-    "pods": 88
+    "windows": 139,
+    "pods": 182,
+    "tier": "A"
   },
   "h5s4a0": {
     "file": "datasets/h5s4a0_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa0",
     "hotel": 5,
     "sn": 4,
     "sa": 0,
-    "windows": 138,
-    "pods": 132
+    "windows": 145,
+    "pods": 204,
+    "tier": "A"
   },
   "h5s4a1": {
     "file": "datasets/h5s4a1_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 5,
     "sn": 4,
     "sa": 1,
-    "windows": 138,
-    "pods": 126
+    "windows": 142,
+    "pods": 204,
+    "tier": "A"
   },
   "h5s4a2": {
     "file": "datasets/h5s4a2_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 5,
     "sn": 4,
     "sa": 2,
-    "windows": 129,
-    "pods": 110
+    "windows": 142,
+    "pods": 205,
+    "tier": "A"
   },
   "h5s4a3": {
     "file": "datasets/h5s4a3_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa3",
     "hotel": 5,
     "sn": 4,
     "sa": 3,
-    "windows": 132,
-    "pods": 94
+    "windows": 138,
+    "pods": 206,
+    "tier": "A"
   },
   "h5s4a4": {
     "file": "datasets/h5s4a4_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa4",
     "hotel": 5,
     "sn": 4,
     "sa": 4,
-    "windows": 138,
-    "pods": 98
+    "windows": 140,
+    "pods": 207,
+    "tier": "A"
   },
   "h5s4a5": {
     "file": "datasets/h5s4a5_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 5,
     "sn": 4,
     "sa": 5,
-    "windows": 133,
-    "pods": 91
+    "windows": 139,
+    "pods": 208,
+    "tier": "A"
   },
   "h5s4a6": {
     "file": "datasets/h5s4a6_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 5,
     "sn": 4,
     "sa": 6,
-    "windows": 133,
-    "pods": 91
+    "windows": 139,
+    "pods": 209,
+    "tier": "A"
   },
   "h5s5a0": {
     "file": "datasets/h5s5a0_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa0",
     "hotel": 5,
     "sn": 5,
     "sa": 0,
-    "windows": 138,
-    "pods": 136
+    "windows": 145,
+    "pods": 231,
+    "tier": "A"
   },
   "h5s5a1": {
     "file": "datasets/h5s5a1_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 5,
     "sn": 5,
     "sa": 1,
-    "windows": 138,
-    "pods": 129
+    "windows": 142,
+    "pods": 231,
+    "tier": "A"
   },
   "h5s5a2": {
     "file": "datasets/h5s5a2_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 5,
     "sn": 5,
     "sa": 2,
-    "windows": 129,
-    "pods": 112
+    "windows": 142,
+    "pods": 232,
+    "tier": "A"
   },
   "h5s5a3": {
     "file": "datasets/h5s5a3_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa3",
     "hotel": 5,
     "sn": 5,
     "sa": 3,
-    "windows": 132,
-    "pods": 96
+    "windows": 138,
+    "pods": 233,
+    "tier": "A"
   },
   "h5s5a4": {
     "file": "datasets/h5s5a4_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa4",
     "hotel": 5,
     "sn": 5,
     "sa": 4,
-    "windows": 138,
-    "pods": 101
+    "windows": 140,
+    "pods": 234,
+    "tier": "A"
   },
   "h5s5a5": {
     "file": "datasets/h5s5a5_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 5,
     "sn": 5,
     "sa": 5,
-    "windows": 133,
-    "pods": 93
+    "windows": 139,
+    "pods": 235,
+    "tier": "A"
   },
   "h5s5a6": {
     "file": "datasets/h5s5a6_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 5,
     "sn": 5,
     "sa": 6,
-    "windows": 133,
-    "pods": 93
+    "windows": 139,
+    "pods": 236,
+    "tier": "A"
   },
   "h5s6a0": {
     "file": "datasets/h5s6a0_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa0",
     "hotel": 5,
     "sn": 6,
     "sa": 0,
-    "windows": 138,
-    "pods": 139
+    "windows": 145,
+    "pods": 258,
+    "tier": "A"
   },
   "h5s6a1": {
     "file": "datasets/h5s6a1_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 5,
     "sn": 6,
     "sa": 1,
-    "windows": 138,
-    "pods": 133
+    "windows": 142,
+    "pods": 258,
+    "tier": "A"
   },
   "h5s6a2": {
     "file": "datasets/h5s6a2_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 5,
     "sn": 6,
     "sa": 2,
-    "windows": 129,
-    "pods": 114
+    "windows": 142,
+    "pods": 259,
+    "tier": "A"
   },
   "h5s6a3": {
     "file": "datasets/h5s6a3_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa3",
     "hotel": 5,
     "sn": 6,
     "sa": 3,
-    "windows": 132,
-    "pods": 98
+    "windows": 138,
+    "pods": 260,
+    "tier": "A"
   },
   "h5s6a4": {
     "file": "datasets/h5s6a4_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa4",
     "hotel": 5,
     "sn": 6,
     "sa": 4,
-    "windows": 138,
-    "pods": 105
+    "windows": 140,
+    "pods": 261,
+    "tier": "A"
   },
   "h5s6a5": {
     "file": "datasets/h5s6a5_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 5,
     "sn": 6,
     "sa": 5,
-    "windows": 133,
-    "pods": 96
+    "windows": 139,
+    "pods": 262,
+    "tier": "A"
   },
   "h5s6a6": {
     "file": "datasets/h5s6a6_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 5,
     "sn": 6,
     "sa": 6,
-    "windows": 133,
-    "pods": 96
+    "windows": 139,
+    "pods": 263,
+    "tier": "A"
   },
   "h5s7a0": {
     "file": "datasets/h5s7a0_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa0",
     "hotel": 5,
     "sn": 7,
     "sa": 0,
-    "windows": 138,
-    "pods": 143
+    "windows": 145,
+    "pods": 285,
+    "tier": "A"
   },
   "h5s7a1": {
     "file": "datasets/h5s7a1_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 5,
     "sn": 7,
     "sa": 1,
-    "windows": 138,
-    "pods": 136
+    "windows": 142,
+    "pods": 285,
+    "tier": "A"
   },
   "h5s7a2": {
     "file": "datasets/h5s7a2_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 5,
     "sn": 7,
     "sa": 2,
-    "windows": 129,
-    "pods": 116
+    "windows": 142,
+    "pods": 286,
+    "tier": "A"
   },
   "h5s7a3": {
     "file": "datasets/h5s7a3_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa3",
     "hotel": 5,
     "sn": 7,
     "sa": 3,
-    "windows": 132,
-    "pods": 101
+    "windows": 138,
+    "pods": 287,
+    "tier": "A"
   },
   "h5s7a4": {
     "file": "datasets/h5s7a4_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa4",
     "hotel": 5,
     "sn": 7,
     "sa": 4,
-    "windows": 138,
-    "pods": 108
+    "windows": 140,
+    "pods": 288,
+    "tier": "A"
   },
   "h5s7a5": {
     "file": "datasets/h5s7a5_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 5,
     "sn": 7,
     "sa": 5,
-    "windows": 133,
-    "pods": 99
+    "windows": 139,
+    "pods": 289,
+    "tier": "A"
   },
   "h5s7a6": {
     "file": "datasets/h5s7a6_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 5,
     "sn": 7,
     "sa": 6,
-    "windows": 133,
-    "pods": 99
+    "windows": 139,
+    "pods": 290,
+    "tier": "A"
   },
   "h6s0a0": {
     "file": "datasets/h6s0a0_pod.csv",
@@ -3021,502 +3664,613 @@
     "sn": 0,
     "sa": 0,
     "windows": 140,
-    "pods": 114
+    "pods": 114,
+    "tier": "A"
   },
   "h6s0a1": {
     "file": "datasets/h6s0a1_pod.csv",
     "source": "generated",
+    "base": "hotel2_sa1",
     "hotel": 6,
     "sn": 0,
     "sa": 1,
-    "windows": 138,
-    "pods": 115
+    "windows": 143,
+    "pods": 115,
+    "tier": "A"
   },
   "h6s0a2": {
     "file": "datasets/h6s0a2_pod.csv",
     "source": "generated",
+    "base": "hotel2_sa2",
     "hotel": 6,
     "sn": 0,
     "sa": 2,
-    "windows": 138,
-    "pods": 106
+    "windows": 141,
+    "pods": 116,
+    "tier": "A"
   },
   "h6s0a3": {
     "file": "datasets/h6s0a3_pod.csv",
     "source": "generated",
+    "base": "hotel2_sa3",
     "hotel": 6,
     "sn": 0,
     "sa": 3,
-    "windows": 127,
-    "pods": 91
+    "windows": 141,
+    "pods": 117,
+    "tier": "A"
   },
   "h6s0a4": {
     "file": "datasets/h6s0a4_pod.csv",
     "source": "generated",
+    "base": "hotel2_sa4",
     "hotel": 6,
     "sn": 0,
     "sa": 4,
-    "windows": 134,
-    "pods": 69
+    "windows": 142,
+    "pods": 118,
+    "tier": "A"
   },
   "h6s0a5": {
     "file": "datasets/h6s0a5_pod.csv",
     "source": "generated",
+    "base": "hotel2_sa5",
     "hotel": 6,
     "sn": 0,
     "sa": 5,
-    "windows": 133,
-    "pods": 60
+    "windows": 147,
+    "pods": 119,
+    "tier": "A"
   },
   "h6s0a6": {
     "file": "datasets/h6s0a6_pod.csv",
     "source": "generated",
+    "base": "hotel2_sa6",
     "hotel": 6,
     "sn": 0,
     "sa": 6,
-    "windows": 138,
-    "pods": 62
+    "windows": 142,
+    "pods": 120,
+    "tier": "A"
   },
   "h6s1a0": {
     "file": "datasets/h6s1a0_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa0",
     "hotel": 6,
     "sn": 1,
     "sa": 0,
-    "windows": 138,
-    "pods": 119
+    "windows": 145,
+    "pods": 141,
+    "tier": "A"
   },
   "h6s1a1": {
     "file": "datasets/h6s1a1_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa1",
     "hotel": 6,
     "sn": 1,
     "sa": 1,
-    "windows": 138,
-    "pods": 115
+    "windows": 142,
+    "pods": 142,
+    "tier": "A"
   },
   "h6s1a2": {
     "file": "datasets/h6s1a2_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa2",
     "hotel": 6,
     "sn": 1,
     "sa": 2,
     "windows": 129,
-    "pods": 104
+    "pods": 143,
+    "tier": "A"
   },
   "h6s1a3": {
     "file": "datasets/h6s1a3_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa3",
     "hotel": 6,
     "sn": 1,
     "sa": 3,
     "windows": 132,
-    "pods": 88
+    "pods": 144,
+    "tier": "A"
   },
   "h6s1a4": {
     "file": "datasets/h6s1a4_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa4",
     "hotel": 6,
     "sn": 1,
     "sa": 4,
-    "windows": 138,
-    "pods": 89
+    "windows": 139,
+    "pods": 145,
+    "tier": "A"
   },
   "h6s1a5": {
     "file": "datasets/h6s1a5_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa5",
     "hotel": 6,
     "sn": 1,
     "sa": 5,
     "windows": 133,
-    "pods": 85
+    "pods": 146,
+    "tier": "A"
   },
   "h6s1a6": {
     "file": "datasets/h6s1a6_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa5",
     "hotel": 6,
     "sn": 1,
     "sa": 6,
     "windows": 133,
-    "pods": 85
+    "pods": 147,
+    "tier": "A"
   },
   "h6s2a0": {
     "file": "datasets/h6s2a0_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa0",
     "hotel": 6,
     "sn": 2,
     "sa": 0,
-    "windows": 138,
-    "pods": 125
+    "windows": 145,
+    "pods": 169,
+    "tier": "A"
   },
   "h6s2a1": {
     "file": "datasets/h6s2a1_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 6,
     "sn": 2,
     "sa": 1,
-    "windows": 138,
-    "pods": 120
+    "windows": 142,
+    "pods": 169,
+    "tier": "A"
   },
   "h6s2a2": {
     "file": "datasets/h6s2a2_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 6,
     "sn": 2,
     "sa": 2,
-    "windows": 129,
-    "pods": 107
+    "windows": 142,
+    "pods": 170,
+    "tier": "A"
   },
   "h6s2a3": {
     "file": "datasets/h6s2a3_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa3",
     "hotel": 6,
     "sn": 2,
     "sa": 3,
-    "windows": 132,
-    "pods": 91
+    "windows": 138,
+    "pods": 171,
+    "tier": "A"
   },
   "h6s2a4": {
     "file": "datasets/h6s2a4_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa4",
     "hotel": 6,
     "sn": 2,
     "sa": 4,
-    "windows": 138,
-    "pods": 93
+    "windows": 140,
+    "pods": 172,
+    "tier": "A"
   },
   "h6s2a5": {
     "file": "datasets/h6s2a5_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 6,
     "sn": 2,
     "sa": 5,
-    "windows": 133,
-    "pods": 87
+    "windows": 139,
+    "pods": 173,
+    "tier": "A"
   },
   "h6s2a6": {
     "file": "datasets/h6s2a6_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 6,
     "sn": 2,
     "sa": 6,
-    "windows": 133,
-    "pods": 87
+    "windows": 139,
+    "pods": 174,
+    "tier": "A"
   },
   "h6s3a0": {
     "file": "datasets/h6s3a0_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa0",
     "hotel": 6,
     "sn": 3,
     "sa": 0,
-    "windows": 138,
-    "pods": 130
+    "windows": 145,
+    "pods": 196,
+    "tier": "A"
   },
   "h6s3a1": {
     "file": "datasets/h6s3a1_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 6,
     "sn": 3,
     "sa": 1,
-    "windows": 138,
-    "pods": 125
+    "windows": 142,
+    "pods": 196,
+    "tier": "A"
   },
   "h6s3a2": {
     "file": "datasets/h6s3a2_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 6,
     "sn": 3,
     "sa": 2,
-    "windows": 129,
-    "pods": 109
+    "windows": 142,
+    "pods": 197,
+    "tier": "A"
   },
   "h6s3a3": {
     "file": "datasets/h6s3a3_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa3",
     "hotel": 6,
     "sn": 3,
     "sa": 3,
-    "windows": 132,
-    "pods": 93
+    "windows": 138,
+    "pods": 198,
+    "tier": "A"
   },
   "h6s3a4": {
     "file": "datasets/h6s3a4_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa4",
     "hotel": 6,
     "sn": 3,
     "sa": 4,
-    "windows": 138,
-    "pods": 97
+    "windows": 140,
+    "pods": 199,
+    "tier": "A"
   },
   "h6s3a5": {
     "file": "datasets/h6s3a5_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 6,
     "sn": 3,
     "sa": 5,
-    "windows": 133,
-    "pods": 90
+    "windows": 139,
+    "pods": 200,
+    "tier": "A"
   },
   "h6s3a6": {
     "file": "datasets/h6s3a6_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 6,
     "sn": 3,
     "sa": 6,
-    "windows": 133,
-    "pods": 90
+    "windows": 139,
+    "pods": 201,
+    "tier": "A"
   },
   "h6s4a0": {
     "file": "datasets/h6s4a0_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa0",
     "hotel": 6,
     "sn": 4,
     "sa": 0,
-    "windows": 138,
-    "pods": 136
+    "windows": 145,
+    "pods": 223,
+    "tier": "A"
   },
   "h6s4a1": {
     "file": "datasets/h6s4a1_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 6,
     "sn": 4,
     "sa": 1,
-    "windows": 138,
-    "pods": 129
+    "windows": 142,
+    "pods": 223,
+    "tier": "A"
   },
   "h6s4a2": {
     "file": "datasets/h6s4a2_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 6,
     "sn": 4,
     "sa": 2,
-    "windows": 129,
-    "pods": 111
+    "windows": 142,
+    "pods": 224,
+    "tier": "A"
   },
   "h6s4a3": {
     "file": "datasets/h6s4a3_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa3",
     "hotel": 6,
     "sn": 4,
     "sa": 3,
-    "windows": 132,
-    "pods": 95
+    "windows": 138,
+    "pods": 225,
+    "tier": "A"
   },
   "h6s4a4": {
     "file": "datasets/h6s4a4_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa4",
     "hotel": 6,
     "sn": 4,
     "sa": 4,
-    "windows": 138,
-    "pods": 101
+    "windows": 140,
+    "pods": 226,
+    "tier": "A"
   },
   "h6s4a5": {
     "file": "datasets/h6s4a5_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 6,
     "sn": 4,
     "sa": 5,
-    "windows": 133,
-    "pods": 92
+    "windows": 139,
+    "pods": 227,
+    "tier": "A"
   },
   "h6s4a6": {
     "file": "datasets/h6s4a6_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 6,
     "sn": 4,
     "sa": 6,
-    "windows": 133,
-    "pods": 93
+    "windows": 139,
+    "pods": 228,
+    "tier": "A"
   },
   "h6s5a0": {
     "file": "datasets/h6s5a0_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa0",
     "hotel": 6,
     "sn": 5,
     "sa": 0,
-    "windows": 138,
-    "pods": 140
+    "windows": 145,
+    "pods": 250,
+    "tier": "A"
   },
   "h6s5a1": {
     "file": "datasets/h6s5a1_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 6,
     "sn": 5,
     "sa": 1,
-    "windows": 138,
-    "pods": 132
+    "windows": 142,
+    "pods": 250,
+    "tier": "A"
   },
   "h6s5a2": {
     "file": "datasets/h6s5a2_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 6,
     "sn": 5,
     "sa": 2,
-    "windows": 129,
-    "pods": 113
+    "windows": 142,
+    "pods": 251,
+    "tier": "A"
   },
   "h6s5a3": {
     "file": "datasets/h6s5a3_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa3",
     "hotel": 6,
     "sn": 5,
     "sa": 3,
-    "windows": 132,
-    "pods": 98
+    "windows": 138,
+    "pods": 252,
+    "tier": "A"
   },
   "h6s5a4": {
     "file": "datasets/h6s5a4_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa4",
     "hotel": 6,
     "sn": 5,
     "sa": 4,
-    "windows": 138,
-    "pods": 104
+    "windows": 140,
+    "pods": 253,
+    "tier": "A"
   },
   "h6s5a5": {
     "file": "datasets/h6s5a5_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 6,
     "sn": 5,
     "sa": 5,
-    "windows": 133,
-    "pods": 95
+    "windows": 139,
+    "pods": 254,
+    "tier": "A"
   },
   "h6s5a6": {
     "file": "datasets/h6s5a6_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 6,
     "sn": 5,
     "sa": 6,
-    "windows": 133,
-    "pods": 95
+    "windows": 139,
+    "pods": 255,
+    "tier": "A"
   },
   "h6s6a0": {
     "file": "datasets/h6s6a0_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa0",
     "hotel": 6,
     "sn": 6,
     "sa": 0,
-    "windows": 138,
-    "pods": 144
+    "windows": 145,
+    "pods": 277,
+    "tier": "A"
   },
   "h6s6a1": {
     "file": "datasets/h6s6a1_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 6,
     "sn": 6,
     "sa": 1,
-    "windows": 138,
-    "pods": 136
+    "windows": 142,
+    "pods": 277,
+    "tier": "A"
   },
   "h6s6a2": {
     "file": "datasets/h6s6a2_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 6,
     "sn": 6,
     "sa": 2,
-    "windows": 129,
-    "pods": 116
+    "windows": 142,
+    "pods": 278,
+    "tier": "A"
   },
   "h6s6a3": {
     "file": "datasets/h6s6a3_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa3",
     "hotel": 6,
     "sn": 6,
     "sa": 3,
-    "windows": 132,
-    "pods": 100
+    "windows": 138,
+    "pods": 279,
+    "tier": "A"
   },
   "h6s6a4": {
     "file": "datasets/h6s6a4_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa4",
     "hotel": 6,
     "sn": 6,
     "sa": 4,
-    "windows": 138,
-    "pods": 108
+    "windows": 140,
+    "pods": 280,
+    "tier": "A"
   },
   "h6s6a5": {
     "file": "datasets/h6s6a5_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 6,
     "sn": 6,
     "sa": 5,
-    "windows": 133,
-    "pods": 98
+    "windows": 139,
+    "pods": 281,
+    "tier": "A"
   },
   "h6s6a6": {
     "file": "datasets/h6s6a6_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 6,
     "sn": 6,
     "sa": 6,
-    "windows": 133,
-    "pods": 98
+    "windows": 139,
+    "pods": 282,
+    "tier": "A"
   },
   "h6s7a0": {
     "file": "datasets/h6s7a0_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa0",
     "hotel": 6,
     "sn": 7,
     "sa": 0,
-    "windows": 138,
-    "pods": 148
+    "windows": 145,
+    "pods": 304,
+    "tier": "A"
   },
   "h6s7a1": {
     "file": "datasets/h6s7a1_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 6,
     "sn": 7,
     "sa": 1,
-    "windows": 138,
-    "pods": 139
+    "windows": 142,
+    "pods": 304,
+    "tier": "A"
   },
   "h6s7a2": {
     "file": "datasets/h6s7a2_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 6,
     "sn": 7,
     "sa": 2,
-    "windows": 129,
-    "pods": 118
+    "windows": 142,
+    "pods": 305,
+    "tier": "A"
   },
   "h6s7a3": {
     "file": "datasets/h6s7a3_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa3",
     "hotel": 6,
     "sn": 7,
     "sa": 3,
-    "windows": 132,
-    "pods": 103
+    "windows": 138,
+    "pods": 306,
+    "tier": "A"
   },
   "h6s7a4": {
     "file": "datasets/h6s7a4_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa4",
     "hotel": 6,
     "sn": 7,
     "sa": 4,
-    "windows": 138,
-    "pods": 111
+    "windows": 140,
+    "pods": 307,
+    "tier": "A"
   },
   "h6s7a5": {
     "file": "datasets/h6s7a5_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 6,
     "sn": 7,
     "sa": 5,
-    "windows": 133,
-    "pods": 100
+    "windows": 139,
+    "pods": 308,
+    "tier": "A"
   },
   "h6s7a6": {
     "file": "datasets/h6s7a6_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 6,
     "sn": 7,
     "sa": 6,
-    "windows": 133,
-    "pods": 101
+    "windows": 139,
+    "pods": 309,
+    "tier": "A"
   },
   "h7s0a0": {
     "file": "datasets/h7s0a0_pod.csv",
@@ -3525,502 +4279,613 @@
     "sn": 0,
     "sa": 0,
     "windows": 140,
-    "pods": 133
+    "pods": 133,
+    "tier": "A"
   },
   "h7s0a1": {
     "file": "datasets/h7s0a1_pod.csv",
     "source": "generated",
+    "base": "hotel2_sa1",
     "hotel": 7,
     "sn": 0,
     "sa": 1,
-    "windows": 138,
-    "pods": 134
+    "windows": 143,
+    "pods": 134,
+    "tier": "A"
   },
   "h7s0a2": {
     "file": "datasets/h7s0a2_pod.csv",
     "source": "generated",
+    "base": "hotel2_sa2",
     "hotel": 7,
     "sn": 0,
     "sa": 2,
-    "windows": 138,
-    "pods": 110
+    "windows": 141,
+    "pods": 135,
+    "tier": "A"
   },
   "h7s0a3": {
     "file": "datasets/h7s0a3_pod.csv",
     "source": "generated",
+    "base": "hotel2_sa3",
     "hotel": 7,
     "sn": 0,
     "sa": 3,
-    "windows": 127,
-    "pods": 92
+    "windows": 141,
+    "pods": 136,
+    "tier": "A"
   },
   "h7s0a4": {
     "file": "datasets/h7s0a4_pod.csv",
     "source": "generated",
+    "base": "hotel2_sa4",
     "hotel": 7,
     "sn": 0,
     "sa": 4,
-    "windows": 134,
-    "pods": 72
+    "windows": 142,
+    "pods": 137,
+    "tier": "A"
   },
   "h7s0a5": {
     "file": "datasets/h7s0a5_pod.csv",
     "source": "generated",
+    "base": "hotel2_sa5",
     "hotel": 7,
     "sn": 0,
     "sa": 5,
-    "windows": 133,
-    "pods": 63
+    "windows": 147,
+    "pods": 138,
+    "tier": "A"
   },
   "h7s0a6": {
     "file": "datasets/h7s0a6_pod.csv",
     "source": "generated",
+    "base": "hotel2_sa6",
     "hotel": 7,
     "sn": 0,
     "sa": 6,
-    "windows": 138,
-    "pods": 65
+    "windows": 142,
+    "pods": 139,
+    "tier": "A"
   },
   "h7s1a0": {
     "file": "datasets/h7s1a0_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa0",
     "hotel": 7,
     "sn": 1,
     "sa": 0,
-    "windows": 138,
-    "pods": 123
+    "windows": 145,
+    "pods": 160,
+    "tier": "A"
   },
   "h7s1a1": {
     "file": "datasets/h7s1a1_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa1",
     "hotel": 7,
     "sn": 1,
     "sa": 1,
-    "windows": 138,
-    "pods": 119
+    "windows": 142,
+    "pods": 161,
+    "tier": "A"
   },
   "h7s1a2": {
     "file": "datasets/h7s1a2_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa2",
     "hotel": 7,
     "sn": 1,
     "sa": 2,
     "windows": 129,
-    "pods": 106
+    "pods": 162,
+    "tier": "A"
   },
   "h7s1a3": {
     "file": "datasets/h7s1a3_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa3",
     "hotel": 7,
     "sn": 1,
     "sa": 3,
     "windows": 132,
-    "pods": 90
+    "pods": 163,
+    "tier": "A"
   },
   "h7s1a4": {
     "file": "datasets/h7s1a4_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa4",
     "hotel": 7,
     "sn": 1,
     "sa": 4,
-    "windows": 138,
-    "pods": 92
+    "windows": 139,
+    "pods": 164,
+    "tier": "A"
   },
   "h7s1a5": {
     "file": "datasets/h7s1a5_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa5",
     "hotel": 7,
     "sn": 1,
     "sa": 5,
     "windows": 133,
-    "pods": 86
+    "pods": 165,
+    "tier": "A"
   },
   "h7s1a6": {
     "file": "datasets/h7s1a6_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa5",
     "hotel": 7,
     "sn": 1,
     "sa": 6,
     "windows": 133,
-    "pods": 87
+    "pods": 166,
+    "tier": "A"
   },
   "h7s2a0": {
     "file": "datasets/h7s2a0_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa0",
     "hotel": 7,
     "sn": 2,
     "sa": 0,
-    "windows": 138,
-    "pods": 129
+    "windows": 145,
+    "pods": 188,
+    "tier": "A"
   },
   "h7s2a1": {
     "file": "datasets/h7s2a1_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 7,
     "sn": 2,
     "sa": 1,
-    "windows": 138,
-    "pods": 123
+    "windows": 142,
+    "pods": 188,
+    "tier": "A"
   },
   "h7s2a2": {
     "file": "datasets/h7s2a2_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 7,
     "sn": 2,
     "sa": 2,
-    "windows": 129,
-    "pods": 108
+    "windows": 142,
+    "pods": 189,
+    "tier": "A"
   },
   "h7s2a3": {
     "file": "datasets/h7s2a3_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa3",
     "hotel": 7,
     "sn": 2,
     "sa": 3,
-    "windows": 132,
-    "pods": 92
+    "windows": 138,
+    "pods": 190,
+    "tier": "A"
   },
   "h7s2a4": {
     "file": "datasets/h7s2a4_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa4",
     "hotel": 7,
     "sn": 2,
     "sa": 4,
-    "windows": 138,
-    "pods": 96
+    "windows": 140,
+    "pods": 191,
+    "tier": "A"
   },
   "h7s2a5": {
     "file": "datasets/h7s2a5_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 7,
     "sn": 2,
     "sa": 5,
-    "windows": 133,
-    "pods": 89
+    "windows": 139,
+    "pods": 192,
+    "tier": "A"
   },
   "h7s2a6": {
     "file": "datasets/h7s2a6_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 7,
     "sn": 2,
     "sa": 6,
-    "windows": 133,
-    "pods": 89
+    "windows": 139,
+    "pods": 193,
+    "tier": "A"
   },
   "h7s3a0": {
     "file": "datasets/h7s3a0_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa0",
     "hotel": 7,
     "sn": 3,
     "sa": 0,
-    "windows": 138,
-    "pods": 134
+    "windows": 145,
+    "pods": 215,
+    "tier": "A"
   },
   "h7s3a1": {
     "file": "datasets/h7s3a1_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 7,
     "sn": 3,
     "sa": 1,
-    "windows": 138,
-    "pods": 128
+    "windows": 142,
+    "pods": 215,
+    "tier": "A"
   },
   "h7s3a2": {
     "file": "datasets/h7s3a2_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 7,
     "sn": 3,
     "sa": 2,
-    "windows": 129,
-    "pods": 111
+    "windows": 142,
+    "pods": 216,
+    "tier": "A"
   },
   "h7s3a3": {
     "file": "datasets/h7s3a3_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa3",
     "hotel": 7,
     "sn": 3,
     "sa": 3,
-    "windows": 132,
-    "pods": 95
+    "windows": 138,
+    "pods": 217,
+    "tier": "A"
   },
   "h7s3a4": {
     "file": "datasets/h7s3a4_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa4",
     "hotel": 7,
     "sn": 3,
     "sa": 4,
-    "windows": 138,
-    "pods": 100
+    "windows": 140,
+    "pods": 218,
+    "tier": "A"
   },
   "h7s3a5": {
     "file": "datasets/h7s3a5_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 7,
     "sn": 3,
     "sa": 5,
-    "windows": 133,
-    "pods": 92
+    "windows": 139,
+    "pods": 219,
+    "tier": "A"
   },
   "h7s3a6": {
     "file": "datasets/h7s3a6_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 7,
     "sn": 3,
     "sa": 6,
-    "windows": 133,
-    "pods": 92
+    "windows": 139,
+    "pods": 220,
+    "tier": "A"
   },
   "h7s4a0": {
     "file": "datasets/h7s4a0_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa0",
     "hotel": 7,
     "sn": 4,
     "sa": 0,
-    "windows": 138,
-    "pods": 139
+    "windows": 145,
+    "pods": 242,
+    "tier": "A"
   },
   "h7s4a1": {
     "file": "datasets/h7s4a1_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 7,
     "sn": 4,
     "sa": 1,
-    "windows": 138,
-    "pods": 132
+    "windows": 142,
+    "pods": 242,
+    "tier": "A"
   },
   "h7s4a2": {
     "file": "datasets/h7s4a2_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 7,
     "sn": 4,
     "sa": 2,
-    "windows": 129,
-    "pods": 113
+    "windows": 142,
+    "pods": 243,
+    "tier": "A"
   },
   "h7s4a3": {
     "file": "datasets/h7s4a3_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa3",
     "hotel": 7,
     "sn": 4,
     "sa": 3,
-    "windows": 132,
-    "pods": 97
+    "windows": 138,
+    "pods": 244,
+    "tier": "A"
   },
   "h7s4a4": {
     "file": "datasets/h7s4a4_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa4",
     "hotel": 7,
     "sn": 4,
     "sa": 4,
-    "windows": 138,
-    "pods": 103
+    "windows": 140,
+    "pods": 245,
+    "tier": "A"
   },
   "h7s4a5": {
     "file": "datasets/h7s4a5_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 7,
     "sn": 4,
     "sa": 5,
-    "windows": 133,
-    "pods": 94
+    "windows": 139,
+    "pods": 246,
+    "tier": "A"
   },
   "h7s4a6": {
     "file": "datasets/h7s4a6_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 7,
     "sn": 4,
     "sa": 6,
-    "windows": 133,
-    "pods": 94
+    "windows": 139,
+    "pods": 247,
+    "tier": "A"
   },
   "h7s5a0": {
     "file": "datasets/h7s5a0_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa0",
     "hotel": 7,
     "sn": 5,
     "sa": 0,
-    "windows": 138,
-    "pods": 143
+    "windows": 145,
+    "pods": 269,
+    "tier": "A"
   },
   "h7s5a1": {
     "file": "datasets/h7s5a1_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 7,
     "sn": 5,
     "sa": 1,
-    "windows": 138,
-    "pods": 136
+    "windows": 142,
+    "pods": 269,
+    "tier": "A"
   },
   "h7s5a2": {
     "file": "datasets/h7s5a2_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 7,
     "sn": 5,
     "sa": 2,
-    "windows": 129,
-    "pods": 115
+    "windows": 142,
+    "pods": 270,
+    "tier": "A"
   },
   "h7s5a3": {
     "file": "datasets/h7s5a3_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa3",
     "hotel": 7,
     "sn": 5,
     "sa": 3,
-    "windows": 132,
-    "pods": 100
+    "windows": 138,
+    "pods": 271,
+    "tier": "A"
   },
   "h7s5a4": {
     "file": "datasets/h7s5a4_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa4",
     "hotel": 7,
     "sn": 5,
     "sa": 4,
-    "windows": 138,
-    "pods": 107
+    "windows": 140,
+    "pods": 272,
+    "tier": "A"
   },
   "h7s5a5": {
     "file": "datasets/h7s5a5_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 7,
     "sn": 5,
     "sa": 5,
-    "windows": 133,
-    "pods": 97
+    "windows": 139,
+    "pods": 273,
+    "tier": "A"
   },
   "h7s5a6": {
     "file": "datasets/h7s5a6_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 7,
     "sn": 5,
     "sa": 6,
-    "windows": 133,
-    "pods": 97
+    "windows": 139,
+    "pods": 274,
+    "tier": "A"
   },
   "h7s6a0": {
     "file": "datasets/h7s6a0_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa0",
     "hotel": 7,
     "sn": 6,
     "sa": 0,
-    "windows": 138,
-    "pods": 147
+    "windows": 145,
+    "pods": 296,
+    "tier": "A"
   },
   "h7s6a1": {
     "file": "datasets/h7s6a1_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 7,
     "sn": 6,
     "sa": 1,
-    "windows": 138,
-    "pods": 139
+    "windows": 142,
+    "pods": 296,
+    "tier": "A"
   },
   "h7s6a2": {
     "file": "datasets/h7s6a2_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 7,
     "sn": 6,
     "sa": 2,
-    "windows": 129,
-    "pods": 117
+    "windows": 142,
+    "pods": 297,
+    "tier": "A"
   },
   "h7s6a3": {
     "file": "datasets/h7s6a3_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa3",
     "hotel": 7,
     "sn": 6,
     "sa": 3,
-    "windows": 132,
-    "pods": 102
+    "windows": 138,
+    "pods": 298,
+    "tier": "A"
   },
   "h7s6a4": {
     "file": "datasets/h7s6a4_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa4",
     "hotel": 7,
     "sn": 6,
     "sa": 4,
-    "windows": 138,
-    "pods": 110
+    "windows": 140,
+    "pods": 299,
+    "tier": "A"
   },
   "h7s6a5": {
     "file": "datasets/h7s6a5_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 7,
     "sn": 6,
     "sa": 5,
-    "windows": 133,
-    "pods": 100
+    "windows": 139,
+    "pods": 300,
+    "tier": "A"
   },
   "h7s6a6": {
     "file": "datasets/h7s6a6_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 7,
     "sn": 6,
     "sa": 6,
-    "windows": 133,
-    "pods": 100
+    "windows": 139,
+    "pods": 301,
+    "tier": "A"
   },
   "h7s7a0": {
     "file": "datasets/h7s7a0_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa0",
     "hotel": 7,
     "sn": 7,
     "sa": 0,
-    "windows": 138,
-    "pods": 150
+    "windows": 145,
+    "pods": 323,
+    "tier": "A"
   },
   "h7s7a1": {
     "file": "datasets/h7s7a1_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 7,
     "sn": 7,
     "sa": 1,
-    "windows": 138,
-    "pods": 143
+    "windows": 142,
+    "pods": 323,
+    "tier": "A"
   },
   "h7s7a2": {
     "file": "datasets/h7s7a2_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 7,
     "sn": 7,
     "sa": 2,
-    "windows": 129,
-    "pods": 119
+    "windows": 142,
+    "pods": 324,
+    "tier": "A"
   },
   "h7s7a3": {
     "file": "datasets/h7s7a3_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa3",
     "hotel": 7,
     "sn": 7,
     "sa": 3,
-    "windows": 132,
-    "pods": 104
+    "windows": 138,
+    "pods": 325,
+    "tier": "A"
   },
   "h7s7a4": {
     "file": "datasets/h7s7a4_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa4",
     "hotel": 7,
     "sn": 7,
     "sa": 4,
-    "windows": 138,
-    "pods": 113
+    "windows": 140,
+    "pods": 326,
+    "tier": "A"
   },
   "h7s7a5": {
     "file": "datasets/h7s7a5_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 7,
     "sn": 7,
     "sa": 5,
-    "windows": 133,
-    "pods": 102
+    "windows": 139,
+    "pods": 327,
+    "tier": "A"
   },
   "h7s7a6": {
     "file": "datasets/h7s7a6_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 7,
     "sn": 7,
     "sa": 6,
-    "windows": 133,
-    "pods": 102
+    "windows": 139,
+    "pods": 328,
+    "tier": "A"
   },
   "h8s0a0": {
     "file": "datasets/h8s0a0_pod.csv",
@@ -4029,501 +4894,612 @@
     "sn": 0,
     "sa": 0,
     "windows": 145,
-    "pods": 152
+    "pods": 152,
+    "tier": "A"
   },
   "h8s0a1": {
     "file": "datasets/h8s0a1_pod.csv",
     "source": "generated",
+    "base": "hotel2_sa1",
     "hotel": 8,
     "sn": 0,
     "sa": 1,
-    "windows": 138,
-    "pods": 142
+    "windows": 143,
+    "pods": 153,
+    "tier": "A"
   },
   "h8s0a2": {
     "file": "datasets/h8s0a2_pod.csv",
     "source": "generated",
+    "base": "hotel2_sa2",
     "hotel": 8,
     "sn": 0,
     "sa": 2,
-    "windows": 138,
-    "pods": 113
+    "windows": 141,
+    "pods": 154,
+    "tier": "A"
   },
   "h8s0a3": {
     "file": "datasets/h8s0a3_pod.csv",
     "source": "generated",
+    "base": "hotel2_sa3",
     "hotel": 8,
     "sn": 0,
     "sa": 3,
-    "windows": 127,
-    "pods": 94
+    "windows": 141,
+    "pods": 155,
+    "tier": "A"
   },
   "h8s0a4": {
     "file": "datasets/h8s0a4_pod.csv",
     "source": "generated",
+    "base": "hotel2_sa4",
     "hotel": 8,
     "sn": 0,
     "sa": 4,
-    "windows": 134,
-    "pods": 74
+    "windows": 142,
+    "pods": 156,
+    "tier": "A"
   },
   "h8s0a5": {
     "file": "datasets/h8s0a5_pod.csv",
     "source": "generated",
+    "base": "hotel2_sa5",
     "hotel": 8,
     "sn": 0,
     "sa": 5,
-    "windows": 133,
-    "pods": 66
+    "windows": 147,
+    "pods": 157,
+    "tier": "A"
   },
   "h8s0a6": {
     "file": "datasets/h8s0a6_pod.csv",
     "source": "generated",
+    "base": "hotel2_sa6",
     "hotel": 8,
     "sn": 0,
     "sa": 6,
-    "windows": 138,
-    "pods": 69
+    "windows": 142,
+    "pods": 158,
+    "tier": "A"
   },
   "h8s1a0": {
     "file": "datasets/h8s1a0_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa0",
     "hotel": 8,
     "sn": 1,
     "sa": 0,
-    "windows": 138,
-    "pods": 127
+    "windows": 145,
+    "pods": 179,
+    "tier": "A"
   },
   "h8s1a1": {
     "file": "datasets/h8s1a1_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa1",
     "hotel": 8,
     "sn": 1,
     "sa": 1,
-    "windows": 138,
-    "pods": 122
+    "windows": 142,
+    "pods": 180,
+    "tier": "A"
   },
   "h8s1a2": {
     "file": "datasets/h8s1a2_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa2",
     "hotel": 8,
     "sn": 1,
     "sa": 2,
     "windows": 129,
-    "pods": 108
+    "pods": 181,
+    "tier": "A"
   },
   "h8s1a3": {
     "file": "datasets/h8s1a3_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa3",
     "hotel": 8,
     "sn": 1,
     "sa": 3,
     "windows": 132,
-    "pods": 92
+    "pods": 182,
+    "tier": "A"
   },
   "h8s1a4": {
     "file": "datasets/h8s1a4_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa4",
     "hotel": 8,
     "sn": 1,
     "sa": 4,
-    "windows": 138,
-    "pods": 95
+    "windows": 139,
+    "pods": 183,
+    "tier": "A"
   },
   "h8s1a5": {
     "file": "datasets/h8s1a5_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa5",
     "hotel": 8,
     "sn": 1,
     "sa": 5,
     "windows": 133,
-    "pods": 88
+    "pods": 184,
+    "tier": "A"
   },
   "h8s1a6": {
     "file": "datasets/h8s1a6_pod.csv",
     "source": "generated",
+    "base": "hotel1_sn1_sa5",
     "hotel": 8,
     "sn": 1,
     "sa": 6,
     "windows": 133,
-    "pods": 88
+    "pods": 185,
+    "tier": "A"
   },
   "h8s2a0": {
     "file": "datasets/h8s2a0_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa0",
     "hotel": 8,
     "sn": 2,
     "sa": 0,
-    "windows": 138,
-    "pods": 132
+    "windows": 145,
+    "pods": 207,
+    "tier": "A"
   },
   "h8s2a1": {
     "file": "datasets/h8s2a1_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 8,
     "sn": 2,
     "sa": 1,
-    "windows": 138,
-    "pods": 127
+    "windows": 142,
+    "pods": 207,
+    "tier": "A"
   },
   "h8s2a2": {
     "file": "datasets/h8s2a2_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 8,
     "sn": 2,
     "sa": 2,
-    "windows": 129,
-    "pods": 110
+    "windows": 142,
+    "pods": 208,
+    "tier": "A"
   },
   "h8s2a3": {
     "file": "datasets/h8s2a3_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa3",
     "hotel": 8,
     "sn": 2,
     "sa": 3,
-    "windows": 132,
-    "pods": 94
+    "windows": 138,
+    "pods": 209,
+    "tier": "A"
   },
   "h8s2a4": {
     "file": "datasets/h8s2a4_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa4",
     "hotel": 8,
     "sn": 2,
     "sa": 4,
-    "windows": 138,
-    "pods": 99
+    "windows": 140,
+    "pods": 210,
+    "tier": "A"
   },
   "h8s2a5": {
     "file": "datasets/h8s2a5_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 8,
     "sn": 2,
     "sa": 5,
-    "windows": 133,
-    "pods": 91
+    "windows": 139,
+    "pods": 211,
+    "tier": "A"
   },
   "h8s2a6": {
     "file": "datasets/h8s2a6_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 8,
     "sn": 2,
     "sa": 6,
-    "windows": 133,
-    "pods": 91
+    "windows": 139,
+    "pods": 212,
+    "tier": "A"
   },
   "h8s3a0": {
     "file": "datasets/h8s3a0_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa0",
     "hotel": 8,
     "sn": 3,
     "sa": 0,
-    "windows": 138,
-    "pods": 138
+    "windows": 145,
+    "pods": 234,
+    "tier": "A"
   },
   "h8s3a1": {
     "file": "datasets/h8s3a1_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 8,
     "sn": 3,
     "sa": 1,
-    "windows": 138,
-    "pods": 131
+    "windows": 142,
+    "pods": 234,
+    "tier": "A"
   },
   "h8s3a2": {
     "file": "datasets/h8s3a2_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 8,
     "sn": 3,
     "sa": 2,
-    "windows": 129,
-    "pods": 112
+    "windows": 142,
+    "pods": 235,
+    "tier": "A"
   },
   "h8s3a3": {
     "file": "datasets/h8s3a3_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa3",
     "hotel": 8,
     "sn": 3,
     "sa": 3,
-    "windows": 132,
-    "pods": 97
+    "windows": 138,
+    "pods": 236,
+    "tier": "A"
   },
   "h8s3a4": {
     "file": "datasets/h8s3a4_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa4",
     "hotel": 8,
     "sn": 3,
     "sa": 4,
-    "windows": 138,
-    "pods": 102
+    "windows": 140,
+    "pods": 237,
+    "tier": "A"
   },
   "h8s3a5": {
     "file": "datasets/h8s3a5_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 8,
     "sn": 3,
     "sa": 5,
-    "windows": 133,
-    "pods": 94
+    "windows": 139,
+    "pods": 238,
+    "tier": "A"
   },
   "h8s3a6": {
     "file": "datasets/h8s3a6_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 8,
     "sn": 3,
     "sa": 6,
-    "windows": 133,
-    "pods": 94
+    "windows": 139,
+    "pods": 239,
+    "tier": "A"
   },
   "h8s4a0": {
     "file": "datasets/h8s4a0_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa0",
     "hotel": 8,
     "sn": 4,
     "sa": 0,
-    "windows": 138,
-    "pods": 143
+    "windows": 145,
+    "pods": 261,
+    "tier": "A"
   },
   "h8s4a1": {
     "file": "datasets/h8s4a1_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 8,
     "sn": 4,
     "sa": 1,
-    "windows": 138,
-    "pods": 135
+    "windows": 142,
+    "pods": 261,
+    "tier": "A"
   },
   "h8s4a2": {
     "file": "datasets/h8s4a2_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 8,
     "sn": 4,
     "sa": 2,
-    "windows": 129,
-    "pods": 115
+    "windows": 142,
+    "pods": 262,
+    "tier": "A"
   },
   "h8s4a3": {
     "file": "datasets/h8s4a3_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa3",
     "hotel": 8,
     "sn": 4,
     "sa": 3,
-    "windows": 132,
-    "pods": 99
+    "windows": 138,
+    "pods": 263,
+    "tier": "A"
   },
   "h8s4a4": {
     "file": "datasets/h8s4a4_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa4",
     "hotel": 8,
     "sn": 4,
     "sa": 4,
-    "windows": 138,
-    "pods": 106
+    "windows": 140,
+    "pods": 264,
+    "tier": "A"
   },
   "h8s4a5": {
     "file": "datasets/h8s4a5_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 8,
     "sn": 4,
     "sa": 5,
-    "windows": 133,
-    "pods": 96
+    "windows": 139,
+    "pods": 265,
+    "tier": "A"
   },
   "h8s4a6": {
     "file": "datasets/h8s4a6_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 8,
     "sn": 4,
     "sa": 6,
-    "windows": 133,
-    "pods": 96
+    "windows": 139,
+    "pods": 266,
+    "tier": "A"
   },
   "h8s5a0": {
     "file": "datasets/h8s5a0_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa0",
     "hotel": 8,
     "sn": 5,
     "sa": 0,
-    "windows": 138,
-    "pods": 147
+    "windows": 145,
+    "pods": 288,
+    "tier": "A"
   },
   "h8s5a1": {
     "file": "datasets/h8s5a1_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 8,
     "sn": 5,
     "sa": 1,
-    "windows": 138,
-    "pods": 139
+    "windows": 142,
+    "pods": 288,
+    "tier": "A"
   },
   "h8s5a2": {
     "file": "datasets/h8s5a2_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 8,
     "sn": 5,
     "sa": 2,
-    "windows": 129,
-    "pods": 117
+    "windows": 142,
+    "pods": 289,
+    "tier": "A"
   },
   "h8s5a3": {
     "file": "datasets/h8s5a3_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa3",
     "hotel": 8,
     "sn": 5,
     "sa": 3,
-    "windows": 132,
-    "pods": 102
+    "windows": 138,
+    "pods": 290,
+    "tier": "A"
   },
   "h8s5a4": {
     "file": "datasets/h8s5a4_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa4",
     "hotel": 8,
     "sn": 5,
     "sa": 4,
-    "windows": 138,
-    "pods": 109
+    "windows": 140,
+    "pods": 291,
+    "tier": "A"
   },
   "h8s5a5": {
     "file": "datasets/h8s5a5_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 8,
     "sn": 5,
     "sa": 5,
-    "windows": 133,
-    "pods": 99
+    "windows": 139,
+    "pods": 292,
+    "tier": "A"
   },
   "h8s5a6": {
     "file": "datasets/h8s5a6_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 8,
     "sn": 5,
     "sa": 6,
-    "windows": 133,
-    "pods": 99
+    "windows": 139,
+    "pods": 293,
+    "tier": "A"
   },
   "h8s6a0": {
     "file": "datasets/h8s6a0_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa0",
     "hotel": 8,
     "sn": 6,
     "sa": 0,
-    "windows": 138,
-    "pods": 151
+    "windows": 145,
+    "pods": 315,
+    "tier": "A"
   },
   "h8s6a1": {
     "file": "datasets/h8s6a1_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 8,
     "sn": 6,
     "sa": 1,
-    "windows": 138,
-    "pods": 142
+    "windows": 142,
+    "pods": 315,
+    "tier": "A"
   },
   "h8s6a2": {
     "file": "datasets/h8s6a2_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 8,
     "sn": 6,
     "sa": 2,
-    "windows": 129,
-    "pods": 119
+    "windows": 142,
+    "pods": 316,
+    "tier": "A"
   },
   "h8s6a3": {
     "file": "datasets/h8s6a3_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa3",
     "hotel": 8,
     "sn": 6,
     "sa": 3,
-    "windows": 132,
-    "pods": 104
+    "windows": 138,
+    "pods": 317,
+    "tier": "A"
   },
   "h8s6a4": {
     "file": "datasets/h8s6a4_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa4",
     "hotel": 8,
     "sn": 6,
     "sa": 4,
-    "windows": 138,
-    "pods": 112
+    "windows": 140,
+    "pods": 318,
+    "tier": "A"
   },
   "h8s6a5": {
     "file": "datasets/h8s6a5_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 8,
     "sn": 6,
     "sa": 5,
-    "windows": 133,
-    "pods": 101
+    "windows": 139,
+    "pods": 319,
+    "tier": "A"
   },
   "h8s6a6": {
     "file": "datasets/h8s6a6_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 8,
     "sn": 6,
     "sa": 6,
-    "windows": 133,
-    "pods": 102
+    "windows": 139,
+    "pods": 320,
+    "tier": "A"
   },
   "h8s7a0": {
     "file": "datasets/h8s7a0_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa0",
     "hotel": 8,
     "sn": 7,
     "sa": 0,
-    "windows": 138,
-    "pods": 154
+    "windows": 145,
+    "pods": 342,
+    "tier": "A"
   },
   "h8s7a1": {
     "file": "datasets/h8s7a1_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 8,
     "sn": 7,
     "sa": 1,
-    "windows": 138,
-    "pods": 146
+    "windows": 142,
+    "pods": 342,
+    "tier": "A"
   },
   "h8s7a2": {
     "file": "datasets/h8s7a2_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa1",
     "hotel": 8,
     "sn": 7,
     "sa": 2,
-    "windows": 129,
-    "pods": 121
+    "windows": 142,
+    "pods": 343,
+    "tier": "A"
   },
   "h8s7a3": {
     "file": "datasets/h8s7a3_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa3",
     "hotel": 8,
     "sn": 7,
     "sa": 3,
-    "windows": 132,
-    "pods": 106
+    "windows": 138,
+    "pods": 344,
+    "tier": "A"
   },
   "h8s7a4": {
     "file": "datasets/h8s7a4_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa4",
     "hotel": 8,
     "sn": 7,
     "sa": 4,
-    "windows": 138,
-    "pods": 116
+    "windows": 140,
+    "pods": 345,
+    "tier": "A"
   },
   "h8s7a5": {
     "file": "datasets/h8s7a5_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 8,
     "sn": 7,
     "sa": 5,
-    "windows": 133,
-    "pods": 104
+    "windows": 139,
+    "pods": 346,
+    "tier": "A"
   },
   "h8s7a6": {
     "file": "datasets/h8s7a6_pod.csv",
     "source": "generated",
+    "base": "hotel2_sn2_sa5",
     "hotel": 8,
     "sn": 7,
     "sa": 6,
-    "windows": 133,
-    "pods": 104
+    "windows": 139,
+    "pods": 347,
+    "tier": "A"
   }
 }

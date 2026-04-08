@@ -41,6 +41,7 @@ from replay_engine   import ReplayEngine
 from aggregator      import Aggregator
 from kwok_manager    import KWOKManager
 from api             import app, state
+from transaction_poller import TransactionPoller
 
 # ── Logging setup ─────────────────────────────────────────────────────────────
 logging.basicConfig(
@@ -80,9 +81,11 @@ def tick_loop(
             if composition_changed or not replay_engine.is_loaded():
 
                 if not composition:
-                    # no active jobs — clear metrics
+                    # no active jobs — clear metrics and remove KWOK pods
                     state["latest_metrics"] = aggregator.compute([])
-                    logger.info("No active jobs — metrics cleared")
+                    if not no_kwok:
+                        kwok_manager.sync([])
+                    logger.info("No active jobs — metrics cleared, KWOK pods removed")
                 else:
                     # select new dataset
                     csv_path, meta = selector.select(composition)
@@ -113,6 +116,10 @@ def tick_loop(
 
             # ── 3. Skip tick if no active jobs ────────────────────────────────
             if not composition or not replay_engine.is_loaded():
+                # keep serving fresh baseline rows every tick during idle
+                if not composition:
+                    state["latest_metrics"] = aggregator.compute([])
+                    logger.info("No active jobs — serving baseline metrics")
                 _sleep_remaining(tick_start)
                 continue
 
@@ -214,6 +221,10 @@ def main():
     )
     tick_thread.start()
     logger.info("Tick loop started in background thread")
+
+    # ── Start transaction poller ───────────────────────────────────────────────
+    poller = TransactionPoller(timeline=timeline)
+    poller.start()
 
     # ── Start FastAPI server (blocking) ───────────────────────────────────────
     uvicorn.run(

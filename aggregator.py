@@ -8,6 +8,9 @@ Rules:
   PSI               → Ridge regression model (no simple sum — double counting)
   sched/dstate/softirq → sum (already distributed top-down, guaranteed = node value)
 
+When no pods are active (idle), returns real baseline node metrics
+from BaselineProvider instead of zeroed values.
+
 Output format matches /usage/latest API response:
   timestamp, cpu_usage_pct, cpu_psi_some_pct, ram_usage_pct, ram_usage_mi,
   disk_used_pct, sched_total_ms, dstate_total_ms, softirq_total_ms, node_cpu_watts
@@ -24,6 +27,7 @@ from config import (
     RIDGE_INTERCEPT, RIDGE_PSI_SUM, RIDGE_PSI_WAV,
     RIDGE_NUM_PODS, RIDGE_ACT_PODS, ACTIVE_CPU_THRESH,
 )
+from baseline_provider import BaselineProvider
 
 logger = logging.getLogger(__name__)
 
@@ -31,8 +35,17 @@ logger = logging.getLogger(__name__)
 class Aggregator:
     """
     Computes node-level metrics from a list of pod row dicts.
-    Stateless — each call to compute() is independent.
+    When pod_rows is empty, serves real idle metrics from BaselineProvider
+    instead of returning zeros.
     """
+
+    def __init__(self, baseline_provider: Optional[BaselineProvider] = None):
+        """
+        Args:
+            baseline_provider: optional BaselineProvider instance.
+                               If None, a new one is created automatically.
+        """
+        self._baseline = baseline_provider or BaselineProvider()
 
     def compute(self, pod_rows: List[Dict]) -> Optional[Dict]:
         """
@@ -42,10 +55,12 @@ class Aggregator:
             pod_rows: list of pod dicts from ReplayEngine.get_current_window_pods()
 
         Returns:
-            Node-level metrics dict ready for API exposure, or None if no pods.
+            Node-level metrics dict ready for API exposure.
+            When empty → real baseline metrics (not zeros).
         """
         if not pod_rows:
-            return self._empty_snapshot()
+            # hard switch: serve next baseline row instead of zeros
+            return self._baseline.next()
 
         # ── Simple sums ───────────────────────────────────────────────────────
         cpu_mcores     = sum(r.get("cpu_usage_mcores", 0) for r in pod_rows)
@@ -61,9 +76,9 @@ class Aggregator:
         psi_us = self._estimate_psi(pod_rows)
 
         # ── Percentages ───────────────────────────────────────────────────────
-        cpu_pct      = min((cpu_mcores / NODE_CPU_MCORES) * 100, 100.0)
-        ram_pct      = min((ram_mi     / NODE_RAM_MI)     * 100, 100.0)
-        psi_pct      = min((psi_us     / NODE_PSI_MAX_US) * 100, 100.0)
+        cpu_pct       = min((cpu_mcores   / NODE_CPU_MCORES) * 100, 100.0)
+        ram_pct       = min((ram_mi       / NODE_RAM_MI)     * 100, 100.0)
+        psi_pct       = min((psi_us       / NODE_PSI_MAX_US) * 100, 100.0)
         disk_used_pct = min((disk_space_mb / max(NODE_DISK_MB, 1)) * 100, 100.0)
 
         return {
@@ -121,24 +136,3 @@ class Aggregator:
         cpu_util = min(total_cpu / NODE_CPU_MCORES, 1.0)
         psi_cap  = cpu_util * NODE_PSI_MAX_US
         return max(0.0, min(raw_psi, psi_cap, NODE_PSI_MAX_US))
-
-    def _empty_snapshot(self) -> Dict:
-        """Return zeroed snapshot when no pods are active."""
-        return {
-            "timestamp":        datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-            "cpu_usage_pct":    0.0,
-            "cpu_psi_some_pct": 0.0,
-            "ram_usage_pct":    0.0,
-            "ram_usage_mi":     0.0,
-            "disk_used_pct":    0.0,
-            "sched_total_ms":   0.0,
-            "dstate_total_ms":  0.0,
-            "softirq_total_ms": 0.0,
-            "node_cpu_watts":   0.0,
-            "_cpu_mcores":      0.0,
-            "_ram_mi":          0.0,
-            "_psi_us":          0.0,
-            "_disk_space_mb":   0.0,
-            "_disk_usage_mb":   0.0,
-            "_pod_count":       0,
-        }

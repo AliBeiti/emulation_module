@@ -83,6 +83,21 @@ class CapacityResponse(BaseModel):
     disk_total_gb:    int
 
 
+class TransactionRequest(BaseModel):
+    type:            str = Field(..., description="Transaction type, e.g. 'transfer'")
+    buyer:           dict = Field(..., description="Buyer object from trading module")
+    seller:          dict = Field(..., description="Seller object from trading module")
+    amount:          float = Field(..., description="Agreed transaction amount")
+    tx_start_ts:     str = Field(..., description="Transaction start timestamp")
+    lease_duration:  int = Field(..., gt=0, description="Lease duration in seconds")
+
+
+class TransactionResponse(BaseModel):
+    status:   str
+    job_id:   str
+    message:  str
+
+
 # ── Endpoints ─────────────────────────────────────────────────────────────────
 
 @app.post("/submit", response_model=SubmitResponse, status_code=202)
@@ -117,6 +132,47 @@ async def submit_job(request: SubmitRequest):
             f"Job accepted. Will start at next tick. "
             f"Active for {request.lifetime_seconds}s "
             f"(~{request.lifetime_seconds // 5} windows)."
+        )
+    )
+
+
+@app.post("/transaction", response_model=TransactionResponse, status_code=202)
+async def handle_transaction(request: TransactionRequest):
+    """
+    Receives a confirmed transaction from the trading module.
+    Immediately adds a hotel workload for the duration of the lease.
+
+    The emulation module picks the correct dataset automatically
+    based on current composition + 1 new hotel instance.
+    """
+    if request.type != "transfer":
+        raise HTTPException(
+            status_code=400,
+            detail=f"Unsupported transaction type '{request.type}'. Only 'transfer' is supported."
+        )
+
+    timeline = state.get("timeline")
+    if timeline is None:
+        raise HTTPException(status_code=503, detail="Emulation module not ready")
+
+    job = timeline.add_job(
+        app_type         = "hotel",
+        lifetime_seconds = request.lease_duration
+    )
+
+    logger.info(
+        f"Transaction accepted: job={job.job_id} | "
+        f"buyer={request.buyer} | amount={request.amount} | "
+        f"lease={request.lease_duration}s"
+    )
+
+    return TransactionResponse(
+        status  = "accepted",
+        job_id  = job.job_id,
+        message = (
+            f"Hotel workload scheduled for {request.lease_duration}s "
+            f"(~{request.lease_duration // 5} windows). "
+            f"Job ID: {job.job_id}"
         )
     )
 
