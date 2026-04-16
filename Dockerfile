@@ -33,6 +33,7 @@ COPY replay_engine.py .
 COPY aggregator.py .
 COPY baseline_provider.py .
 COPY transaction_poller.py .
+COPY prepare_calibration.py .
 COPY kwok_manager.py .
 COPY api.py .
 COPY main.py .
@@ -41,6 +42,7 @@ COPY main.py .
 # Run prepare_datasets_v2.py first to generate datasets/ folder
 COPY datasets/ /app/datasets/
 COPY baseline/ /app/baseline/
+COPY calibration/ /app/calibration/
 
 # Expose API port
 EXPOSE 8090

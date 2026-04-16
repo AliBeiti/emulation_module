@@ -34,7 +34,9 @@ import sys
 
 import uvicorn
 
-from config import API_HOST, API_PORT, TICK_INTERVAL_S
+from config import API_HOST, API_PORT, TICK_INTERVAL_S, BASE_DIR
+import os
+CALIBRATION_CSV = os.path.join(BASE_DIR, "calibration", "calibration_pod.csv")
 from timeline        import Timeline
 from dataset_selector import DatasetSelector
 from replay_engine   import ReplayEngine
@@ -69,10 +71,42 @@ def tick_loop(
     logger.info("Tick loop started")
     last_composition = {}
 
+    # ── Load calibration dataset at startup ───────────────────────────────────
+    calibration_engine = ReplayEngine()
+    if os.path.exists(CALIBRATION_CSV):
+        calibration_engine.load(CALIBRATION_CSV, "calibration")
+        # build identity namespace map
+        cal_ns = calibration_engine.get_dataset_namespaces()
+        calibration_engine.build_namespace_map(cal_ns)
+        logger.info(f"Calibration dataset loaded: {CALIBRATION_CSV}")
+    else:
+        logger.warning(f"Calibration CSV not found: {CALIBRATION_CSV} — skipping calibration phase")
+        state["calibration_done"] = True   # skip calibration if no file
+
     while True:
         tick_start = time.time()
 
         try:
+            # ── Calibration phase ─────────────────────────────────────────────
+            if not state.get("calibration_done", False):
+                if calibration_engine.is_loaded():
+                    cal_pods = calibration_engine.get_current_window_pods()
+                    metrics  = aggregator.compute(cal_pods)
+                    state["latest_metrics"] = metrics
+                    calibration_engine.advance_window()
+                    logger.debug(
+                        f"[CALIBRATION] window={calibration_engine.get_window_index()} | "
+                        f"cpu={metrics.get('cpu_usage_pct',0):.1f}% | "
+                        f"sched={metrics.get('sched_total_ms',0):.0f}ms"
+                    )
+                else:
+                    # no calibration data — serve baseline
+                    state["latest_metrics"] = aggregator.compute([])
+                _sleep_remaining(tick_start)
+                continue
+
+            # ── Normal operation (calibration done) ───────────────────────────
+
             # ── 1. Advance timeline ───────────────────────────────────────────
             composition_changed = timeline.tick()
             composition         = timeline.get_composition()

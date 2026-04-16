@@ -40,6 +40,7 @@ state: Dict = {
     "timeline":       None,   # Timeline instance
     "replay_engine":  None,   # ReplayEngine instance
     "started_at":     datetime.now().isoformat(),
+    "calibration_done": False,   # True after AC sends /calibration/done
 }
 
 # ── FastAPI app ────────────────────────────────────────────────────────────────
@@ -83,21 +84,6 @@ class CapacityResponse(BaseModel):
     disk_total_gb:    int
 
 
-class TransactionRequest(BaseModel):
-    type:            str = Field(..., description="Transaction type, e.g. 'transfer'")
-    buyer:           dict = Field(..., description="Buyer object from trading module")
-    seller:          dict = Field(..., description="Seller object from trading module")
-    amount:          float = Field(..., description="Agreed transaction amount")
-    tx_start_ts:     str = Field(..., description="Transaction start timestamp")
-    lease_duration:  int = Field(..., gt=0, description="Lease duration in seconds")
-
-
-class TransactionResponse(BaseModel):
-    status:   str
-    job_id:   str
-    message:  str
-
-
 # ── Endpoints ─────────────────────────────────────────────────────────────────
 
 @app.post("/submit", response_model=SubmitResponse, status_code=202)
@@ -113,6 +99,9 @@ async def submit_job(request: SubmitRequest):
             status_code=400,
             detail=f"Invalid app_type '{request.app_type}'. Must be one of {valid_apps}"
         )
+
+    if not state.get("calibration_done", False):
+        raise HTTPException(status_code=503, detail="Calibration in progress — not accepting jobs yet")
 
     timeline = state.get("timeline")
     if timeline is None:
@@ -136,46 +125,50 @@ async def submit_job(request: SubmitRequest):
     )
 
 
+
+
+class TransactionRequest(BaseModel):
+    type:            str   = Field(..., description="Transaction type, e.g. 'transfer'")
+    buyer:           dict  = Field(..., description="Buyer object from trading module")
+    seller:          dict  = Field(..., description="Seller object from trading module")
+    amount:          float = Field(..., description="Agreed transaction amount")
+    tx_start_ts:     str   = Field(..., description="Transaction start timestamp")
+    lease_duration:  int   = Field(..., gt=0, description="Lease duration in seconds")
+
+
+class TransactionResponse(BaseModel):
+    status:  str
+    job_id:  str
+    message: str
+
+
 @app.post("/transaction", response_model=TransactionResponse, status_code=202)
 async def handle_transaction(request: TransactionRequest):
     """
     Receives a confirmed transaction from the trading module.
     Immediately adds a hotel workload for the duration of the lease.
-
-    The emulation module picks the correct dataset automatically
-    based on current composition + 1 new hotel instance.
+    Blocked during calibration phase.
     """
+    if not state.get("calibration_done", False):
+        raise HTTPException(status_code=503, detail="Calibration in progress — not accepting transactions yet")
+
     if request.type != "transfer":
-        raise HTTPException(
-            status_code=400,
-            detail=f"Unsupported transaction type '{request.type}'. Only 'transfer' is supported."
-        )
+        raise HTTPException(status_code=400,
+            detail=f"Unsupported transaction type '{request.type}'. Only 'transfer' is supported.")
 
     timeline = state.get("timeline")
     if timeline is None:
         raise HTTPException(status_code=503, detail="Emulation module not ready")
 
-    job = timeline.add_job(
-        app_type         = "hotel",
-        lifetime_seconds = request.lease_duration
-    )
-
-    logger.info(
-        f"Transaction accepted: job={job.job_id} | "
-        f"buyer={request.buyer} | amount={request.amount} | "
-        f"lease={request.lease_duration}s"
-    )
+    job = timeline.add_job(app_type="hotel", lifetime_seconds=request.lease_duration)
+    logger.info(f"Transaction accepted: job={job.job_id} | buyer={request.buyer} | "
+                f"amount={request.amount} | lease={request.lease_duration}s")
 
     return TransactionResponse(
         status  = "accepted",
         job_id  = job.job_id,
-        message = (
-            f"Hotel workload scheduled for {request.lease_duration}s "
-            f"(~{request.lease_duration // 5} windows). "
-            f"Job ID: {job.job_id}"
-        )
+        message = (f"Hotel workload scheduled for {request.lease_duration}s. Job ID: {job.job_id}")
     )
-
 
 @app.get("/usage/latest", response_model=LatestMetrics)
 async def get_latest_metrics():
@@ -266,3 +259,39 @@ async def get_status():
 async def healthz():
     """Kubernetes liveness probe."""
     return {"status": "ok", "service": API_SERVICE_NAME}
+
+
+@app.post("/calibration/done")
+async def calibration_done(payload: dict = None):
+    """
+    AC posts to this endpoint when calibration is complete.
+    Expected body: {"signal": "FIXED"}
+    Switches emulation module from calibration phase to normal operation.
+    """
+    signal = (payload or {}).get("signal", "")
+    if signal != "FIXED":
+        raise HTTPException(
+            status_code=400,
+            detail=f"Invalid signal '{signal}'. Expected 'FIXED'."
+        )
+
+    if state.get("calibration_done"):
+        return {"status": "already_done", "message": "Calibration was already completed"}
+
+    state["calibration_done"] = True
+    logger.info("Calibration done signal received — switching to normal operation")
+
+    return {
+        "status": "ok",
+        "message": "Calibration complete. Emulation module switching to normal mode."
+    }
+
+
+@app.get("/calibration/status")
+async def calibration_status():
+    """Returns whether calibration phase is complete."""
+    done = state.get("calibration_done", False)
+    return {
+        "calibration_done": done,
+        "phase": "normal" if done else "calibration",
+    }
