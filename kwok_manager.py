@@ -7,8 +7,9 @@ Patches pod annotations with metric values every tick.
 
 Optimization principles:
   - Create/delete only the diff (what changed), never teardown everything
+  - Buyer-named namespaces: hotel_serf1/, hotel_serf2/ etc.
+  - On job expiry: remove only that buyer's namespace, not all
   - Cache pod existence to avoid redundant API calls
-  - Batch annotation patches per namespace
   - Reuse kubernetes client connection pool
 """
 
@@ -43,19 +44,16 @@ class KWOKManager:
     Responsibilities:
       1. Create fake KWOK node at startup
       2. Sync namespaces and pods when composition changes (diff only)
-      3. Patch pod annotations every tick with current metrics
-      4. Clean up on shutdown
-
-    Pod naming convention:
-      Each pod_name in dataset has format "namespace/service-name"
-      e.g. "hotel2/frontend" → namespace="hotel2", pod_name="frontend"
+      3. Remove only the expired buyer's namespace on job expiry
+      4. Patch pod annotations every tick with current metrics
+      5. Clean up on shutdown
     """
 
     def __init__(self, dry_run: bool = False):
         self._dry_run = dry_run
         self._k8s: Optional[client.CoreV1Api] = None
-        self._alive_namespaces: Set[str]  = set()
-        self._alive_pods: Dict[str, Set[str]] = {}  # {namespace: {pod_name}}
+        self._alive_namespaces: Set[str]       = set()
+        self._alive_pods: Dict[str, Set[str]]  = {}  # {namespace: {pod_name}}
 
         if not dry_run and K8S_AVAILABLE:
             self._init_k8s_client()
@@ -63,7 +61,6 @@ class KWOKManager:
     # ── Kubernetes client ─────────────────────────────────────────────────────
 
     def _init_k8s_client(self):
-        """Initialize Kubernetes client with connection pooling."""
         try:
             try:
                 k8s_config.load_incluster_config()
@@ -79,8 +76,8 @@ class KWOKManager:
             cfg = client.Configuration.get_default_copy()
             cfg.connection_pool_maxsize = 20
             api_client = client.ApiClient(configuration=cfg)
-            self._k8s = client.CoreV1Api(api_client=api_client)
-            self._k8s.list_namespace(limit=1)   # test connection
+            self._k8s  = client.CoreV1Api(api_client=api_client)
+            self._k8s.list_namespace(limit=1)
             logger.info("Kubernetes client initialized")
         except Exception as e:
             logger.error(f"Failed to initialize Kubernetes client: {e}")
@@ -89,7 +86,6 @@ class KWOKManager:
     # ── KWOK Node ─────────────────────────────────────────────────────────────
 
     def ensure_node(self):
-        """Create the KWOK emulation node if it does not exist."""
         if self._dry_run or not self._k8s:
             logger.info(f"[DRY-RUN] Would create KWOK node: {KWOK_NODE_NAME}")
             return
@@ -125,16 +121,8 @@ class KWOKManager:
                 }]
             },
             "status": {
-                "allocatable": {
-                    "cpu": KWOK_NODE_CPU,
-                    "memory": KWOK_NODE_MEMORY,
-                    "pods": "500"
-                },
-                "capacity": {
-                    "cpu": KWOK_NODE_CPU,
-                    "memory": KWOK_NODE_MEMORY,
-                    "pods": "500"
-                },
+                "allocatable": {"cpu": KWOK_NODE_CPU, "memory": KWOK_NODE_MEMORY, "pods": "500"},
+                "capacity":    {"cpu": KWOK_NODE_CPU, "memory": KWOK_NODE_MEMORY, "pods": "500"},
                 "phase": "Running",
                 "conditions": [
                     {"type": "Ready", "status": "True",
@@ -153,11 +141,9 @@ class KWOKManager:
         Sync namespaces and pods to match the new dataset's pod list.
         Only creates/deletes what changed — never tears down everything.
 
-        Args:
-            new_pod_rows: pod rows from the new dataset (single window sample)
-                          used only to determine required namespaces and pod names
+        Pod names in new_pod_rows already have buyer-named namespaces
+        (e.g. hotel_serf1/consul) from replay_engine namespace mapping.
         """
-        # determine required namespaces and pods from dataset
         required: Dict[str, Set[str]] = {}
         for row in new_pod_rows:
             parts = str(row["pod_name"]).split("/", 1)
@@ -174,17 +160,14 @@ class KWOKManager:
         ns_to_create = required_ns - current_ns
         ns_to_delete = current_ns  - required_ns
 
-        # create new namespaces and their pods
         for ns in ns_to_create:
             self._create_namespace(ns)
             for pod_name in required.get(ns, set()):
                 self._create_pod(ns, pod_name)
 
-        # delete removed namespaces (deletes all pods inside too)
         for ns in ns_to_delete:
             self._delete_namespace(ns)
 
-        # for unchanged namespaces, sync pod diff
         for ns in required_ns & current_ns:
             current_pods  = self._alive_pods.get(ns, set())
             required_pods = required.get(ns, set())
@@ -193,7 +176,6 @@ class KWOKManager:
             for pod in current_pods - required_pods:
                 self._delete_pod(ns, pod)
 
-        # update internal state
         self._alive_namespaces = required_ns
         self._alive_pods = {ns: set(pods) for ns, pods in required.items()}
 
@@ -202,29 +184,46 @@ class KWOKManager:
             f"{sum(len(p) for p in required.values())} pods"
         )
 
+    def remove_buyer_namespaces(self, app_type: str, buyer_name: str):
+        """
+        Remove only the namespace belonging to a specific buyer.
+        Called when a job expires so only that buyer's pods are removed.
+
+        Args:
+            app_type:   "hotel", "sn", or "sa"
+            buyer_name: sanitized buyer name (e.g. "serf2")
+        """
+        ns_to_remove = f"{app_type}_{buyer_name}"
+
+        if ns_to_remove not in self._alive_namespaces:
+            logger.debug(
+                f"Namespace {ns_to_remove} not found in alive set — "
+                f"nothing to remove"
+            )
+            return
+
+        self._delete_namespace(ns_to_remove)
+        self._alive_namespaces.discard(ns_to_remove)
+        self._alive_pods.pop(ns_to_remove, None)
+
+        logger.info(
+            f"Removed buyer namespace: {ns_to_remove} "
+            f"(job expired for buyer={buyer_name}, app={app_type})"
+        )
+
     def get_alive_namespaces(self) -> List[str]:
-        """Return list of currently alive namespace names."""
         return list(self._alive_namespaces)
 
     # ── Annotation Patching ───────────────────────────────────────────────────
 
     def patch_annotations(self, pod_rows: List[Dict], window_index: int):
-        """
-        Patch all pods with their current metric values as annotations.
-        Called every tick. Grouped by namespace for efficiency.
-
-        Args:
-            pod_rows: current window's pod rows with mapped pod_names
-            window_index: current replay window index
-        """
         if self._dry_run or not self._k8s:
             return
 
         from datetime import datetime
         ts = datetime.now().isoformat()
 
-        # group rows by namespace
-        by_ns: Dict[str, List[Dict]] = {}
+        by_ns: Dict[str, List] = {}
         for row in pod_rows:
             parts = str(row["pod_name"]).split("/", 1)
             if len(parts) != 2:
@@ -252,9 +251,7 @@ class KWOKManager:
                 patch = {"metadata": {"annotations": annotations}}
                 try:
                     self._k8s.patch_namespaced_pod(
-                        name=pod_name,
-                        namespace=ns,
-                        body=patch
+                        name=pod_name, namespace=ns, body=patch
                     )
                 except ApiException as e:
                     if e.status != 404:
@@ -274,7 +271,7 @@ class KWOKManager:
             ))
             logger.info(f"Created namespace: {ns}")
         except ApiException as e:
-            if e.status != 409:   # 409 = already exists
+            if e.status != 409:
                 logger.error(f"Failed to create namespace {ns}: {e}")
 
     def _delete_namespace(self, ns: str):
@@ -314,7 +311,7 @@ class KWOKManager:
                     "image": "fake-image:latest",
                     "resources": {
                         "requests": {"cpu": "100m", "memory": "128Mi"},
-                        "limits":   {"cpu": "1000m","memory": "512Mi"}
+                        "limits":   {"cpu": "1000m", "memory": "512Mi"}
                     }
                 }]
             }
@@ -345,7 +342,6 @@ class KWOKManager:
                 logger.error(f"Failed to delete pod {ns}/{pod_name}: {e}")
 
     def _kubectl_apply(self, manifest: dict):
-        """Apply a manifest via kubectl stdin."""
         process = subprocess.Popen(
             ["kubectl", "apply", "-f", "-"],
             stdin=subprocess.PIPE,

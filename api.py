@@ -56,6 +56,7 @@ app = FastAPI(
 class SubmitRequest(BaseModel):
     app_type:         str = Field(..., description="Application type: hotel, sn, or sa")
     lifetime_seconds: int = Field(..., gt=0, description="Job lifetime in seconds")
+    buyer_name:       str = Field("unknown", description="Buyer name for namespace tracking")
 
 
 class SubmitResponse(BaseModel):
@@ -109,10 +110,11 @@ async def submit_job(request: SubmitRequest):
 
     job = timeline.add_job(
         app_type         = request.app_type,
-        lifetime_seconds = request.lifetime_seconds
+        lifetime_seconds = request.lifetime_seconds,
+        buyer_name       = request.buyer_name or "unknown",
     )
 
-    logger.info(f"Job accepted: {job.job_id} | {request.app_type} | {request.lifetime_seconds}s")
+    logger.info(f"Job accepted: {job.job_id} | {request.app_type} | buyer={request.buyer_name} | {request.lifetime_seconds}s")
 
     return SubmitResponse(
         status  = "accepted",
@@ -160,8 +162,13 @@ async def handle_transaction(request: TransactionRequest):
     if timeline is None:
         raise HTTPException(status_code=503, detail="Emulation module not ready")
 
-    job = timeline.add_job(app_type="hotel", lifetime_seconds=request.lease_duration)
-    logger.info(f"Transaction accepted: job={job.job_id} | buyer={request.buyer} | "
+    buyer_name = request.buyer.get("name", "unknown") or "unknown"
+    job = timeline.add_job(
+        app_type         = "hotel",
+        lifetime_seconds = request.lease_duration,
+        buyer_name       = buyer_name,
+    )
+    logger.info(f"Transaction accepted: job={job.job_id} | buyer={buyer_name} | "
                 f"amount={request.amount} | lease={request.lease_duration}s")
 
     return TransactionResponse(

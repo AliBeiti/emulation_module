@@ -7,17 +7,24 @@ Starts two concurrent components:
   2. Tick loop       — runs every 5s, drives the emulation
 
 Flow per tick:
-  timeline.tick()
-    → if composition changed:
-        dataset_selector.select(composition) → new CSV path
-        replay_engine.load(csv_path)
-        kwok_manager.sync(sample_pods)
-        replay_engine.build_namespace_map(alive_namespaces)
-    → pod_rows = replay_engine.get_current_window_pods()
-    → kwok_manager.patch_annotations(pod_rows, window_index)
-    → metrics = aggregator.compute(pod_rows)
-    → state["latest_metrics"] = metrics
-    → replay_engine.advance_window()
+  [Calibration phase]
+    replay calibration_pod.csv window by window
+    serve metrics to AC via /usage/latest
+    wait for POST /calibration/done {"signal": "FIXED"}
+
+  [Normal phase]
+    timeline.tick()
+      → on job expiry: kwok_manager.remove_buyer_namespaces() for expired jobs
+      → if composition changed:
+          dataset_selector.select(composition) → new CSV path
+          replay_engine.load(csv_path, preserve_window=True)
+          build buyer namespace map from active jobs
+          kwok_manager.sync(sample_pods with buyer namespaces)
+      → pod_rows = replay_engine.get_current_window_pods()
+      → kwok_manager.patch_annotations(pod_rows, window_index)
+      → metrics = aggregator.compute(pod_rows)
+      → state["latest_metrics"] = metrics
+      → replay_engine.advance_window()
 
 Usage:
   python main.py                    # normal mode
@@ -25,27 +32,27 @@ Usage:
   python main.py --no-kwok          # skip KWOK, only expose metrics API
 """
 
-import asyncio
 import argparse
 import logging
+import os
 import threading
 import time
 import sys
+from typing import Dict, List
 
 import uvicorn
 
 from config import API_HOST, API_PORT, TICK_INTERVAL_S, BASE_DIR
-import os
-CALIBRATION_CSV = os.path.join(BASE_DIR, "calibration", "calibration_pod.csv")
-from timeline        import Timeline
+from timeline         import Timeline
 from dataset_selector import DatasetSelector
-from replay_engine   import ReplayEngine
-from aggregator      import Aggregator
-from kwok_manager    import KWOKManager
-from api             import app, state
+from replay_engine    import ReplayEngine
+from aggregator       import Aggregator
+from kwok_manager     import KWOKManager
+from api              import app, state
 from transaction_poller import TransactionPoller
 
-# ── Logging setup ─────────────────────────────────────────────────────────────
+CALIBRATION_CSV = os.path.join(BASE_DIR, "calibration", "calibration_pod.csv")
+
 logging.basicConfig(
     level   = logging.INFO,
     format  = "%(asctime)s [%(levelname)s] %(name)s — %(message)s",
@@ -54,34 +61,49 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
+# ── Buyer namespace helpers ────────────────────────────────────────────────────
+
+def get_active_jobs_by_app(timeline: Timeline) -> Dict[str, List[str]]:
+    """
+    Return {app_type: [buyer_name, ...]} ordered by job start_tick (oldest first).
+    Used to build buyer-named namespace mappings.
+    """
+    active_jobs = timeline.get_active_job_objects()
+    active_jobs_sorted = sorted(active_jobs, key=lambda j: (j.app_type, j.start_tick))
+
+    by_app: Dict[str, List[str]] = {}
+    for job in active_jobs_sorted:
+        if job.app_type not in by_app:
+            by_app[job.app_type] = []
+        by_app[job.app_type].append(job.buyer_name)
+
+    return by_app
+
+
 # ── Tick loop ──────────────────────────────────────────────────────────────────
 
 def tick_loop(
-    timeline:         Timeline,
-    selector:         DatasetSelector,
-    replay_engine:    ReplayEngine,
-    aggregator:       Aggregator,
-    kwok_manager:     KWOKManager,
-    no_kwok:          bool = False,
+    timeline:      Timeline,
+    selector:      DatasetSelector,
+    replay_engine: ReplayEngine,
+    aggregator:    Aggregator,
+    kwok_manager:  KWOKManager,
+    no_kwok:       bool = False,
 ):
-    """
-    Main emulation loop. Runs every TICK_INTERVAL_S seconds.
-    Drives dataset selection, KWOK sync, metric replay, and aggregation.
-    """
     logger.info("Tick loop started")
-    last_composition = {}
 
     # ── Load calibration dataset at startup ───────────────────────────────────
     calibration_engine = ReplayEngine()
     if os.path.exists(CALIBRATION_CSV):
         calibration_engine.load(CALIBRATION_CSV, "calibration")
-        # build identity namespace map
         cal_ns = calibration_engine.get_dataset_namespaces()
         calibration_engine.build_namespace_map(cal_ns)
         logger.info(f"Calibration dataset loaded: {CALIBRATION_CSV}")
     else:
-        logger.warning(f"Calibration CSV not found: {CALIBRATION_CSV} — skipping calibration phase")
-        state["calibration_done"] = True   # skip calibration if no file
+        logger.warning(
+            f"Calibration CSV not found: {CALIBRATION_CSV} — skipping calibration phase"
+        )
+        state["calibration_done"] = True
 
     while True:
         tick_start = time.time()
@@ -100,77 +122,89 @@ def tick_loop(
                         f"sched={metrics.get('sched_total_ms',0):.0f}ms"
                     )
                 else:
-                    # no calibration data — serve baseline
                     state["latest_metrics"] = aggregator.compute([])
                 _sleep_remaining(tick_start)
                 continue
 
-            # ── Normal operation (calibration done) ───────────────────────────
+            # ── Normal operation ──────────────────────────────────────────────
 
             # ── 1. Advance timeline ───────────────────────────────────────────
             composition_changed = timeline.tick()
             composition         = timeline.get_composition()
 
-            # ── 2. Handle composition change ──────────────────────────────────
+            # ── 2. Handle expired jobs (remove only their namespaces) ─────────
+            expired_jobs = timeline.get_expired_jobs()
+            if expired_jobs and not no_kwok:
+                for job in expired_jobs:
+                    kwok_manager.remove_buyer_namespaces(
+                        app_type   = job.app_type,
+                        buyer_name = job.buyer_name,
+                    )
+
+            # ── 3. Handle composition change ──────────────────────────────────
             if composition_changed or not replay_engine.is_loaded():
 
                 if not composition:
-                    # no active jobs — clear metrics and remove KWOK pods
                     state["latest_metrics"] = aggregator.compute([])
                     if not no_kwok:
                         kwok_manager.sync([])
-                    logger.info("No active jobs — metrics cleared, KWOK pods removed")
+                    logger.info("No active jobs — serving baseline, KWOK pods removed")
+
                 else:
-                    # select new dataset
                     csv_path, meta = selector.select(composition)
 
                     if csv_path is None:
-                        logger.error(f"No dataset found for {composition} — keeping old dataset")
+                        logger.error(
+                            f"No dataset found for {composition} — keeping old dataset"
+                        )
                     else:
-                        dataset_key = selector._composition_to_key(composition)
-                        replay_engine.load(csv_path, dataset_key)
+                        dataset_key  = selector._composition_to_key(composition)
+                        is_first_load = not replay_engine.is_loaded()
 
-                        # sync KWOK pods (diff only)
+                        # preserve window when switching, reset on first load
+                        replay_engine.load(
+                            csv_path,
+                            dataset_key,
+                            preserve_window = not is_first_load,
+                        )
+
+                        # build buyer-named namespace map
+                        jobs_by_app = get_active_jobs_by_app(timeline)
+                        replay_engine.build_buyer_namespace_map(jobs_by_app)
+
                         if not no_kwok:
-                            sample_raw = replay_engine._windows.get(0, [])
+                            sample_raw = replay_engine.get_current_window_pods()
                             kwok_manager.sync(sample_raw)
-                            alive_ns = kwok_manager.get_alive_namespaces()
-                            replay_engine.build_namespace_map(alive_ns)
                         else:
-                            # no-kwok mode: identity map using dataset namespaces
                             dataset_ns = replay_engine.get_dataset_namespaces()
                             replay_engine.build_namespace_map(dataset_ns)
 
                         logger.info(
                             f"Dataset loaded: {dataset_key} | "
-                            f"composition: {composition}"
+                            f"composition: {composition} | "
+                            f"buyers: {jobs_by_app}"
                         )
 
-                last_composition = composition
-
-            # ── 3. Skip tick if no active jobs ────────────────────────────────
+            # ── 4. Skip tick if no active jobs ────────────────────────────────
             if not composition or not replay_engine.is_loaded():
-                # keep serving fresh baseline rows every tick during idle
                 if not composition:
                     state["latest_metrics"] = aggregator.compute([])
-                    logger.info("No active jobs — serving baseline metrics")
                 _sleep_remaining(tick_start)
                 continue
 
-            # ── 4. Get current window pods (with namespace mapping) ───────────
+            # ── 5. Get current window pods ────────────────────────────────────
             pod_rows = replay_engine.get_current_window_pods()
 
-            # ── 5. Patch KWOK pod annotations ─────────────────────────────────
+            # ── 6. Patch KWOK pod annotations ─────────────────────────────────
             if not no_kwok:
                 kwok_manager.patch_annotations(
-                    pod_rows,
-                    replay_engine.get_window_index()
+                    pod_rows, replay_engine.get_window_index()
                 )
 
-            # ── 6. Aggregate to node level ────────────────────────────────────
+            # ── 7. Aggregate to node level ────────────────────────────────────
             metrics = aggregator.compute(pod_rows)
 
-            # ── 7. Store for API ──────────────────────────────────────────────
+            # ── 8. Store for API ──────────────────────────────────────────────
             state["latest_metrics"] = metrics
 
             logger.info(
@@ -182,7 +216,7 @@ def tick_loop(
                 f"power {metrics.get('node_cpu_watts', 0):.1f}W"
             )
 
-            # ── 8. Advance window ─────────────────────────────────────────────
+            # ── 9. Advance window ─────────────────────────────────────────────
             replay_engine.advance_window()
 
         except Exception as e:
@@ -192,34 +226,32 @@ def tick_loop(
 
 
 def _sleep_remaining(tick_start: float):
-    """Sleep for the remainder of the tick interval."""
-    elapsed = time.time() - tick_start
+    elapsed   = time.time() - tick_start
     remaining = TICK_INTERVAL_S - elapsed
     if remaining > 0:
         time.sleep(remaining)
     else:
-        logger.warning(f"Tick took {elapsed:.2f}s — longer than interval {TICK_INTERVAL_S}s")
+        logger.warning(
+            f"Tick took {elapsed:.2f}s — longer than interval {TICK_INTERVAL_S}s"
+        )
 
 
 # ── Entry point ────────────────────────────────────────────────────────────────
 
 def main():
     parser = argparse.ArgumentParser(description="Emulation Module")
-    parser.add_argument("--dry-run", action="store_true",
-                        help="Disable Kubernetes API calls")
-    parser.add_argument("--no-kwok", action="store_true",
-                        help="Skip KWOK pod management (metrics API only)")
+    parser.add_argument("--dry-run",   action="store_true")
+    parser.add_argument("--no-kwok",   action="store_true")
     parser.add_argument("--log-level", default="INFO",
                         choices=["DEBUG", "INFO", "WARNING", "ERROR"])
     args = parser.parse_args()
 
     logging.getLogger().setLevel(getattr(logging, args.log_level))
 
-    logger.info("="*60)
+    logger.info("=" * 60)
     logger.info("EMULATION MODULE STARTING")
-    logger.info("="*60)
+    logger.info("=" * 60)
 
-    # ── Initialize components ─────────────────────────────────────────────────
     try:
         timeline      = Timeline()
         selector      = DatasetSelector()
@@ -230,37 +262,31 @@ def main():
         logger.error(f"Initialization failed: {e}")
         sys.exit(1)
 
-    # ensure KWOK node exists
     if not args.dry_run and not args.no_kwok:
         try:
             kwok_manager.ensure_node()
         except Exception as e:
             logger.warning(f"Could not ensure KWOK node: {e}")
 
-    # ── Share components with API ─────────────────────────────────────────────
     state["timeline"]      = timeline
     state["replay_engine"] = replay_engine
 
     logger.info(f"Dataset index loaded: {len(selector.list_available())} datasets")
     logger.info(f"API will be available at http://{API_HOST}:{API_PORT}")
-    logger.info(f"Admission Control endpoint: GET /usage/latest")
 
-    # ── Start tick loop in background thread ──────────────────────────────────
     tick_thread = threading.Thread(
-        target   = tick_loop,
-        args     = (timeline, selector, replay_engine, aggregator,
-                    kwok_manager, args.no_kwok),
-        daemon   = True,
-        name     = "tick-loop"
+        target = tick_loop,
+        args   = (timeline, selector, replay_engine, aggregator,
+                  kwok_manager, args.no_kwok),
+        daemon = True,
+        name   = "tick-loop"
     )
     tick_thread.start()
     logger.info("Tick loop started in background thread")
 
-    # ── Start transaction poller ───────────────────────────────────────────────
     poller = TransactionPoller(timeline=timeline)
     poller.start()
 
-    # ── Start FastAPI server (blocking) ───────────────────────────────────────
     uvicorn.run(
         app,
         host      = API_HOST,

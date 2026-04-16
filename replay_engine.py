@@ -2,25 +2,29 @@
 replay_engine.py
 
 Loads an emulation dataset into memory and replays it window by window.
-Manages namespace mapping between dataset pod names and real KWOK pod names.
+Manages namespace mapping between dataset pod names and buyer-named KWOK namespaces.
 
 Key responsibilities:
-  - Load dataset CSV once → keep in memory as dict[window_index → DataFrame]
+  - Load dataset CSV once → keep in memory as dict[window_index → list of dicts]
   - Advance window index every tick, loop at MAX_WINDOWS
-  - Apply namespace mapping: dataset ns → kwok ns
+  - Apply namespace mapping: dataset ns → buyer-named ns (e.g. hotel/ → hotel_serf2/)
+  - Preserve window index across dataset switches (no restart from 0)
   - Return current window's pod rows for annotation
 
-Namespace mapping example:
-  Dataset has: hotel/, hotel2/, sn1/, sn2/, sa1/, sa2/, sa3/
-  KWOK alive:  hotel/, hotel2/, sn1/, sn2/, sa1/, sa3/, sa4/  (sa2 removed)
+Namespace mapping (new):
+  Dataset has: hotel/, hotel2/, hotel3/  (for 3 hotel jobs)
+  Active buyers: serf1, serf2, serf3     (ordered by job start time)
   Map:
-    hotel/  → hotel/
-    hotel2/ → hotel2/
-    sn1/    → sn1/
-    sn2/    → sn2/
-    sa1/    → sa1/
-    sa2/    → sa3/    ← positional mapping
-    sa3/    → sa4/
+    hotel/  → hotel_serf1/
+    hotel2/ → hotel_serf2/
+    hotel3/ → hotel_serf3/
+
+  When serf2's job expires:
+    Dataset switches to h2s0a0: hotel/, hotel2/
+    Remaining buyers: serf1, serf3
+    Map:
+      hotel/  → hotel_serf1/
+      hotel2/ → hotel_serf3/
 """
 
 import logging
@@ -34,28 +38,31 @@ logger = logging.getLogger(__name__)
 
 class ReplayEngine:
     """
-    Manages dataset loading and window-by-window replay with namespace mapping.
-
-    Thread safety: the caller (main loop) is single-threaded for replay.
-    The api.py may read current state concurrently — reads are safe since
-    Python dict/int reads are atomic for simple types.
+    Manages dataset loading and window-by-window replay with
+    buyer-named namespace mapping.
     """
 
     def __init__(self):
-        # dataset storage: window_index → list of pod row dicts
         self._windows: Dict[int, List[Dict]] = {}
-        self._total_windows    = 0
-        self._current_window   = 0
-        self._current_dataset  = None   # key of currently loaded dataset
+        self._total_windows   = 0
+        self._current_window  = 0
+        self._current_dataset = None
         self._namespace_map: Dict[str, str] = {}  # dataset_ns → kwok_ns
-        self._loaded           = False
+        self._loaded          = False
 
     # ── Dataset loading ───────────────────────────────────────────────────────
 
-    def load(self, csv_path: str, dataset_key: str):
+    def load(self, csv_path: str, dataset_key: str, preserve_window: bool = False):
         """
-        Load a new dataset. Resets window index to 0.
-        Called when composition changes and a new dataset is selected.
+        Load a new dataset.
+
+        Args:
+            csv_path:         path to pod CSV
+            dataset_key:      key string e.g. 'h2s0a0'
+            preserve_window:  if True, keep current window index (clamped to
+                              new dataset size) instead of resetting to 0.
+                              Use True when switching datasets due to a job
+                              joining/leaving — replay continues at same point.
         """
         logger.info(f"Loading dataset: {dataset_key} from {csv_path}")
 
@@ -68,21 +75,30 @@ class ReplayEngine:
             for c in missing:
                 df[c] = 0.0
 
-        # build window dict: {window_index: [{pod_row}, ...]}
+        # build window dict
         self._windows = {}
         for win_idx, group in df.groupby("window_index"):
             self._windows[int(win_idx)] = group.to_dict(orient="records")
 
         self._total_windows  = len(self._windows)
-        self._current_window = 0
         self._current_dataset = dataset_key
         self._loaded = True
 
-        logger.info(
-            f"Dataset loaded: {dataset_key} | "
-            f"{self._total_windows} windows | "
-            f"{len(df)} total pod rows"
-        )
+        if preserve_window and self._total_windows > 0:
+            # clamp to new dataset size so we never go out of bounds
+            self._current_window = self._current_window % self._total_windows
+            logger.info(
+                f"Dataset loaded: {dataset_key} | "
+                f"{self._total_windows} windows | "
+                f"window preserved at {self._current_window}"
+            )
+        else:
+            self._current_window = 0
+            logger.info(
+                f"Dataset loaded: {dataset_key} | "
+                f"{self._total_windows} windows | "
+                f"window reset to 0"
+            )
 
     def is_loaded(self) -> bool:
         return self._loaded
@@ -91,70 +107,88 @@ class ReplayEngine:
 
     def build_namespace_map(
         self,
-        alive_namespaces: List[str]
+        alive_namespaces: List[str],
     ) -> Dict[str, str]:
         """
-        Build a positional mapping from dataset namespaces → alive KWOK namespaces.
-
-        Logic:
-          - For each app type (hotel, sn, sa), sort both dataset namespaces
-            and alive namespaces for that app type
-          - Map them positionally: 1st dataset ns → 1st alive ns, etc.
-          - Store result in self._namespace_map
-
-        Args:
-            alive_namespaces: list of currently alive KWOK namespace names
-                              e.g. ["hotel", "hotel2", "sn1", "sa1", "sa3", "sa4"]
-
-        Returns:
-            The built mapping dict (also stored in self._namespace_map)
+        Build positional mapping from dataset namespaces → alive KWOK namespaces.
+        Used in no-kwok mode or legacy mode.
         """
         if not self._loaded:
             return {}
 
-        # get all dataset namespaces from first window
-        dataset_namespaces = set()
-        if 0 in self._windows:
-            for row in self._windows[0]:
-                ns = str(row["pod_name"]).split("/")[0]
-                dataset_namespaces.add(ns)
-
-        # group by app type
+        dataset_namespaces = self._get_dataset_namespaces_set()
         app_types = ("hotel", "sn", "sa")
         mapping   = {}
 
         for app in app_types:
-            # dataset namespaces for this app
-            ds_ns = sorted([
-                ns for ns in dataset_namespaces
-                if ns.startswith(app)
-            ], key=lambda x: (len(x), x))
-
-            # alive namespaces for this app
-            alive_ns = sorted([
-                ns for ns in alive_namespaces
-                if ns.startswith(app)
-            ], key=lambda x: (len(x), x))
-
-            # positional mapping
+            ds_ns = sorted(
+                [ns for ns in dataset_namespaces if ns.startswith(app)],
+                key=lambda x: (len(x), x)
+            )
+            alive_ns = sorted(
+                [ns for ns in alive_namespaces if ns.startswith(app)],
+                key=lambda x: (len(x), x)
+            )
             for i, ds in enumerate(ds_ns):
                 if i < len(alive_ns):
                     mapping[ds] = alive_ns[i]
                     logger.debug(f"Namespace map: {ds} → {alive_ns[i]}")
-                else:
-                    # more dataset namespaces than alive — skip extras
-                    logger.debug(f"Namespace {ds} has no alive counterpart, skipping")
 
         self._namespace_map = mapping
         logger.info(f"Namespace map built: {mapping}")
+        return mapping
+
+    def build_buyer_namespace_map(
+        self,
+        active_jobs_by_app: Dict[str, List[str]],
+    ) -> Dict[str, str]:
+        """
+        Build namespace mapping using buyer names.
+
+        Args:
+            active_jobs_by_app: dict of {app_type: [buyer_name, ...]}
+                                ordered by job start time (oldest first)
+                                e.g. {"hotel": ["serf1", "serf3"], "sn": ["serf2"]}
+
+        Returns:
+            mapping dict stored in self._namespace_map
+
+        Example:
+            Dataset h2s0a0 has: hotel/, hotel2/
+            active_jobs_by_app = {"hotel": ["serf1", "serf3"]}
+            Result: {hotel/: hotel_serf1/, hotel2/: hotel_serf3/}
+        """
+        if not self._loaded:
+            return {}
+
+        dataset_namespaces = self._get_dataset_namespaces_set()
+        app_types = ("hotel", "sn", "sa")
+        mapping   = {}
+
+        for app in app_types:
+            ds_ns = sorted(
+                [ns for ns in dataset_namespaces if ns.startswith(app)],
+                key=lambda x: (len(x), x)
+            )
+            buyers = active_jobs_by_app.get(app, [])
+
+            for i, ds in enumerate(ds_ns):
+                if i < len(buyers):
+                    buyer   = buyers[i]
+                    kwok_ns = f"{app}_{buyer}"
+                    mapping[ds] = kwok_ns
+                    logger.debug(f"Buyer namespace map: {ds} → {kwok_ns}")
+                else:
+                    logger.debug(f"Dataset ns {ds} has no buyer — skipping")
+
+        self._namespace_map = mapping
+        logger.info(f"Buyer namespace map built: {mapping}")
         return mapping
 
     def apply_namespace_map(self, pod_name: str) -> Optional[str]:
         """
         Apply namespace mapping to a pod name.
         Returns remapped pod name or None if namespace not in map.
-
-        e.g. "sa2/customer-feedback" → "sa3/customer-feedback"
         """
         parts = str(pod_name).split("/", 1)
         if len(parts) != 2:
@@ -168,37 +202,31 @@ class ReplayEngine:
     # ── Window replay ─────────────────────────────────────────────────────────
 
     def get_current_window_pods(self) -> List[Dict]:
-        """
-        Return pod rows for the current window with namespace mapping applied.
-        Rows with unmapped namespaces are skipped.
-        """
+        """Return pod rows for current window with namespace mapping applied."""
         if not self._loaded or self._current_window not in self._windows:
             return []
 
-        raw_rows = self._windows[self._current_window]
+        raw_rows    = self._windows[self._current_window]
         mapped_rows = []
-
         for row in raw_rows:
-            remapped_name = self.apply_namespace_map(row["pod_name"])
-            if remapped_name is None:
+            remapped = self.apply_namespace_map(row["pod_name"])
+            if remapped is None:
                 continue
-            row_copy = dict(row)
-            row_copy["pod_name"] = remapped_name
+            row_copy             = dict(row)
+            row_copy["pod_name"] = remapped
             mapped_rows.append(row_copy)
 
         return mapped_rows
 
     def advance_window(self):
-        """
-        Move to the next window. Loops back to 0 after MAX_WINDOWS
-        or after the last window in the dataset.
-        """
+        """Move to next window, looping at MAX_WINDOWS or dataset end."""
         if not self._loaded:
             return
-
         limit = min(self._total_windows, MAX_WINDOWS)
         self._current_window = (self._current_window + 1) % limit
         logger.debug(f"Window advanced to {self._current_window}/{limit}")
+
+    # ── Accessors ─────────────────────────────────────────────────────────────
 
     def get_window_index(self) -> int:
         return self._current_window
@@ -213,11 +241,16 @@ class ReplayEngine:
         return dict(self._namespace_map)
 
     def get_dataset_namespaces(self) -> List[str]:
-        """Return list of unique namespaces in the loaded dataset."""
+        """Return sorted list of unique namespaces in the loaded dataset."""
+        return sorted(self._get_dataset_namespaces_set())
+
+    # ── Internal helpers ──────────────────────────────────────────────────────
+
+    def _get_dataset_namespaces_set(self) -> set:
         if not self._loaded or 0 not in self._windows:
-            return []
+            return set()
         ns_set = set()
         for row in self._windows[0]:
             ns = str(row["pod_name"]).split("/")[0]
             ns_set.add(ns)
-        return sorted(ns_set)
+        return ns_set

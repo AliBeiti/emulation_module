@@ -133,6 +133,12 @@ class TransactionPoller:
                 time.sleep(remaining)
 
     def _poll_once(self):
+        # do not process transactions during calibration phase
+        from api import state
+        if not state.get("calibration_done", False):
+            logger.debug("Calibration in progress — skipping transaction poll")
+            return
+
         raw = self._fetch()
         if raw is None:
             return
@@ -166,14 +172,16 @@ class TransactionPoller:
                     )
                     continue
 
+                buyer_name = tx.get("buyer", {}).get("name", "unknown") or "unknown"
                 job = self._timeline.add_job(
                     app_type         = "hotel",
                     lifetime_seconds = lifetime_s,
+                    buyer_name       = buyer_name,
                 )
                 new_count += 1
                 logger.info(
                     f"Transaction → Job: hash={tx_hash[:12]}… | "
-                    f"job_id={job.job_id} | "
+                    f"job_id={job.job_id} | buyer={buyer_name} | "
                     f"lifetime={lifetime_s}s (original={lease_dur}s)"
                 )
 
@@ -190,7 +198,7 @@ class TransactionPoller:
 
     def _is_relevant(self, tx_record: dict) -> bool:
         status = tx_record.get("Status", "")
-        if status not in ONGOING_STATUSES:
+        if status.lower() != "ongoing":
             return False
 
         tx = tx_record.get("Tx", {})
