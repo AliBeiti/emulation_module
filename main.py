@@ -34,6 +34,7 @@ Usage:
 
 import argparse
 import logging
+import logging.handlers
 import os
 import threading
 import time
@@ -51,14 +52,35 @@ from kwok_manager     import KWOKManager
 from api              import app, state
 from transaction_poller import TransactionPoller
 
+
+
+LOG_DIR = "/app/logs"
+os.makedirs(LOG_DIR, exist_ok=True)
+
+LOG_FORMAT  = "%(asctime)s [%(levelname)s] %(name)s — %(message)s"
+DATE_FORMAT = "%Y-%m-%d %H:%M:%S"
+
+root_logger = logging.getLogger()
+root_logger.setLevel(logging.INFO)
+
+stream_handler = logging.StreamHandler()
+stream_handler.setFormatter(logging.Formatter(LOG_FORMAT, DATE_FORMAT))
+root_logger.addHandler(stream_handler)
+
+file_handler = logging.handlers.RotatingFileHandler(
+    filename    = f"{LOG_DIR}/emulation.log",
+    maxBytes    = 10 * 1024 * 1024,
+    backupCount = 5,
+    encoding    = "utf-8"
+)
+file_handler.setFormatter(logging.Formatter(LOG_FORMAT, DATE_FORMAT))
+root_logger.addHandler(file_handler)
+
+logger = logging.getLogger(__name__)
+
 CALIBRATION_CSV = os.path.join(BASE_DIR, "calibration", "calibration_pod.csv")
 
-logging.basicConfig(
-    level   = logging.INFO,
-    format  = "%(asctime)s [%(levelname)s] %(name)s — %(message)s",
-    datefmt = "%Y-%m-%d %H:%M:%S"
-)
-logger = logging.getLogger(__name__)
+
 
 
 # ── Buyer namespace helpers ────────────────────────────────────────────────────
@@ -79,6 +101,48 @@ def get_active_jobs_by_app(timeline: Timeline) -> Dict[str, List[str]]:
 
     return by_app
 
+# ── snapshot loop ──────────────────────────────────────────────────────────────────
+
+def snapshot_loop(timeline: Timeline, kwok_manager: KWOKManager):
+    """Writes a JSON snapshot every 2 minutes to /app/logs/snapshots.jsonl"""
+    import json
+    from datetime import datetime
+
+    snapshot_path = f"{LOG_DIR}/snapshots.jsonl"
+    logger.info("Snapshot loop started")
+
+    while True:
+        time.sleep(120)  # every 2 minutes
+        try:
+            active_jobs = timeline.get_active_job_objects()
+            namespaces  = kwok_manager.get_alive_namespaces()
+            alive_pods  = kwok_manager._alive_pods
+
+            snapshot = {
+                "timestamp":       datetime.now().isoformat(),
+                "active_job_count": len(active_jobs),
+                "active_jobs": [
+                    {
+                        "job_id":    j.job_id,
+                        "app_type":  j.app_type,
+                        "buyer":     j.buyer_name,
+                        "remaining": j.remaining_ticks,
+                    }
+                    for j in active_jobs
+                ],
+                "namespace_count": len(namespaces),
+                "namespaces":      namespaces,
+                "pod_counts": {
+                    ns: len(pods) for ns, pods in alive_pods.items()
+                },
+                "total_pods": sum(len(p) for p in alive_pods.values()),
+            }
+
+            with open(snapshot_path, "a", encoding="utf-8") as f:
+                f.write(json.dumps(snapshot) + "\n")
+
+        except Exception as e:
+            logger.error(f"Snapshot error: {e}", exc_info=True)
 
 # ── Tick loop ──────────────────────────────────────────────────────────────────
 
@@ -283,6 +347,15 @@ def main():
     )
     tick_thread.start()
     logger.info("Tick loop started in background thread")
+
+    snapshot_thread = threading.Thread(
+        target = snapshot_loop,
+        args   = (timeline, kwok_manager),
+        daemon = True,
+        name   = "snapshot-loop"
+    )
+    snapshot_thread.start()
+    logger.info("Snapshot loop started in background thread")
 
     poller = TransactionPoller(timeline=timeline)
     poller.start()
