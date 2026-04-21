@@ -193,7 +193,7 @@ class KWOKManager:
             app_type:   "hotel", "sn", or "sa"
             buyer_name: sanitized buyer name (e.g. "serf2")
         """
-        ns_to_remove = f"{app_type}_{buyer_name}"
+        ns_to_remove = f"{app_type}-{buyer_name}"
 
         if ns_to_remove not in self._alive_namespaces:
             logger.debug(

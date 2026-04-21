@@ -93,7 +93,7 @@ class Timeline:
             end_tick   = start_tick + max(1, lifetime_seconds // TICK_INTERVAL_S)
 
             # sanitize buyer_name for use in namespace (lowercase, no spaces)
-            safe_buyer = buyer_name.strip().lower().replace(" ", "_") or "unknown"
+            safe_buyer = buyer_name.strip().lower().replace(" ", "-").replace("_", "-") or "unknown"
 
             job = Job(
                 job_id           = job_id,

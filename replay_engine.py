@@ -175,7 +175,7 @@ class ReplayEngine:
             for i, ds in enumerate(ds_ns):
                 if i < len(buyers):
                     buyer   = buyers[i]
-                    kwok_ns = f"{app}_{buyer}"
+                    kwok_ns = f"{app}-{buyer}"
                     mapping[ds] = kwok_ns
                     logger.debug(f"Buyer namespace map: {ds} → {kwok_ns}")
                 else:
