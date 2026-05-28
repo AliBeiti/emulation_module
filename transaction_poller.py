@@ -1,19 +1,22 @@
 """
 transaction_poller.py
 
-Background thread that polls the transaction module every POLL_INTERVAL_S
-seconds and adds hotel workloads to the timeline for new Ongoing transactions
+Background thread that reads the Redis stream "emulate" every POLL_INTERVAL_S
+seconds and adds workloads to the timeline for new OnGoing transactions
 belonging to this seller node.
+
+Replaces the old CometBFT HTTP polling approach with Redis stream consumer
+groups. Each message is acknowledged (XACK) immediately after processing so
+it is never delivered again, even across pod restarts.
 
 Seller IP detection (automatic, no hardcoding):
   1. SELLER_NODE_IP env var if set (manual override)
-  2. UDP socket trick to find the 10.0.1.x interface IP automatically
+  2. UDP socket trick to find the 10.0.x interface IP automatically
   3. If neither works, matches ALL sellers (logs a warning)
 
-Requires hostNetwork: true in pod spec so localhost:26657 reaches cometbft.
+Requires hostNetwork: true in pod spec so localhost:6379 reaches Redis.
 """
 
-import base64
 import json
 import logging
 import os
@@ -21,17 +24,22 @@ import socket
 import threading
 import time
 from datetime import datetime, timezone
-from typing import Optional, Set
-import urllib.request
-import urllib.error
+from typing import Optional
 
-from config import TRANSACTION_API_URL, SELLER_NODE_IP, POLL_INTERVAL_S
+import redis
+
+from config import SELLER_NODE_IP, POLL_INTERVAL_S
 
 logger = logging.getLogger(__name__)
 
-ONGOING_STATUSES    = {"ongoing", "Ongoing", "ONGOING", "OnGoing"}
-CLAB_SUBNET_PREFIX  = "10.0."          # ContainerLab experiment network
-CLAB_PROBE_TARGET   = "10.0.1.1"       # probe target to find local interface
+REDIS_HOST         = "localhost"
+REDIS_PORT         = 6379
+STREAM_KEY         = "emulate"
+STREAM_FIELD       = "ongoingtx"
+CONSUMER_GROUP     = "emulation-module"
+
+CLAB_SUBNET_PREFIX = "10.0."
+CLAB_PROBE_TARGET  = "10.0.1.1"
 
 
 def detect_clab_ip() -> str:
@@ -71,16 +79,15 @@ def detect_clab_ip() -> str:
 
 class TransactionPoller:
     """
-    Polls the transaction module API and injects hotel workloads
-    into the emulation timeline for new ongoing transactions.
+    Reads the Redis stream "emulate" and injects workloads into the emulation
+    timeline for new OnGoing transactions targeting this seller node.
     """
 
     def __init__(self, timeline):
-        self._timeline     = timeline
-        self._seen_hashes: Set[str] = set()
-        self._lock         = threading.Lock()
-        self._running      = False
+        self._timeline = timeline
+        self._running  = False
         self._thread: Optional[threading.Thread] = None
+        self._rd: Optional[redis.Redis] = None
 
         # Resolve seller IP: env var first, then auto-detect
         self._seller_ip = SELLER_NODE_IP.strip()
@@ -95,6 +102,9 @@ class TransactionPoller:
                 "transaction poller will match ALL sellers. "
                 "Ensure hostNetwork: true is set in pod spec."
             )
+
+        # Consumer name is the seller IP (or hostname as fallback)
+        self._consumer_name = self._seller_ip or socket.gethostname()
 
     # ── Public API ────────────────────────────────────────────────────────────
 
@@ -112,54 +122,127 @@ class TransactionPoller:
             f"Transaction poller started | "
             f"seller_ip={self._seller_ip or 'ANY'} | "
             f"interval={POLL_INTERVAL_S}s | "
-            f"url={TRANSACTION_API_URL}"
+            f"redis={REDIS_HOST}:{REDIS_PORT} | "
+            f"stream={STREAM_KEY} | "
+            f"group={CONSUMER_GROUP} | "
+            f"consumer={self._consumer_name}"
         )
 
     def stop(self):
         self._running = False
 
+    # ── Redis connection ──────────────────────────────────────────────────────
+
+    def _connect(self) -> bool:
+        """Connect to Redis and create the consumer group if it doesn't exist."""
+        try:
+            self._rd = redis.Redis(
+                host=REDIS_HOST,
+                port=REDIS_PORT,
+                decode_responses=True
+            )
+            self._rd.ping()
+
+            # Create consumer group; MKSTREAM creates the stream if absent
+            try:
+                self._rd.xgroup_create(
+                    STREAM_KEY,
+                    CONSUMER_GROUP,
+                    id="0",          # start from the very beginning
+                    mkstream=True
+                )
+                logger.info(
+                    f"Consumer group '{CONSUMER_GROUP}' created on "
+                    f"stream '{STREAM_KEY}'"
+                )
+            except redis.exceptions.ResponseError as e:
+                if "BUSYGROUP" in str(e):
+                    # Group already exists — normal on restart
+                    logger.debug(
+                        f"Consumer group '{CONSUMER_GROUP}' already exists"
+                    )
+                else:
+                    raise
+
+            return True
+
+        except redis.exceptions.ConnectionError as e:
+            logger.error(f"Redis connection failed: {e}")
+            self._rd = None
+            return False
+
     # ── Polling loop ──────────────────────────────────────────────────────────
 
     def _poll_loop(self):
         while self._running:
+            # Ensure Redis is connected
+            if self._rd is None:
+                if not self._connect():
+                    logger.warning(
+                        "Redis unavailable — retrying in "
+                        f"{POLL_INTERVAL_S}s"
+                    )
+                    time.sleep(POLL_INTERVAL_S)
+                    continue
+
             poll_start = time.time()
             try:
                 self._poll_once()
+            except redis.exceptions.ConnectionError as e:
+                logger.error(f"Redis connection lost: {e} — will reconnect")
+                self._rd = None
             except Exception as e:
                 logger.error(f"Transaction poller error: {e}", exc_info=True)
+
             elapsed   = time.time() - poll_start
             remaining = POLL_INTERVAL_S - elapsed
             if remaining > 0:
                 time.sleep(remaining)
 
     def _poll_once(self):
-        # do not process transactions during calibration phase
+        # Do not process transactions during calibration phase
         from api import state
         if not state.get("calibration_done", False):
             logger.debug("Calibration in progress — skipping transaction poll")
             return
 
-        raw = self._fetch()
-        if raw is None:
-            return
-        transactions = self._decode(raw)
-        if transactions is None:
+        # Read new messages: ">" means only undelivered messages
+        results = self._rd.xreadgroup(
+            groupname=CONSUMER_GROUP,
+            consumername=self._consumer_name,
+            streams={STREAM_KEY: ">"},
+            count=100,       # max messages per poll
+            block=None       # non-blocking
+        )
+
+        if not results:
             return
 
+        # results structure: [ (stream_key, [(msg_id, {field: value}), ...]) ]
+        _, messages = results[0]
         now       = datetime.now(timezone.utc)
         new_count = 0
 
-        for tx_record in transactions:
+        for msg_id, fields in messages:
             try:
-                if not self._is_relevant(tx_record):
+                raw_json = fields.get(STREAM_FIELD)
+                if not raw_json:
+                    logger.warning(
+                        f"Message {msg_id} missing field '{STREAM_FIELD}' "
+                        f"— acknowledging and skipping"
+                    )
+                    self._rd.xack(STREAM_KEY, CONSUMER_GROUP, msg_id)
                     continue
 
-                tx_hash = tx_record.get("tx_hash", "")
-                with self._lock:
-                    if tx_hash in self._seen_hashes:
-                        continue
-                    self._seen_hashes.add(tx_hash)
+                tx_record = json.loads(raw_json)
 
+                if not self._is_relevant(tx_record):
+                    # Acknowledge even irrelevant messages so they don't
+                    # accumulate in the pending list
+                    self._rd.xack(STREAM_KEY, CONSUMER_GROUP, msg_id)
+                    continue
+
+                tx_hash      = tx_record.get("tx_hash", "")
                 tx           = tx_record.get("tx", {})
                 lease_dur    = int(tx.get("lease_duration", 0))
                 tx_start_str = tx.get("tx_start_ts", "")
@@ -170,6 +253,7 @@ class TransactionPoller:
                         f"Skipping expired tx {tx_hash[:12]}… "
                         f"(lease already ended)"
                     )
+                    self._rd.xack(STREAM_KEY, CONSUMER_GROUP, msg_id)
                     continue
 
                 buyer_name = tx.get("buyer", {}).get("name", "unknown") or "unknown"
@@ -185,11 +269,16 @@ class TransactionPoller:
                     f"lifetime={lifetime_s}s (original={lease_dur}s)"
                 )
 
+                # Acknowledge after successful processing
+                self._rd.xack(STREAM_KEY, CONSUMER_GROUP, msg_id)
+
             except Exception as e:
                 logger.error(
-                    f"Failed to process tx "
-                    f"{tx_record.get('tx_hash','?')[:12]}: {e}"
+                    f"Failed to process message {msg_id}: {e}",
+                    exc_info=True
                 )
+                # Do NOT acknowledge on error — message stays pending
+                # and can be inspected or reprocessed manually
 
         if new_count:
             logger.info(f"Transaction poller: {new_count} new job(s) added")
@@ -242,52 +331,3 @@ class TransactionPoller:
                 f"— using full lease_duration"
             )
             return lease_duration_s
-
-    # ── HTTP fetch ────────────────────────────────────────────────────────────
-
-    def _fetch(self) -> Optional[dict]:
-        try:
-            req = urllib.request.Request(
-                TRANSACTION_API_URL,
-                headers={"Accept": "application/json"},
-            )
-            with urllib.request.urlopen(req, timeout=5) as resp:
-                raw_bytes = resp.read()
-            return json.loads(raw_bytes.decode("utf-8"))
-        except urllib.error.URLError as e:
-            logger.warning(f"Transaction API unreachable: {e}")
-            return None
-        except Exception as e:
-            logger.error(f"Transaction API fetch error: {e}")
-            return None
-
-    # ── Base64 decode ─────────────────────────────────────────────────────────
-
-    def _decode(self, response: dict) -> Optional[list]:
-        try:
-            value_b64 = (
-                response
-                .get("result", {})
-                .get("response", {})
-                .get("value", "")
-            )
-            if not value_b64:
-                logger.debug("Transaction API returned empty value field")
-                return None
-
-            decoded_bytes = base64.b64decode(value_b64)
-            decoded_str   = decoded_bytes.decode("utf-8", errors="ignore").rstrip("\x00")
-            json_end      = decoded_str.rfind("]") + 1
-            if json_end == 0:
-                logger.warning("No JSON array in decoded transaction value")
-                return None
-
-            transactions = json.loads(decoded_str[:json_end])
-            if not isinstance(transactions, list):
-                logger.warning("Decoded transaction value is not a list")
-                return None
-            return transactions
-
-        except Exception as e:
-            logger.error(f"Failed to decode transaction value: {e}")
-            return None
