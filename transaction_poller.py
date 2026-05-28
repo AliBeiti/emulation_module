@@ -154,13 +154,13 @@ class TransactionPoller:
                 if not self._is_relevant(tx_record):
                     continue
 
-                tx_hash = tx_record.get("TxHash", "")
+                tx_hash = tx_record.get("tx_hash", "")
                 with self._lock:
                     if tx_hash in self._seen_hashes:
                         continue
                     self._seen_hashes.add(tx_hash)
 
-                tx           = tx_record.get("Tx", {})
+                tx           = tx_record.get("tx", {})
                 lease_dur    = int(tx.get("lease_duration", 0))
                 tx_start_str = tx.get("tx_start_ts", "")
 
@@ -188,7 +188,7 @@ class TransactionPoller:
             except Exception as e:
                 logger.error(
                     f"Failed to process tx "
-                    f"{tx_record.get('TxHash','?')[:12]}: {e}"
+                    f"{tx_record.get('tx_hash','?')[:12]}: {e}"
                 )
 
         if new_count:
@@ -197,11 +197,11 @@ class TransactionPoller:
     # ── Filtering ─────────────────────────────────────────────────────────────
 
     def _is_relevant(self, tx_record: dict) -> bool:
-        status = tx_record.get("Status", "")
+        status = tx_record.get("status", "")
         if status.lower() != "ongoing":
             return False
 
-        tx = tx_record.get("Tx", {})
+        tx = tx_record.get("tx", {})
         if tx.get("type") != "transfer":
             return False
 
