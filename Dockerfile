@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # Set working directory
 WORKDIR /app
-
+RUN mkdir -p /app/logs
 # Copy and install Python dependencies first (layer caching)
 COPY requirements.txt .
 RUN pip install --no-cache-dir \
@@ -23,7 +23,8 @@ RUN pip install --no-cache-dir \
     "fastapi>=0.110.0" \
     "uvicorn>=0.29.0" \
     "kubernetes>=29.0.0" \
-    "pydantic>=2.0.0"
+    "pydantic>=2.0.0" \
+    "redis>=4.0.0"
 
 # Copy module source files
 COPY config.py .
@@ -33,6 +34,7 @@ COPY replay_engine.py .
 COPY aggregator.py .
 COPY baseline_provider.py .
 COPY transaction_poller.py .
+COPY event_logger.py .
 COPY prepare_calibration.py .
 COPY kwok_manager.py .
 COPY api.py .

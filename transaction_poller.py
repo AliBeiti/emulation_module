@@ -29,6 +29,7 @@ from typing import Optional
 import redis
 
 from config import SELLER_NODE_IP, POLL_INTERVAL_S
+from event_logger import EventLogger
 
 logger = logging.getLogger(__name__)
 
@@ -40,6 +41,8 @@ CONSUMER_GROUP     = "emulation-module"
 
 CLAB_SUBNET_PREFIX = "10.0."
 CLAB_PROBE_TARGET  = "10.0.1.1"
+
+_event_logger = EventLogger()
 
 
 def detect_clab_ip() -> str:
@@ -214,6 +217,7 @@ class TransactionPoller:
             count=100,       # max messages per poll
             block=None       # non-blocking
         )
+        received_unix = time.time()   # captured immediately after Redis delivers messages
 
         if not results:
             return
@@ -267,6 +271,14 @@ class TransactionPoller:
                     f"Transaction → Job: hash={tx_hash[:12]}… | "
                     f"job_id={job.job_id} | buyer={buyer_name} | "
                     f"lifetime={lifetime_s}s (original={lease_dur}s)"
+                )
+
+                _event_logger.log(
+                    tx_record     = tx_record,
+                    msg_id        = msg_id,
+                    job           = job,
+                    received_unix = received_unix,
+                    composition   = self._timeline.get_composition(),
                 )
 
                 # Acknowledge after successful processing
