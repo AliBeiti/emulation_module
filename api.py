@@ -6,9 +6,10 @@ Exposes all REST endpoints consumed by Admission Control, Pricing,
 and buyers.
 
 Endpoints:
-  POST /submit              ← buyer submits a job
   GET  /usage/latest        ← Admission Control reads current node metrics
   GET  /usage/capacity      ← node total resources (constant)
+  POST /calibration/done    ← Admission Control signals calibration complete
+  GET  /calibration/status  ← whether calibration phase is done
   GET  /status              ← current jobs and composition
   GET  /healthz             ← Kubernetes liveness probe
 
@@ -23,7 +24,7 @@ from datetime import datetime
 from typing import Dict, Optional
 
 from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 
 from config import (
     NODE_CPU_MCORES, NODE_CPU_CORES,
@@ -53,18 +54,6 @@ app = FastAPI(
 
 # ── Request / Response models ─────────────────────────────────────────────────
 
-class SubmitRequest(BaseModel):
-    app_type:         str = Field(..., description="Application type: hotel, sn, or sa")
-    lifetime_seconds: int = Field(..., gt=0, description="Job lifetime in seconds")
-    buyer_name:       str = Field("unknown", description="Buyer name for namespace tracking")
-
-
-class SubmitResponse(BaseModel):
-    status:   str
-    job_id:   str
-    message:  str
-
-
 class LatestMetrics(BaseModel):
     timestamp:        str
     cpu_usage_pct:    Optional[float]
@@ -86,96 +75,6 @@ class CapacityResponse(BaseModel):
 
 
 # ── Endpoints ─────────────────────────────────────────────────────────────────
-
-@app.post("/submit", response_model=SubmitResponse, status_code=202)
-async def submit_job(request: SubmitRequest):
-    """
-    Buyer submits a job request.
-    The job becomes active at the next 5s tick boundary.
-    Returns immediately with job_id and status.
-    """
-    valid_apps = {"hotel", "sn", "sa"}
-    if request.app_type not in valid_apps:
-        raise HTTPException(
-            status_code=400,
-            detail=f"Invalid app_type '{request.app_type}'. Must be one of {valid_apps}"
-        )
-
-    if not state.get("calibration_done", False):
-        raise HTTPException(status_code=503, detail="Calibration in progress — not accepting jobs yet")
-
-    timeline = state.get("timeline")
-    if timeline is None:
-        raise HTTPException(status_code=503, detail="Emulation module not ready")
-
-    job = timeline.add_job(
-        app_type         = request.app_type,
-        lifetime_seconds = request.lifetime_seconds,
-        buyer_name       = request.buyer_name or "unknown",
-    )
-
-    logger.info(f"Job accepted: {job.job_id} | {request.app_type} | buyer={request.buyer_name} | {request.lifetime_seconds}s")
-
-    return SubmitResponse(
-        status  = "accepted",
-        job_id  = job.job_id,
-        message = (
-            f"Job accepted. Will start at next tick. "
-            f"Active for {request.lifetime_seconds}s "
-            f"(~{request.lifetime_seconds // 5} windows)."
-        )
-    )
-
-
-
-
-class TransactionRequest(BaseModel):
-    type:            str   = Field(..., description="Transaction type, e.g. 'transfer'")
-    buyer:           dict  = Field(..., description="Buyer object from trading module")
-    seller:          dict  = Field(..., description="Seller object from trading module")
-    amount:          float = Field(..., description="Agreed transaction amount")
-    tx_start_ts:     str   = Field(..., description="Transaction start timestamp")
-    lease_duration:  int   = Field(..., gt=0, description="Lease duration in seconds")
-
-
-class TransactionResponse(BaseModel):
-    status:  str
-    job_id:  str
-    message: str
-
-
-@app.post("/transaction", response_model=TransactionResponse, status_code=202)
-async def handle_transaction(request: TransactionRequest):
-    """
-    Receives a confirmed transaction from the trading module.
-    Immediately adds a hotel workload for the duration of the lease.
-    Blocked during calibration phase.
-    """
-    if not state.get("calibration_done", False):
-        raise HTTPException(status_code=503, detail="Calibration in progress — not accepting transactions yet")
-
-    if request.type != "transfer":
-        raise HTTPException(status_code=400,
-            detail=f"Unsupported transaction type '{request.type}'. Only 'transfer' is supported.")
-
-    timeline = state.get("timeline")
-    if timeline is None:
-        raise HTTPException(status_code=503, detail="Emulation module not ready")
-
-    buyer_name = request.buyer.get("name", "unknown") or "unknown"
-    job = timeline.add_job(
-        app_type         = "hotel",
-        lifetime_seconds = request.lease_duration,
-        buyer_name       = buyer_name,
-    )
-    logger.info(f"Transaction accepted: job={job.job_id} | buyer={buyer_name} | "
-                f"amount={request.amount} | lease={request.lease_duration}s")
-
-    return TransactionResponse(
-        status  = "accepted",
-        job_id  = job.job_id,
-        message = (f"Hotel workload scheduled for {request.lease_duration}s. Job ID: {job.job_id}")
-    )
 
 @app.get("/usage/latest", response_model=LatestMetrics)
 async def get_latest_metrics():

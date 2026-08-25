@@ -27,7 +27,7 @@ spec:
       serviceAccountName: ksense-usage-api
 
       # hostNetwork: true — pod shares the node's network namespace
-      # This allows localhost:26657 inside the pod to reach cometbft
+      # This allows localhost:6379 inside the pod to reach Redis
       # on the node, and also allows correct ContainerLab IP detection
       hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet
@@ -38,14 +38,9 @@ spec:
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8090
-          env:
-            # Transaction module URL — localhost works because hostNetwork: true
-            - name: TRANSACTION_API_URL
-              value: "http://localhost:26657/abci_query?data=%22tx%22"
-
-            # SELLER_NODE_IP is intentionally NOT set here
-            # transaction_poller.py auto-detects the 10.0.x.x interface IP
-            # using the UDP socket trick at startup
+          # SELLER_NODE_IP is intentionally NOT set here
+          # transaction_poller.py auto-detects the 10.0.x.x interface IP
+          # using the UDP socket trick at startup
 
           livenessProbe:
             httpGet:
@@ -68,9 +63,11 @@ spec:
 # Admission Control connects via ClusterIP DNS (unchanged):
 #   http://ksense-usage-api.ksense.svc:8090/usage/latest
 #
-# Trading module / buyer node connects via NodePort:
-#   http://<seller-node-IP>:30090/transaction
+# Exposed via NodePort:
 #   http://<seller-node-IP>:30090/usage/latest
+#   http://<seller-node-IP>:30090/usage/capacity
+#   http://<seller-node-IP>:30090/status
+#   http://<seller-node-IP>:30090/healthz
 apiVersion: v1
 kind: Service
 metadata:
