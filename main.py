@@ -126,7 +126,7 @@ def snapshot_loop(timeline: Timeline, kwok_manager: KWOKManager):
                         "job_id":    j.job_id,
                         "app_type":  j.app_type,
                         "buyer":     j.buyer_name,
-                        "remaining": j.remaining_ticks,
+                        "remaining": j.end_tick - timeline.get_current_tick(),
                     }
                     for j in active_jobs
                 ],
