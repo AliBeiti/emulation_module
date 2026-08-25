@@ -11,14 +11,24 @@ set -e
 
 DOCKERHUB_USER="alibeiti"
 IMAGE_NAME="${DOCKERHUB_USER}/emulation-module"
+# NOTE: default tag here is "latest", but k8s/deployment.yaml currently pins
+# "v2" — building with no argument does NOT update what's actually deployed.
+# Not fixing that behavior here, just flagging it.
 TAG="${1:-latest}"
 
-# Check datasets exist
-if [ ! -f "datasets/dataset_index.json" ]; then
-    echo "ERROR: datasets/dataset_index.json not found"
-    echo "Run prepare_datasets.py first"
-    exit 1
-fi
+# Check the runtime data dataset_generator.py/main.py actually need exists
+# (datasets/ itself is generated on demand at container startup, not
+# pre-built, so it is intentionally not checked here)
+for required in \
+    "corrected_full/experiment_meta.json" \
+    "all_data_full/baseline_node.csv" \
+    "calibration/calibration_pod.csv"
+do
+    if [ ! -f "$required" ]; then
+        echo "ERROR: $required not found"
+        exit 1
+    fi
+done
 
 echo "Building ${IMAGE_NAME}:${TAG}..."
 docker build -t "${IMAGE_NAME}:${TAG}" .

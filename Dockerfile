@@ -1,6 +1,9 @@
 # ── Emulation Module Dockerfile ───────────────────────────────────────────────
 # Builds a self-contained image for the seller-side emulation module.
-# Datasets and baseline are baked into the image at build time.
+# Corrected source data and baseline are baked into the image at build time;
+# datasets/ itself starts empty — it's populated on container startup by
+# DatasetSelector's sweep + Tier A pre-warm (dataset_generator.py generates
+# on demand, dataset_cache.py caches the result).
 
 FROM python:3.11-slim
 
@@ -15,21 +18,17 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Set working directory
 WORKDIR /app
 RUN mkdir -p /app/logs
+RUN mkdir -p /app/datasets
 # Copy and install Python dependencies first (layer caching)
 COPY requirements.txt .
-RUN pip install --no-cache-dir \
-    "numpy==1.24.4" \
-    "pandas==2.0.3" \
-    "fastapi>=0.110.0" \
-    "uvicorn>=0.29.0" \
-    "kubernetes>=29.0.0" \
-    "pydantic>=2.0.0" \
-    "redis>=4.0.0"
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy module source files
 COPY config.py .
 COPY timeline.py .
 COPY dataset_selector.py .
+COPY dataset_generator.py .
+COPY dataset_cache.py .
 COPY replay_engine.py .
 COPY aggregator.py .
 COPY baseline_provider.py .
@@ -40,9 +39,11 @@ COPY kwok_manager.py .
 COPY api.py .
 COPY main.py .
 
-# Copy datasets and baseline into the image (baked in at build time)
-# Run prepare_datasets_v2.py first to generate datasets/ folder
-COPY datasets/ /app/datasets/
+# Corrected source data + baseline, baked in at build time.
+# datasets/ is intentionally NOT copied — it's generated on demand at
+# startup (see comment at the top of this file).
+COPY corrected_full/ /app/corrected_full/
+COPY all_data_full/baseline_node.csv /app/all_data_full/baseline_node.csv
 COPY baseline/ /app/baseline/
 COPY calibration/ /app/calibration/
 

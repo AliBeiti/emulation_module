@@ -1,0 +1,28 @@
+# Version control
+.git/
+.gitignore
+
+# Python bytecode
+__pycache__/
+*.pyc
+*.pyo
+
+# Tests (not needed in the runtime image)
+test_emulation_module.py
+
+# Dev-only tools and one-off data-prep scripts (not needed at runtime;
+# dataset_generator.py generates datasets on demand from corrected_full/)
+dry_run_testbench.py
+analyze_testbench.py
+prepare_datasets.py
+
+# Stale precomputed grid — datasets/ is generated fresh at container
+# startup by DatasetSelector's sweep + Tier A pre-warm, not shipped
+datasets/
+
+# all_data_full/ is ~120MB across 216 raw per-experiment files; only
+# baseline_node.csv is actually read at runtime (config.BASELINE_PATH)
+all_data_full/*
+!all_data_full/baseline_node.csv
+
+# corrected_full/ and calibration/ are fully needed at runtime — NOT excluded
