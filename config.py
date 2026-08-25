@@ -55,6 +55,16 @@ POWER_INTERCEPT   =  0.07331256227741711
 BASE_DIR          = os.path.dirname(os.path.abspath(__file__))
 DATASETS_DIR      = os.path.join(BASE_DIR, "datasets")
 DATASET_INDEX     = os.path.join(DATASETS_DIR, "dataset_index.json")
+CORRECTED_DIR     = os.path.join(BASE_DIR, "corrected_full")
+BASELINE_PATH     = os.path.join(BASE_DIR, "all_data_full", "baseline_node.csv")
+
+# ─── Dataset Cache ────────────────────────────────────────────────────────────
+# Size-bound LRU cache in front of dataset_generator.get_or_generate(). See
+# dataset_cache.py. 500 MiB is ~48x the ~10.4 MiB Tier A pre-warm footprint
+# and holds room for ~2,900 generated entries at the ~170 KiB Tier A average
+# — comparable to the full 3,024-cell composition grid — while remaining a
+# rounding error against NODE_DISK_GB.
+DATASET_CACHE_MAX_BYTES = 500 * 1024 * 1024   # 500 MiB
 
 # ─── API Settings ─────────────────────────────────────────────────────────────
 API_HOST          = "0.0.0.0"

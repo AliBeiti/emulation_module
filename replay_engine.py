@@ -66,6 +66,8 @@ class ReplayEngine:
         """
         logger.info(f"Loading dataset: {dataset_key} from {csv_path}")
 
+        # TODO: dataset_generator.py now writes datasets as .parquet, not .csv —
+        # switch this to pd.read_parquet(csv_path) once callers pass parquet paths.
         df = pd.read_csv(csv_path)
 
         # validate required columns

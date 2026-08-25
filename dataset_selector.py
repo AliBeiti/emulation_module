@@ -2,152 +2,198 @@
 dataset_selector.py
 
 Responsible for selecting the correct emulation dataset given a workload
-composition. Loads dataset_index.json once at startup and keeps it in memory.
+composition. Generates datasets on demand via dataset_generator.py and
+caches them in a size-bound LRU cache (dataset_cache.py) for the life of
+the process (no more static dataset_index.json / precomputed grid).
+
+At startup: sweeps DATASETS_DIR of any stray non-Tier-A .parquet files left
+over from a previous run (they're cheap to regenerate on demand, so nothing
+is persisted across restarts), then pre-warms the cache with all 62 Tier A
+compositions, pinned so they're never evicted.
 
 Usage:
     selector = DatasetSelector()
-    path, meta = selector.select({"hotel": 2, "sn": 1, "sa": 3})
-    # path = "datasets/h2s1a3_pod.csv"
+    path, meta = selector.select({"hotel": 2, "sn": 1, "sa": 3, "es": 1})
+    # path = ".../datasets/h2s1a3e1_pod.parquet"
 """
 
-import json
 import os
 import logging
 from typing import Dict, Optional, Tuple
 
-from config import DATASET_INDEX, DATASETS_DIR
+import config
+from dataset_generator import (
+    load_templates, load_experiment_meta, get_or_generate,
+    composition_to_key, parse_composition,
+)
+from dataset_cache import SizeBoundLRUCache
 
 logger = logging.getLogger(__name__)
 
 
 class DatasetSelector:
     """
-    Selects the best matching dataset for a given workload composition.
+    Selects (generating on demand, if needed) the dataset for a given
+    workload composition.
 
-    Lookup order:
-    1. Exact match  → use it directly
-    2. No match     → find closest by minimizing replica gap
-    3. No close     → return None (caller must handle gracefully)
+    Lookup order (delegated to dataset_generator.get_or_generate):
+    1. In-memory cache hit        → return immediately
+    2. Exact Tier A match on disk → copy + recompute directly
+    3. No exact match             → build from closest Tier A base + extra replicas
+    4. No viable base             → return (None, None), caller must handle gracefully
     """
 
     def __init__(self):
-        self._index: Dict = {}
-        self._load_index()
-
-    def _load_index(self):
-        """Load dataset_index.json into memory. Called once at startup."""
-        if not os.path.exists(DATASET_INDEX):
-            raise FileNotFoundError(
-                f"Dataset index not found: {DATASET_INDEX}\n"
-                f"Run prepare_datasets.py first."
-            )
-        with open(DATASET_INDEX, "r") as f:
-            self._index = json.load(f)
-        logger.info(f"Loaded dataset index: {len(self._index)} entries")
-
-    @staticmethod
-    def _composition_to_key(composition: Dict[str, int]) -> str:
-        """Convert {hotel:2, sn:1, sa:3} → 'h2s1a3'"""
-        h = composition.get("hotel", 0)
-        s = composition.get("sn", 0)
-        a = composition.get("sa", 0)
-        return f"h{h}s{s}a{a}"
-
-    @staticmethod
-    def _key_to_composition(key: str) -> Dict[str, int]:
-        """Convert 'h2s1a3' → {hotel:2, sn:1, sa:3}"""
-        import re
-        m = re.match(r"h(\d+)s(\d+)a(\d+)", key)
-        if not m:
-            return {"hotel": 0, "sn": 0, "sa": 0}
-        return {
-            "hotel": int(m.group(1)),
-            "sn":    int(m.group(2)),
-            "sa":    int(m.group(3)),
+        self._templates = load_templates(config.CORRECTED_DIR)
+        self._meta       = load_experiment_meta(config.CORRECTED_DIR)
+        self._available  = {
+            f.replace('_pod_corrected.csv', '')
+            for f in os.listdir(config.CORRECTED_DIR)
+            if f.endswith('_pod_corrected.csv')
         }
+
+        self._sweep_non_tier_a()
+
+        self._cache = SizeBoundLRUCache(
+            out_dir=config.DATASETS_DIR,
+            max_bytes=config.DATASET_CACHE_MAX_BYTES,
+        )
+        self._prewarm_tier_a()
+
+        logger.info(
+            f"DatasetSelector ready — "
+            f"{len(self._meta.get('tier_A', []))} Tier A experiments, "
+            f"{len(self._available)} corrected files available, "
+            f"cache: {self._cache.stats()}"
+        )
+
+    def _sweep_non_tier_a(self) -> None:
+        """
+        Delete any .parquet file already in DATASETS_DIR whose composition
+        key is not a Tier A composition. Bounds disk usage across restarts
+        without a persisted cache index — non-Tier-A files are cheap to
+        regenerate on demand.
+        """
+        tier_A = self._meta.get("tier_A", [])
+        tier_A_keys = set()
+        for exp in tier_A:
+            h, s, a, e = parse_composition(exp)
+            tier_A_keys.add(composition_to_key(h, s, a, e))
+
+        out_dir = config.DATASETS_DIR
+        if not os.path.isdir(out_dir):
+            return
+
+        removed, removed_bytes = 0, 0
+        for fname in os.listdir(out_dir):
+            if not fname.endswith("_pod.parquet"):
+                continue
+            key = fname[: -len("_pod.parquet")]
+            if key in tier_A_keys:
+                continue
+            path = os.path.join(out_dir, fname)
+            try:
+                removed_bytes += os.path.getsize(path)
+                os.remove(path)
+                removed += 1
+            except OSError as e:
+                logger.warning(f"Sweep: could not remove {path}: {e}")
+
+        if removed:
+            logger.info(
+                f"Startup sweep: removed {removed} non-Tier-A dataset "
+                f"file(s) ({removed_bytes:,} bytes)"
+            )
+
+    def _prewarm_tier_a(self) -> None:
+        """
+        Generate (or copy) all Tier A compositions into the cache before
+        the first real request, pinned so they're never evicted.
+        """
+        tier_A = self._meta.get("tier_A", [])
+        with self._cache.prewarm():
+            for exp in tier_A:
+                h, s, a, e = parse_composition(exp)
+                entry = get_or_generate(
+                    h, s, a, e,
+                    self._cache, self._templates, tier_A,
+                    self._available, config.CORRECTED_DIR, config.BASELINE_PATH,
+                    out_dir=config.DATASETS_DIR,
+                )
+                if entry is None:
+                    logger.warning(f"Pre-warm: failed to generate Tier A experiment '{exp}'")
+
+        stats = self._cache.stats()
+        logger.info(
+            f"Pre-warm complete: {stats['entries']} entries, "
+            f"{stats['total_bytes']:,} bytes"
+        )
 
     def select(
         self,
         composition: Dict[str, int]
     ) -> Tuple[Optional[str], Optional[Dict]]:
         """
-        Select the best dataset for the given composition.
+        Select (generating on demand if needed) the best dataset for the
+        given composition.
 
         Returns:
             (file_path, metadata_dict) or (None, None) if nothing found
         """
-        key = self._composition_to_key(composition)
+        h = composition.get("hotel", 0)
+        s = composition.get("sn",    0)
+        a = composition.get("sa",    0)
+        e = composition.get("es",    0)
+        key = composition_to_key(h, s, a, e)
 
-        # ── Exact match ───────────────────────────────────────────────────────
-        if key in self._index:
-            entry = self._index[key]
-            path  = os.path.join(os.path.dirname(DATASETS_DIR), entry["file"])
-            logger.info(f"Exact match: {key} → {path}")
-            return path, entry
+        entry = get_or_generate(
+            h, s, a, e,
+            self._cache, self._templates, self._meta.get("tier_A", []),
+            self._available, config.CORRECTED_DIR, config.BASELINE_PATH,
+            out_dir=config.DATASETS_DIR,
+        )
 
-        # ── Closest match ─────────────────────────────────────────────────────
-        logger.warning(f"No exact match for {key}, finding closest...")
-        closest_key, closest_score = self._find_closest(composition)
-
-        if closest_key is None:
-            logger.error(f"No suitable dataset found for {key}")
+        if entry is None:
+            logger.error(f"No dataset could be generated for {key}")
             return None, None
 
-        entry = self._index[closest_key]
-        path  = os.path.join(os.path.dirname(DATASETS_DIR), entry["file"])
-        logger.warning(f"Using closest match: {closest_key} (score={closest_score}) for {key}")
+        # entry["file"] carries a hardcoded "datasets/" prefix from
+        # dataset_generator.py (a vestige of the old batch-script convention);
+        # join against the real, possibly differently-named, DATASETS_DIR
+        # directly rather than trusting that prefix to match its basename.
+        path = os.path.join(config.DATASETS_DIR, os.path.basename(entry["file"]))
+        logger.info(f"Dataset ready: {key} → {path} (source={entry.get('source')})")
         return path, entry
 
-    def _find_closest(
-        self,
-        composition: Dict[str, int]
-    ) -> Tuple[Optional[str], float]:
-        """
-        Find the closest dataset key by minimizing total replica gap.
-        Only considers datasets that do not exceed requested counts.
-        """
-        h = composition.get("hotel", 0)
-        s = composition.get("sn", 0)
-        a = composition.get("sa", 0)
-
-        best_key   = None
-        best_score = float("inf")
-
-        for key, entry in self._index.items():
-            bh = entry.get("hotel", 0)
-            bs = entry.get("sn",    0)
-            ba = entry.get("sa",    0)
-
-            # do not use a dataset that has MORE of any app than requested
-            if bh > h or bs > s or ba > a:
-                continue
-
-            # gap = total missing replicas
-            gap = (h - bh) + (s - bs) + (a - ba)
-
-            # penalize if required apps are completely absent
-            missing_apps = 0
-            if h > 0 and bh == 0: missing_apps += 1
-            if s > 0 and bs == 0: missing_apps += 1
-            if a > 0 and ba == 0: missing_apps += 1
-
-            score = gap + missing_apps * 100
-
-            if score < best_score:
-                best_score = score
-                best_key   = key
-
-        return best_key, best_score
-
-    def list_available(self) -> Dict:
-        """Return full index for inspection."""
-        return self._index
-
     def get_entry(self, composition: Dict[str, int]) -> Optional[Dict]:
-        """Return index entry for a composition without loading the file."""
-        key = self._composition_to_key(composition)
-        return self._index.get(key)
+        """
+        Return the cached index entry for a composition if it has already
+        been generated this run. Does NOT trigger generation — call
+        select() for that.
+        """
+        key = composition_to_key(
+            composition.get("hotel", 0), composition.get("sn", 0),
+            composition.get("sa",    0), composition.get("es", 0),
+        )
+        return self._cache.peek(key)
 
     def exists(self, composition: Dict[str, int]) -> bool:
-        """Check if an exact match exists for this composition."""
-        return self._composition_to_key(composition) in self._index
+        """
+        True if this composition has already been generated and cached
+        this run. Does NOT check whether it *could* be generated — that
+        only happens on select().
+        """
+        key = composition_to_key(
+            composition.get("hotel", 0), composition.get("sn", 0),
+            composition.get("sa",    0), composition.get("es", 0),
+        )
+        return key in self._cache
+
+    def list_available(self) -> Dict:
+        """
+        Return datasets generated so far this run (the 62 pre-warmed Tier A
+        entries plus anything select() has produced since). Unlike the old
+        static index, this is NOT the full theoretical grid — generation is
+        lazy/on-demand.
+        """
+        return self._cache.snapshot()
