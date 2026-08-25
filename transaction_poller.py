@@ -42,6 +42,10 @@ CONSUMER_GROUP     = "emulation-module"
 CLAB_SUBNET_PREFIX = "10.0."
 CLAB_PROBE_TARGET  = "10.0.1.1"
 
+# Redis message uses tx.buyer.app_type in {"HR","SN","SA","ES"}; Timeline/
+# dataset keys use the lowercase short forms below.
+APP_TYPE_MAP = {"HR": "hotel", "SN": "sn", "SA": "sa", "ES": "es"}
+
 _event_logger = EventLogger()
 
 
@@ -260,9 +264,19 @@ class TransactionPoller:
                     self._rd.xack(STREAM_KEY, CONSUMER_GROUP, msg_id)
                     continue
 
-                buyer_name = tx.get("buyer", {}).get("name", "unknown") or "unknown"
+                buyer_name    = tx.get("buyer", {}).get("name", "unknown") or "unknown"
+                raw_app_type  = tx.get("buyer", {}).get("app_type")
+                app_type      = APP_TYPE_MAP.get(raw_app_type)
+                if app_type is None:
+                    logger.warning(
+                        f"Unrecognized/missing app_type '{raw_app_type}' for tx "
+                        f"{tx_hash[:12]}… — skipping (known: {sorted(APP_TYPE_MAP)})"
+                    )
+                    self._rd.xack(STREAM_KEY, CONSUMER_GROUP, msg_id)
+                    continue
+
                 job = self._timeline.add_job(
-                    app_type         = "hotel",
+                    app_type         = app_type,
                     lifetime_seconds = lifetime_s,
                     buyer_name       = buyer_name,
                 )

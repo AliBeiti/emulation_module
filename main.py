@@ -222,7 +222,7 @@ def tick_loop(
                             f"No dataset found for {composition} — keeping old dataset"
                         )
                     else:
-                        dataset_key  = selector._composition_to_key(composition)
+                        dataset_key  = selector.key_for(composition)
                         is_first_load = not replay_engine.is_loaded()
 
                         # preserve window when switching, reset on first load

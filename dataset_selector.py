@@ -165,17 +165,25 @@ class DatasetSelector:
         logger.info(f"Dataset ready: {key} → {path} (source={entry.get('source')})")
         return path, entry
 
+    def key_for(self, composition: Dict[str, int]) -> str:
+        """
+        Convert a {"hotel":.., "sn":.., "sa":.., "es":..} composition dict
+        into its dataset_generator composition_to_key() string
+        (e.g. "h2s1a3e1"). Thin public wrapper so callers (main.py) don't
+        need to import dataset_generator directly just to log/compare keys.
+        """
+        return composition_to_key(
+            composition.get("hotel", 0), composition.get("sn", 0),
+            composition.get("sa",    0), composition.get("es", 0),
+        )
+
     def get_entry(self, composition: Dict[str, int]) -> Optional[Dict]:
         """
         Return the cached index entry for a composition if it has already
         been generated this run. Does NOT trigger generation — call
         select() for that.
         """
-        key = composition_to_key(
-            composition.get("hotel", 0), composition.get("sn", 0),
-            composition.get("sa",    0), composition.get("es", 0),
-        )
-        return self._cache.peek(key)
+        return self._cache.peek(self.key_for(composition))
 
     def exists(self, composition: Dict[str, int]) -> bool:
         """
@@ -183,11 +191,7 @@ class DatasetSelector:
         this run. Does NOT check whether it *could* be generated — that
         only happens on select().
         """
-        key = composition_to_key(
-            composition.get("hotel", 0), composition.get("sn", 0),
-            composition.get("sa",    0), composition.get("es", 0),
-        )
-        return key in self._cache
+        return self.key_for(composition) in self._cache
 
     def list_available(self) -> Dict:
         """

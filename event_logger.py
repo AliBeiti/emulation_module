@@ -138,6 +138,7 @@ class EventLogger:
             "running_hotel": comp.get("hotel", 0),
             "running_sn":    comp.get("sn",    0),
             "running_sa":    comp.get("sa",    0),
+            "running_es":    comp.get("es",    0),
             "running_total": sum(comp.values()),
             # Full dict — for completeness / future app types
             "composition_at_add": comp,

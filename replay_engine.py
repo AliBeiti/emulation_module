@@ -44,6 +44,11 @@ class ReplayEngine:
 
     def __init__(self):
         self._windows: Dict[int, List[Dict]] = {}
+        self._window_keys: List[int] = []   # sorted actual window_index values;
+                                             # _current_window is a 0-based POSITION
+                                             # into this list, not a literal key —
+                                             # some datasets' window_index doesn't
+                                             # start at 0 (e.g. ES-inclusive ones)
         self._total_windows   = 0
         self._current_window  = 0
         self._current_dataset = None
@@ -57,7 +62,10 @@ class ReplayEngine:
         Load a new dataset.
 
         Args:
-            csv_path:         path to pod CSV
+            csv_path:         path to pod CSV or Parquet file. dataset_generator.py
+                              writes .parquet; the calibration dataset
+                              (calibration_pod.csv) and existing test fixtures
+                              are still plain .csv — dispatched by extension.
             dataset_key:      key string e.g. 'h2s0a0'
             preserve_window:  if True, keep current window index (clamped to
                               new dataset size) instead of resetting to 0.
@@ -66,9 +74,10 @@ class ReplayEngine:
         """
         logger.info(f"Loading dataset: {dataset_key} from {csv_path}")
 
-        # TODO: dataset_generator.py now writes datasets as .parquet, not .csv —
-        # switch this to pd.read_parquet(csv_path) once callers pass parquet paths.
-        df = pd.read_csv(csv_path)
+        if str(csv_path).lower().endswith(".parquet"):
+            df = pd.read_parquet(csv_path)
+        else:
+            df = pd.read_csv(csv_path)
 
         # validate required columns
         missing = [c for c in POD_CSV_COLS if c not in df.columns]
@@ -82,6 +91,7 @@ class ReplayEngine:
         for win_idx, group in df.groupby("window_index"):
             self._windows[int(win_idx)] = group.to_dict(orient="records")
 
+        self._window_keys    = sorted(self._windows.keys())
         self._total_windows  = len(self._windows)
         self._current_dataset = dataset_key
         self._loaded = True
@@ -119,7 +129,7 @@ class ReplayEngine:
             return {}
 
         dataset_namespaces = self._get_dataset_namespaces_set()
-        app_types = ("hotel", "sn", "sa")
+        app_types = ("hotel", "sn", "sa", "es")
         mapping   = {}
 
         for app in app_types:
@@ -164,7 +174,7 @@ class ReplayEngine:
             return {}
 
         dataset_namespaces = self._get_dataset_namespaces_set()
-        app_types = ("hotel", "sn", "sa")
+        app_types = ("hotel", "sn", "sa", "es")
         mapping   = {}
 
         for app in app_types:
@@ -205,10 +215,11 @@ class ReplayEngine:
 
     def get_current_window_pods(self) -> List[Dict]:
         """Return pod rows for current window with namespace mapping applied."""
-        if not self._loaded or self._current_window not in self._windows:
+        if not self._loaded or not self._window_keys or self._current_window >= len(self._window_keys):
             return []
 
-        raw_rows    = self._windows[self._current_window]
+        actual_key  = self._window_keys[self._current_window]
+        raw_rows    = self._windows[actual_key]
         mapped_rows = []
         for row in raw_rows:
             remapped = self.apply_namespace_map(row["pod_name"])
@@ -249,10 +260,10 @@ class ReplayEngine:
     # ── Internal helpers ──────────────────────────────────────────────────────
 
     def _get_dataset_namespaces_set(self) -> set:
-        if not self._loaded or 0 not in self._windows:
+        if not self._loaded or not self._window_keys:
             return set()
         ns_set = set()
-        for row in self._windows[0]:
+        for row in self._windows[self._window_keys[0]]:
             ns = str(row["pod_name"]).split("/")[0]
             ns_set.add(ns)
         return ns_set
