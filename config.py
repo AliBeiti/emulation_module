@@ -115,3 +115,28 @@ SELLER_NODE_IP = os.environ.get("SELLER_NODE_IP", "")
 # ─── Transaction Poller Settings ──────────────────────────────────────────────
 # How often to poll for new transactions (seconds)
 POLL_INTERVAL_S = 5
+
+# ─── Resource Offer Publisher Settings ─────────────────────────────────────────
+# Publishes this node's sellable resources to the global Redis every
+# RESOURCE_OFFER_INTERVAL_S seconds. See resource_offer_publisher.py.
+RESOURCE_OFFER_INTERVAL_S     = int(os.environ.get("RESOURCE_OFFER_INTERVAL_S", "10"))
+RESOURCE_OFFER_HTTP_TIMEOUT_S = int(os.environ.get("RESOURCE_OFFER_HTTP_TIMEOUT_S", "5"))
+
+# Admission Control's resource-offer endpoint — injected by Kubernetes as
+# <SVC_NAME>_SERVICE_HOST / <SVC_NAME>_SERVICE_PORT for a Service named
+# ksense-resource-offer-api in the same namespace. Empty string if unset
+# (resource_offer_publisher.py checks before building a URL from these).
+KSENSE_RESOURCE_OFFER_API_SERVICE_HOST = os.environ.get("KSENSE_RESOURCE_OFFER_API_SERVICE_HOST", "")
+KSENSE_RESOURCE_OFFER_API_SERVICE_PORT = os.environ.get("KSENSE_RESOURCE_OFFER_API_SERVICE_PORT", "")
+
+# Global Redis — separate from transaction_poller.py's own "localhost"
+# connection to the per-node "emulate" stream. This one carries sellable
+# resource offers for every seller node, not just this one.
+REDIS_GLOBAL_HOST     = os.environ.get("REDIS_GLOBAL_HOST", "redis")
+REDIS_GLOBAL_PORT     = int(os.environ.get("REDIS_GLOBAL_PORT", "6379"))
+REDIS_GLOBAL_HASH_KEY = os.environ.get("REDIS_GLOBAL_HASH_KEY", "sellable_resources")
+REDIS_GLOBAL_CHANNEL  = os.environ.get("REDIS_GLOBAL_CHANNEL", "seller-updates")
+
+# This node's identity for the resource offer message. Falls back to
+# "clab-nebula-extended-" + hostname if unset — see resource_offer_publisher.py.
+NODE_NAME = os.environ.get("NODE_NAME", "")

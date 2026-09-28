@@ -51,6 +51,7 @@ from aggregator       import Aggregator
 from kwok_manager     import KWOKManager
 from api              import app, state
 from transaction_poller import TransactionPoller
+from resource_offer_publisher import ResourceOfferPublisher
 
 
 
@@ -359,6 +360,9 @@ def main():
 
     poller = TransactionPoller(timeline=timeline)
     poller.start()
+
+    offer_publisher = ResourceOfferPublisher()
+    offer_publisher.start()
 
     uvicorn.run(
         app,
