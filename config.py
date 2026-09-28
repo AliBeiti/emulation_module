@@ -132,7 +132,7 @@ KSENSE_RESOURCE_OFFER_API_SERVICE_PORT = os.environ.get("KSENSE_RESOURCE_OFFER_A
 # Global Redis — separate from transaction_poller.py's own "localhost"
 # connection to the per-node "emulate" stream. This one carries sellable
 # resource offers for every seller node, not just this one.
-REDIS_GLOBAL_HOST     = os.environ.get("REDIS_GLOBAL_HOST", "redis")
+REDIS_GLOBAL_HOST     = os.environ.get("REDIS_GLOBAL_HOST", "172.20.20.197")
 REDIS_GLOBAL_PORT     = int(os.environ.get("REDIS_GLOBAL_PORT", "6379"))
 REDIS_GLOBAL_HASH_KEY = os.environ.get("REDIS_GLOBAL_HASH_KEY", "sellable_resources")
 REDIS_GLOBAL_CHANNEL  = os.environ.get("REDIS_GLOBAL_CHANNEL", "seller-updates")
