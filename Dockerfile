@@ -33,6 +33,7 @@ COPY replay_engine.py .
 COPY aggregator.py .
 COPY baseline_provider.py .
 COPY transaction_poller.py .
+COPY resource_offer_publisher.py .
 COPY event_logger.py .
 COPY prepare_calibration.py .
 COPY kwok_manager.py .
